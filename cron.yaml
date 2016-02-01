@@ -1,0 +1,20 @@
+cron:
+- description: refresh
+  url: /fm/start
+  schedule: every monday 05:30
+  timezone: Europe/Paris
+
+- description: launch missions
+  url: /fm/start_launch_missions
+  schedule: every 1 hours
+  timezone: Europe/Paris
+
+- description: taxes
+  url: /fm/start_taxes
+  schedule: every monday 03:30
+  timezone: Europe/Paris
+
+- description: check if there are airports for sale
+  url: /fm/sale_airports
+  schedule: every 20 minutes
+  timezone: Europe/Paris
