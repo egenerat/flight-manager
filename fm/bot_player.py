@@ -8,7 +8,7 @@ from app.airport.airports_methods import get_other_airports_id, \
     switch_to_airport
 from app.common.as_exceptions import OutdatedPlanesListException
 from app.common.constants import PLANES_PAGE, CONCORDE_SPEED, CONCORDE_CAPACITY, \
-    KEROZENE_PRICE
+    KEROZENE_PRICE, MAX_PLANES_NB
 from app.common.countries import countries
 from app.common.file_methods import force_save_session_to_db
 from app.common.http_methods import get_request
@@ -34,7 +34,7 @@ def are_missions_expired(missions):
 def analyse_missions():
     # Be careful, if all airports are in the same country, lot of redundancy
     db_remove_all_missions()
-    other_airports = get_other_airports_id()
+    other_airports = ["131469"]#get_other_airports_id()
     for j in other_airports:
         # remove duplicates (airports in the same country)
         #if j != '125146':
@@ -56,6 +56,7 @@ def analyse_missions():
 
 
 def update_missions():
+    switch_to_airport("131469")
     db_remove_all_missions()
     missions_list = list_missions()
     current_airport = Airport()
@@ -81,14 +82,14 @@ def get_engines_nb_to_change(plane_list):
 
 
 def send_planes():
-    list_missions = db_get_ordered_missions('Suisse', CONCORDE_SPEED, CONCORDE_CAPACITY, 84, '-reputation_per_hour')
+    list_missions = db_get_ordered_missions('Suisse', CONCORDE_SPEED, CONCORDE_CAPACITY, MAX_PLANES_NB, '-reputation_per_hour')
 
     other_airports = get_other_airports_id()
 
-    if len(list_missions) < 84 or are_missions_expired(list_missions):
+    if len(list_missions) < MAX_PLANES_NB or are_missions_expired(list_missions):
         logger.error('Refresh missions')
         update_missions()
-        list_missions = db_get_ordered_missions('Suisse', CONCORDE_SPEED, CONCORDE_CAPACITY, 84, '-reputation_per_hour')
+        list_missions = db_get_ordered_missions('Suisse', CONCORDE_SPEED, CONCORDE_CAPACITY, MAX_PLANES_NB, '-reputation_per_hour')
 
     # switch on all airports
     for j in other_airports:
