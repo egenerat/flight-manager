@@ -1,0 +1,2 @@
+class OutdatedPlanesListException(Exception):
+    pass
