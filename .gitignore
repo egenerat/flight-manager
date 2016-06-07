@@ -64,4 +64,5 @@ target/
 
 app/common/constants.py
 settings.py
-common/target_urls.py
+app/common/target_urls.py
+app/common/site_strings.py
