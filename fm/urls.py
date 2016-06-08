@@ -16,5 +16,6 @@ urlpatterns = patterns('fm.views',
     (r'^sale_airports$', 'sale_airports'),
     (r'^test$', 'test'),
     (r'^fill_kero$', 'fill_kero'),
-   (r'^start_fill_kero$', 'start_fill_kero'),
+    (r'^start_fill_kero$', 'start_fill_kero'),
+    (r'^engines$', 'engines'),
 )
