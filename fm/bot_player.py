@@ -5,7 +5,7 @@ import math
 
 from app.airport.Airport import Airport
 from app.airport.airports_methods import get_other_airports_id, \
-    switch_to_airport
+    switch_to_airport, filter_airports
 from app.common.as_exceptions import OutdatedPlanesListException
 from app.common.constants import PLANES_PAGE, CONCORDE_SPEED, CONCORDE_CAPACITY, \
     KEROZENE_PRICE, MAX_PLANES_NB
@@ -13,7 +13,7 @@ from app.common.countries import countries
 from app.common.file_methods import force_save_session_to_db
 from app.common.http_methods import get_request
 from app.common.logger import logger
-from app.missions.mission import get_ongoing_missions, substract, \
+from app.missions.mission import get_ongoing_missions, subtract, \
     accept_all_missions, list_missions, get_real_benefit, get_expiry_date
 from app.planes.deserialization import build_planes_from_html
 from fm.models import Mission
@@ -24,7 +24,7 @@ from fm.database import db_remove_all_missions, db_insert_object, db_get_ordered
 
 def are_missions_expired(missions):
     #TODO improve environment handling
-    if fm.singleton_session.local_modelocal_mode:
+    if fm.singleton_session.local_mode:
         return False
     expiry_date = missions[0].expiry_date
     today = datetime.datetime.now()
@@ -85,8 +85,9 @@ def send_planes():
     list_missions = db_get_ordered_missions('Suisse', CONCORDE_SPEED, CONCORDE_CAPACITY, MAX_PLANES_NB, '-reputation_per_hour')
 
     other_airports = get_other_airports_id()
+    other_airports = filter_airports(other_airports)
 
-    if len(list_missions) < MAX_PLANES_NB or are_missions_expired(list_missions):
+    if len(list_missions) < 84 or are_missions_expired(list_missions):
         logger.error('Refresh missions')
         update_missions()
         list_missions = db_get_ordered_missions('Suisse', CONCORDE_SPEED, CONCORDE_CAPACITY, MAX_PLANES_NB, '-reputation_per_hour')
@@ -141,8 +142,7 @@ def send_planes():
                     i.prepare_for_mission()
                     if i.get_status():
                         temp.append(i)
-                
-            
+
             ready_planes = temp
 
             ready_planes_nb = len(ready_planes)
@@ -171,7 +171,7 @@ def send_planes():
 
             # 2 purge all already ongoing
             ongoing_missions_id = get_ongoing_missions()
-            missions_list = substract(missions_list, ongoing_missions_id)
+            missions_list = subtract(missions_list, ongoing_missions_id)
 
             # 3 cut just the good number
             missions_list = missions_list[:ready_planes_nb]
