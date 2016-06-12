@@ -1,0 +1,70 @@
+{% load template_math %}
+
+{% block body_content %}
+
+
+
+<table style="width:100%">
+	<tr>
+		<th>Country</th>
+		<th>Reputation 36</th>
+		<th>Revenue 36</th>
+		<th>Reputation 54</th>
+		<th>Revenue 54</th>
+		<th>Reputation 84</th>
+		<th>Revenue 84</th>
+	</tr>
+{% for key, values in result.items %}
+<tr>
+	<td>{{key}}</td>
+	<td>{{values.total_reputation_36|floatformat:2}}</td>
+	<td>{{values.total_revenue_36|floatformat:2}}</td>
+	
+	<td>{{values.total_reputation_54|floatformat:2}}</td>
+	<td>{{values.total_revenue_54|floatformat:2}}</td>
+	
+	<td>{{values.total_reputation_84|floatformat:2}}</td>
+	<td>{{values.total_revenue_84|floatformat:2}}</td>
+</tr>
+{% endfor %}
+
+{% for key, values in result.items %}
+<tr>
+	<td>{{key}}</td>
+	<td>{{values.total_reputation_36|floatformat:2}}</td>
+	<td>{{values.total_revenue_36|floatformat:2}}</td>
+	
+	<td>{{values.total_reputation_54|floatformat:2}}</td>
+	<td>{{values.total_revenue_54|floatformat:2}}</td>
+	
+	<td>{{values.total_reputation_84|floatformat:2}}</td>
+	<td>{{values.total_revenue_84|floatformat:2|multiply:1000}}</td>
+</tr>
+{% endfor %}
+<!-- <table style="width:100%">
+	<tr>
+		<th>Mission nb</th>
+		<th>Country</th>
+		<th>Km</th>
+		<th>Reputation</th>
+		<th>Reputation per hour</th>
+		<th>Revenue</th>
+		<th>Revenue per hour</th>
+		
+		
+	</tr>
+{% for i in missions%}
+
+
+<tr>
+<td>{{i}}</td>
+<td>{{i.country_nb}}</td>
+<td>{{i.km_nb}}</td>
+<td>{{i.reputation}}</td>
+<td>{{i.reputation_per_hour}}</td>
+<td>{{i.contract_amount}}</td>
+<td>{{i.revenue_per_hour}}</td>
+</tr>
+{% endfor %} -->
+</table>
+{% endblock %}
