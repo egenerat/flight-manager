@@ -25,6 +25,11 @@ def subtract(missions_list, ongoing_missions_id):
 
 
 def get_real_benefit(a_mission):
+    # TODO: to make it accurate:
+    # - add the cost of maintainance
+    # - add the time of change engines
+    # add the part of the engines that may not be used
+    # add the cost of staff
     revenue = a_mission.contract_amount
     total_hours = a_mission.time_before_departure + math.ceil(a_mission.km_nb / CONCORDE_SPEED) * 2
     plane_use = ((a_mission.km_nb * 2) / 500000.0) * CONCORDE_PRICE
@@ -33,9 +38,17 @@ def get_real_benefit(a_mission):
     return int(revenue_per_hour)
 
 
-def kerozene_consumed():
+def kerozene_consumed(mission, plane):
+    # Un surplus de 3 litres par heure par passager(ou colis) et membre d'équipage. A noter que l'avion consomme 2 fois moins sur le trajet retour.'
+    # Il faut également tenir compte d'une surconsommation liée aux phases de décollage et d' atterrissage.
+
     return 0
 
 
 def hours_consumed(mission_km, plane_speed):
-    return 0
+    hours_float = mission_km / float(plane_speed)
+    return int(math.ceil(hours_float))
+
+
+def is_mission_feasible(mission, plane):
+    return False
