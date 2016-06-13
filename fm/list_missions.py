@@ -1,3 +1,4 @@
+from app.common.constants import SUPERSONICS_MISSION_PAGE
 from app.common.http_methods import post_request
 from app.common.target_urls import SUPERSONICS_MISSION_PAGE
 from app.missions.missionparser import parse_all_missions_in_page, get_country_list

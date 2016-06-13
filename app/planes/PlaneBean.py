@@ -29,6 +29,9 @@ class PlaneBean(RootPlane):
         if self.__km and self.__kerozene:
             return get_plane_value(self.new_plane_value, self.__km, self.__kerozene)
 
+    def get_fuel_consumption_per_hour(self):
+        return self.__consumption_per_hour
+
     def __str__(self):
         return 'Plane ' + str(self.__plane_id) + ' ' + str(self.__ready) + ' ' + str(self.__full_fuel) + ' ' + str(
             self.__current_engine_hours)
