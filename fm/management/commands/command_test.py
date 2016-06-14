@@ -1,10 +1,10 @@
-from fm.bot_player import update_missions
 from django.core.management.base import BaseCommand
+from fm.list_missions import list_countries
 
 
 class Command(BaseCommand):
     help = 'Update the missions saved in the database'
 
     def handle(self, *args, **options):
-        update_missions()
+        list_countries()
         self.stdout.write('Successful')
