@@ -1,5 +1,5 @@
 from app.planes.planes_util import get_plane_value
-from abc import ABCMeta, abstractproperty
+from abc import ABCMeta
 
 
 
@@ -34,7 +34,7 @@ class ReadyPlane(object):
         return self.consumption_per_hour
 
     def is_fuel_full(self):
-        return self.kerozene == self.
+        return self.kerozene == self.fuel_capacity
 
     def __str__(self):
         return 'Plane {} {}'.format(self.plane_id, self.current_engine_hours)
