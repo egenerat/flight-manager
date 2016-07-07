@@ -1,6 +1,7 @@
 from django.db import models
 import base64
 
+
 class Mission(models.Model):
     expiry_date = models.DateTimeField()
     origin_country = models.CharField(max_length=30, blank=True)
@@ -16,9 +17,10 @@ class Mission(models.Model):
     total_time = models.PositiveSmallIntegerField(null=True)
     revenue_per_hour = models.PositiveSmallIntegerField(null=True)
     reputation_per_hour = models.PositiveSmallIntegerField(null=True)
+    mission_type = models.CharField(max_length=1)
 
     def __str__(self):
-        return 'Mission nb '+str(self.mission_nb)
+        return "Mission {}".format(self.mission_nb)
 
 
 class AirportsToBeSold(models.Model):
