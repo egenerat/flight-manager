@@ -1,10 +1,10 @@
 from app.planes.CommercialPlane import CommercialPlane
-from app.planes.UsablePlane import ReadyPlane
+from app.planes.UsablePlane import UsablePlane
 
 
-class ReadyCommercialPlane(CommercialPlane, ReadyPlane):
+class UsableCommercialPlane(CommercialPlane, UsablePlane):
 
     def __init__(self, **kwargs):
-        for base in ReadyCommercialPlane.__bases__:
+        for base in UsableCommercialPlane.__bases__:
             base.__init__(self, **kwargs)
 

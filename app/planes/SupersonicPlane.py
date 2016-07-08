@@ -1,20 +1,25 @@
 from app.common.constants import CHANGE_HOUR_SUPERSONIC
-from app.planes.PlaneBean import PlaneBean
+from app.planes.RootPlane import RootPlane
 
 
-class SupersonicPlane(PlaneBean):
+class SupersonicPlane(RootPlane):
 
     limit_change_engines = 96
     engines_nb = 4
-    __consumption_per_hour = 25625
+    consumption_per_hour = 25625
+    plane_range = 2*2430 #2*2250
+    maximum_engine_hours = 100
+    replacement_engines_type = '6'
 
-    def __init__(self, id, required_maintenance, status, kerozene=None, current_engine_hours=None, maximum_engine_hours=None, km=None):
-        super(SupersonicPlane, self).__init__(id, required_maintenance, status, kerozene, current_engine_hours, maximum_engine_hours, km)
+    def __init__(self, **kwargs):
+        super(SupersonicPlane, self).__init__(**kwargs)
 
-    def is_required_maintenance(self):
-        pass
+    @classmethod
+    def get_plane_range(cls):
+        return cls.plane_range
 
-    def engines_to_be_changed(self):
-        return self.__current_engine_hours >= CHANGE_HOUR_SUPERSONIC
+    @classmethod
+    def get_plane_capacity(cls):
+        return 140 #100
 
 
