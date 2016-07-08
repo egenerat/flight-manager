@@ -9,7 +9,7 @@ MULTI_SPACE = '[\S+\n\r\s]+'
 
 def format_amount(amount):
     result = amount / 1000000
-    return str(result) + 'M'
+    return '{}M'.format(result)
 
 
 def everything_between(text, begin, end):
@@ -27,6 +27,9 @@ def everything_between(text, begin, end):
 
 # def strip_special_characters_in_pattern(pattern):
     # return pattern.replace('?', '\?').replace('.', '\.')
+
+def get_numeric_values_regex(regex, string):
+    return [int(s) for s in re.findall(regex, string)[0]]
 
 
 def get_values_from_regex(regex, string):
@@ -72,4 +75,5 @@ def exception_if_not_contains(regex, string, message=''):
 def string_methods_test():
     string = "-10,198,127 $"
     is_valid = get_amount(string) == -10198127
-    return string + ": "+str(is_valid)+'\n'
+    return '{}: {}\n'.format(string, is_valid)
+
