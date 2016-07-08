@@ -2,7 +2,6 @@ from app.planes.planes_util import get_plane_value
 from abc import ABCMeta
 
 
-
 class abstractstatic(classmethod):
     __slots__ = ()
     def __init__(self, function):
@@ -11,7 +10,7 @@ class abstractstatic(classmethod):
     __isabstractmethod__ = True
 
 
-class ReadyPlane(object):
+class UsablePlane(object):
     __metaclass__ = ABCMeta
 
     def __init__(self, **kwargs):
@@ -37,7 +36,7 @@ class ReadyPlane(object):
         return self.kerozene == self.fuel_capacity
 
     def __str__(self):
-        return 'Plane {} {}'.format(self.plane_id, self.current_engine_hours)
+        return 'Plane {} {}/{}'.format(self.plane_id, self.current_engine_hours, self.maximum_engine_hours)
 
     @abstractstatic
     def get_plane_range(cls):
