@@ -1,4 +1,5 @@
 from app.common.constants import CHANGE_HOUR_SUPERSONIC
+from app.common.target_urls import BUY_SUPERSONIC_URL
 from app.planes.RootPlane import RootPlane
 
 
@@ -10,6 +11,8 @@ class SupersonicPlane(RootPlane):
     plane_range = 2*2430 #2*2250
     maximum_engine_hours = 100
     replacement_engines_type = '6'
+    price = 12590000
+    buy_url = BUY_SUPERSONIC_URL
 
     def __init__(self, **kwargs):
         super(SupersonicPlane, self).__init__(**kwargs)
