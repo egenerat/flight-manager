@@ -5,7 +5,7 @@ from app.planes.RootPlane import RootPlane
 
 class SupersonicPlane(RootPlane):
 
-    limit_change_engines = 96
+    limit_change_engines = 97
     engines_nb = 4
     consumption_per_hour = 25625
     plane_range = 2*2430 #2*2250
