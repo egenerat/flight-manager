@@ -8,7 +8,7 @@ class SupersonicPlane(RootPlane):
     limit_change_engines = 97
     engines_nb = 4
     consumption_per_hour = 25625
-    plane_range = 2*2430 #2*2250
+    plane_range = 2*2250
     maximum_engine_hours = 100
     replacement_engines_type = '6'
     price = 12590000
