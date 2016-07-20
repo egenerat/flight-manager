@@ -1,4 +1,5 @@
 from app.common.constants import MAX_KM, KEROZENE_PRICE
+# do not add dependency to CommercialPlane here, otherwise cyclic dependency
 
 
 def get_plane_value(new_plane_value, km, kerozene_qty):

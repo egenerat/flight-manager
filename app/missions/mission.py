@@ -30,6 +30,7 @@ def get_real_benefit(a_mission):
     # - add the time of change engines
     # add the part of the engines that may not be used
     # add the cost of staff
+    # TODO not only works for concorde!!!
     revenue = a_mission.contract_amount
     total_hours = a_mission.time_before_departure + math.ceil(a_mission.km_nb / CONCORDE_SPEED) * 2
     plane_use = ((a_mission.km_nb * 2) / 500000.0) * CONCORDE_PRICE
