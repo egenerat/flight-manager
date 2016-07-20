@@ -10,12 +10,9 @@ from app.common.target_strings import LOGOUT_STRING_2
 from app.common.target_urls import LOGIN_PAGE
 from app.common.target_urls import POST_LOGIN_PAGE
 from lib import requests
-from google.appengine.api import urlfetch
 from app.common import constants
 from app.common.constants import USERNAME, PASSWORD, HEADER
 from app.common.file_methods import read_login_file, save_to_file
-
-urlfetch.set_default_fetch_deadline(45)
 
 
 def login():
@@ -29,7 +26,7 @@ def login():
 
 
 def wait():
-    time.sleep(1 + random.random() - 0.3)
+    time.sleep(0.5 + random.random())
 
 
 def is_connected(page):
