@@ -1,4 +1,4 @@
-from app.common import logger
+from app.common.logger import logger
 from app.common.email_methods import notify
 from app.common.http_methods import get_request, post_request
 from app.common.string_methods import string_contains, exception_if_not_contains
@@ -39,23 +39,22 @@ class PlaneMaintainer(object):
             exception_if_not_contains('Votre avion est maintenant en maintenance', page)
         except:
             logger.error('Problem sending to maintainance')
-            # en mission, en maintenance ou n'a pas plus de 100,000 km sans maintenance
-
-            # TODO I think all this condition is met all the time
             if not string_contains("en mission, en maintenance ou n'a pas plus de 100,000 km sans maintenance",
                                    page):
                 # case when the current airport has changed
+                # case not enough mecanicians
                 notify('AS : could not send to maintainance', page)
             else:
+                # TODO case plane maintainance was over, should continue iteration over planes, refresh and run again
                 raise OutdatedPlanesListException()
-                # Check if correctly sent to maintainance
 
     def prepare_plane(self):
-        # if self.is_required_maintenance():
-        #     self.__do_maintenance()
-        #     return False
-        # if self.plane.engines_to_be_changed():
-        #     self.__change_engines()
+        if self.plane.required_maintenance:
+            self.__do_maintenance()
+            return False
+        if self.plane.engines_to_be_changed():
+            self.__change_engines()
+            return False
         if not self.plane.is_fuel_full():
             self.__fill_fuel()
         return self.__ready
