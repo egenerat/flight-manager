@@ -33,7 +33,8 @@ class BotPlayer(object):
         return get_ongoing_missions(dashboard)
 
     def get_missions(self):
-        return db_get_ordered_missions_multi_type(200, '-reputation_per_hour')
+        db_missions = db_get_ordered_missions_multi_type(210, '-reputation_per_hour')
+        # if are_expired(db_missions)
 
     @property
     def usable_planes(self):
@@ -41,6 +42,10 @@ class BotPlayer(object):
 
     def launch_missions(self):
         mission_list = self.missions
+
+        # other_airports = get_other_airports_id()
+        # other_airports = filter_airports(other_airports)
+
         ongoing_missions = self.ongoing_missions
         mission_list = subtract(mission_list, ongoing_missions)
         garage = PlaneGarage(self.usable_planes, self.airport)
@@ -53,22 +58,14 @@ class BotPlayer(object):
 
 
 
-    def are_missions_expired(missions):
-        # TODO improve environment handling
-        if fm.singleton_session.local_mode:
-            return False
-        expiry_date = missions[0].expiry_date
-        today = datetime.datetime.now()
-        return (expiry_date - today) <= datetime.timedelta(0)
+
 
 
 
 def send_planes():
-    list_missions = db_get_ordered_missions('Suisse', CONCORDE_SPEED, CONCORDE_CAPACITY, MAX_PLANES_NB,
-                                            '-reputation_per_hour')
 
-    other_airports = get_other_airports_id()
-    other_airports = filter_airports(other_airports)
+
+
 
     if len(list_missions) < 84 or are_missions_expired(list_missions):
         logger.error('Refresh missions')
