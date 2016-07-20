@@ -9,11 +9,11 @@ from app.planes.SupersonicPlane import SupersonicPlane
 def split_planes_list_by_type(planes_list):
     result = {
         'commercial_planes': [],
+        'jet_planes': [],
         'supersonic_planes': [],
         'commercial_ready_planes': [],
-        'supersonic_ready_planes': [],
-        'jet_planes': [],
         'jet_ready_planes': [],
+        'supersonic_ready_planes': [],
     }
     for i in planes_list:
         if isinstance(i, SupersonicPlane):
