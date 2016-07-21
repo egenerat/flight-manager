@@ -7,6 +7,7 @@ class SupersonicPlane(RootPlane):
 
     limit_change_engines = 97
     engines_nb = 4
+    fuel_capacity = 119500
     consumption_per_hour = 25625
     plane_range = 2*2250
     maximum_engine_hours = 100
@@ -23,6 +24,6 @@ class SupersonicPlane(RootPlane):
 
     @classmethod
     def get_plane_capacity(cls):
-        return 140 #100
+        return 100
 
 
