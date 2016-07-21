@@ -1,3 +1,6 @@
+import fm
+from django.shortcuts import render_to_response
+
 from app.airport.Airport import Airport
 from app.airport.airports_methods import get_other_airports_id
 from app.airport.airports_methods import switch_to_airport
@@ -7,6 +10,14 @@ from app.common.string_methods import format_amount
 from app.common.target_urls import PLANES_PAGE
 from app.parsers.planesparser import build_planes_from_html
 from django.http import HttpResponse
+from fm.databases.database_django import db_get_ordered_missions, db_get_ordered_missions_multi_type, \
+    planes_needed_by_category
+
+
+def view_top_missions(request):
+    mission_list = db_get_ordered_missions_multi_type(200, '-reputation_per_hour')
+    nb_planes_needed = planes_needed_by_category(mission_list)
+    return render_to_response('list_missions.html', {'missions': mission_list, 'planes_needed': nb_planes_needed})
 
 
 def represent_data(request):
@@ -31,17 +42,14 @@ def represent_data(request):
                 total_revenue_36 += a_mission.revenue_per_hour
                 total_reputation_36 += a_mission.reputation_per_hour
         result[i] = {
-                     'total_reputation_84':total_reputation_84/84,
-                       'total_revenue_84':total_revenue_84/84,
-                     'total_reputation_54':total_reputation_54/54,
-                       'total_revenue_54':total_revenue_54/54,
-                       'total_reputation_36':total_reputation_36/36,
-                       'total_revenue_36':total_revenue_36/36,
-                     }
-    print(result)
-    return render_to_response('missions.html',{'result':result,
-                                               'missions':missions_list
-                                              })
+            'total_reputation_84':total_reputation_84/84,
+            'total_revenue_84':total_revenue_84/84,
+            'total_reputation_54':total_reputation_54/54,
+            'total_revenue_54':total_revenue_54/54,
+            'total_reputation_36':total_reputation_36/36,
+            'total_revenue_36':total_revenue_36/36,
+        }
+    return render_to_response('missions.html',{'result':result, 'missions':missions_list})
 
 
 def planes_value(request):
@@ -60,5 +68,6 @@ def planes_value(request):
                 if i.get_value():
                     sum += i.get_value()
                     planes_nb += 1
-        response += current_airport.get_airport_name() + '('+str(planes_nb)+'/'+ str(current_airport.get_planes_capacity())+'): ' + format_amount(sum) + '<br/><br/>'
+        response += '{}({}/{}) <br/><br/>'.format(current_airport.get_airport_name(), planes_nb, current_airport.get_planes_capacity(), format_amount(sum))
+
     return HttpResponse(response)
