@@ -1,4 +1,4 @@
-# -*- coding: utf-8 -*-
+# coding=utf-8
 
 import datetime
 import math
@@ -26,7 +26,7 @@ def subtract(missions_list, ongoing_missions_id):
 
 def get_real_benefit(a_mission):
     # TODO: to make it accurate:
-    # - add the cost of maintainance
+    # - add the cost of maintenance
     # - add the time of change engines
     # add the part of the engines that may not be used
     # add the cost of staff
@@ -39,10 +39,10 @@ def get_real_benefit(a_mission):
     return int(revenue_per_hour)
 
 
-def kerozene_consumed(mission, plane):
+def kerosene_consumed(mission, plane):
     # Un surplus de 3 litres par heure par passager(ou colis) et membre d'équipage. A noter que l'avion consomme 2 fois moins sur le trajet retour.'
     # Il faut également tenir compte d'une surconsommation liée aux phases de décollage et d' atterrissage.
-
+    # TODO
     return 0
 
 

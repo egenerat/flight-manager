@@ -1,7 +1,7 @@
 # -*- coding: iso-8859-1 -*-
 import requests
 
-from app.airport.airports_parsers import get_country, get_money, get_kerozene_supply, get_kerozene_capacity, \
+from app.airport.airports_parsers import get_country, get_money, get_kerosene_supply, get_kerosene_capacity, \
     get_engines_supply, get_planes_capacity, get_airport_name
 from app.common.target_urls import MY_AIRPORT
 import unittest
@@ -22,11 +22,11 @@ class TestAirportParser(unittest.TestCase):
         self.assertEqual(country, 2444908)
 
     def test_kerosene_supply(self):
-        country = get_kerozene_supply(self.__html_page)
+        country = get_kerosene_supply(self.__html_page)
         self.assertEqual(country, 2009391)
 
-    def test_kerozene_capacity(self):
-        country = get_kerozene_capacity(self.__html_page)
+    def test_kerosene_capacity(self):
+        country = get_kerosene_capacity(self.__html_page)
         self.assertEqual(country, 2500000)
 
     def test_engines_supply(self):

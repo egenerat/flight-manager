@@ -10,7 +10,7 @@ class Mission(models.Model):
     travellers_nb = models.PositiveSmallIntegerField()
     contract_amount = models.PositiveIntegerField()
     reputation = models.PositiveSmallIntegerField()
-    pilotes_nb = models.PositiveSmallIntegerField()
+    pilots_nb = models.PositiveSmallIntegerField()
     flight_attendants_nb = models.PositiveSmallIntegerField()
     time_before_departure = models.PositiveSmallIntegerField()
     km_nb = models.PositiveSmallIntegerField()
