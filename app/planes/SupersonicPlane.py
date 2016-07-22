@@ -1,4 +1,3 @@
-from app.common.constants import CHANGE_HOUR_SUPERSONIC
 from app.common.target_urls import BUY_SUPERSONIC_URL
 from app.planes.RootPlane import RootPlane
 

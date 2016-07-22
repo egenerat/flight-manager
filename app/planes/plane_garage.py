@@ -2,7 +2,6 @@ from app.planes.plane_maintainer import PlaneMaintainer
 
 
 class PlaneGarage(object):
-
     def __init__(self, plane_list, airport):
         self.plane_list = plane_list
         self.airport = airport
@@ -26,22 +25,20 @@ class PlaneGarage(object):
                     result[i.replacement_engines_type] = i.engines_nb
         return result
 
-    def get_kerozene_quantity_needed(self):
+    def get_kerosene_quantity_needed(self):
         result = 0
         for i in self.plane_list:
             if not i.is_fuel_full():
-                result += i.fuel_capacity - i.kerozene
+                result += i.fuel_capacity - i.kerosene
         return result
 
-
-    def buy_missing_planes(self):
-        full_planes_nb = self.get_planes_capacity()
-        missing_planes = full_planes_nb - self.get_planes_nb()
-        if missing_planes > 0:
-            try:
-                self.buy_missing_concorde(missing_planes)
-            # notify('AS : Just bought a Concorde ', 'Just bought a Concorde')
-            except Exception as e:
-                logger.error('Could not buy Concorde !')
-                notify('Errror AS : Could not buy a Concorde ',
-                       get_airport().get_airport_name() + '\nCould not buy a concorde\n' + unicode(e))
+    #TODO
+    # def buy_missing_planes(self):
+    #     full_planes_nb = self.get_planes_capacity()
+    #     missing_planes = full_planes_nb - self.get_planes_nb()
+    #     if missing_planes > 0:
+    #         try:
+    #             self.buy_missing_concorde(missing_planes)
+    #         except Exception as e:
+    #             logger.error('Could not buy Concorde !')
+    #             notify('Errror AS : Could not buy a Concorde {}\nCould not buy a concorde\n{}'.format(get_airport().get_airport_name(), unicode(e)))

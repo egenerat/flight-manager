@@ -1,7 +1,6 @@
 from app.airport.airports_methods import get_other_airports_id, filter_airports, switch_to_airport
 from app.manager.bot_player import BotPlayer
 from fm.databases.database_django import db_get_ordered_missions_multi_type
-from fm.singleton_session import set_airport
 
 
 class MultiAirportBot(object):
@@ -19,7 +18,6 @@ class MultiAirportBot(object):
             # set_airport(current_airport)
             # current_airport.check()
 
-
     def get_missions(self):
         db_missions = db_get_ordered_missions_multi_type(210, '-reputation_per_hour')
         # if len(list_missions) < 84 or are_missions_expired(list_missions):
@@ -30,33 +28,33 @@ class MultiAirportBot(object):
         # if are_expired(db_missions)
         return db_missions
 
-    #         engines_nb_stock = current_airport.get_engines_supply()
-    #         engines_nb = get_engines_nb_to_change(ready_planes)
-    #         engines_to_buy = engines_nb - engines_nb_stock
-    #         if engines_to_buy > 0:
-    #             try:
-    #                 current_airport.buy_engines(engines_nb - engines_nb_stock)
-    #             except:
-    #                 logger.error('Could not buy engines')
-    #
-    #
-    #         # TODO: move fill kerozene to check airport? in any case out of bot_player
-    #         capacity = current_airport.get_kerozene_capacity()
-    #         stock = current_airport.get_kerozene_supply()
-    #         difference = capacity - stock
-    #         percentage_fuel = math.ceil((stock / float(capacity)) * 100)
-    #         if percentage_fuel < 70:
-    #             try:
-    #                 current_airport.buy_kerozene(difference)
-    #             except:
-    #                 logger.warning("Couldn't buy kerozene")
-    #                 # not working because the money is < 0
-    #                 money = current_airport.get_money()
-    #                 if money > 0:
-    #                     kerozene_litres = int(money / KEROZENE_PRICE)
-    #                     logger.info('trying to buy ' + str(kerozene_litres) + ' of kerozene')
-    #                     try:
-    #                         current_airport.buy_kerozene(kerozene_litres)
-    #                     except:
-    #                         logger.error("Really can't buy kerozene")
-    # force_save_session_to_db()
+        #         engines_nb_stock = current_airport.get_engines_supply()
+        #         engines_nb = get_engines_nb_to_change(ready_planes)
+        #         engines_to_buy = engines_nb - engines_nb_stock
+        #         if engines_to_buy > 0:
+        #             try:
+        #                 current_airport.buy_engines(engines_nb - engines_nb_stock)
+        #             except:
+        #                 logger.error('Could not buy engines')
+        #
+        #
+        #         # TODO: move fill kerosene to check airport? in any case out of bot_player
+        #         capacity = current_airport.get_kerosene_capacity()
+        #         stock = current_airport.get_kerosene_supply()
+        #         difference = capacity - stock
+        #         percentage_fuel = math.ceil((stock / float(capacity)) * 100)
+        #         if percentage_fuel < 70:
+        #             try:
+        #                 current_airport.buy_kerosene(difference)
+        #             except:
+        #                 logger.warning("Couldn't buy kerosene")
+        #                 # not working because the money is < 0
+        #                 money = current_airport.get_money()
+        #                 if money > 0:
+        #                     kerosene_litres = int(money / kerosene_PRICE)
+        #                     logger.info('trying to buy ' + str(kerosene_litres) + ' of kerosene')
+        #                     try:
+        #                         current_airport.buy_kerosene(kerosene_litres)
+        #                     except:
+        #                         logger.error("Really can't buy kerosene")
+        # force_save_session_to_db()

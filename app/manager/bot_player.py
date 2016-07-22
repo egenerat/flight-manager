@@ -32,7 +32,8 @@ class BotPlayer(object):
 
     @property
     def usable_planes(self):
-        return self.planes['commercial_ready_planes'] + self.planes['supersonic_ready_planes'] + self.planes['jet_ready_planes']
+        return self.planes['commercial_ready_planes'] + self.planes['supersonic_ready_planes'] + self.planes[
+            'jet_ready_planes']
 
     def launch_missions(self):
         mission_list = self.missions

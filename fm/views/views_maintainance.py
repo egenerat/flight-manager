@@ -14,4 +14,4 @@ def fill_kero(request):
 
 def start_fill_kero(request, taskqueue=None):
     taskqueue.add(url='/fm/fill_kero')
-    return HttpResponse('Start fill kerozene')
+    return HttpResponse('Start fill kerosene')
