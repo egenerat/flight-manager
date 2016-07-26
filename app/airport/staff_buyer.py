@@ -1,3 +1,5 @@
+# coding=utf-8
+
 from app.common.http_methods import post_request
 from app.common.target_urls import HIRE_FLIGHT_ATTENDANTS_URL, HIRE_PILOTS_URL
 

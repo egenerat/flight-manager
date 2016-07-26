@@ -1,3 +1,5 @@
+# coding=utf-8
+
 from app.planes.UsablePlane import UsablePlane
 from app.planes.SupersonicPlane import SupersonicPlane
 

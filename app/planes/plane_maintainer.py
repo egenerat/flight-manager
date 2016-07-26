@@ -1,3 +1,5 @@
+# coding=utf-8
+
 from app.common.as_exceptions import OutdatedPlanesListException
 from app.common.logger import logger
 from app.common.email_methods import notify

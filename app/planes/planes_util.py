@@ -1,3 +1,5 @@
+# coding=utf-8
+
 from app.common.constants import MAX_KM, KEROSENE_PRICE
 
 

@@ -1,3 +1,5 @@
+# coding=utf-8
+
 from fm.models import Mission
 
 

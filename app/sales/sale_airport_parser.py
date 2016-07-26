@@ -1,4 +1,5 @@
 # coding=utf-8
+
 import fm
 from app.airport.airports_methods import switch_to_airport
 from app.airport.airports_to_be_sold import build_airports_list, find_new_airports
