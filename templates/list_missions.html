@@ -1,0 +1,35 @@
+{% load template_math %}
+
+{% block body_content %}
+	<h2>Planes needed by type</h2>
+	{% for key, value in planes_needed.items %}
+		{{key}}: {{value}}<br/>
+	{% endfor %}
+
+	<h2>Missions accepted</h2>
+	<table style="width:100%">
+		<tr>
+			<th>Mission nb</th>
+			<th>Mission type</th>
+			<th>Country</th>
+			<th>Km</th>
+			<th>Reputation</th>
+			<th>Reputation per hour</th>
+			<th>Revenue</th>
+			<th>Revenue per hour</th>
+		</tr>
+
+		{% for i in missions%}
+			<tr>
+				<td>{{i}}</td>
+				<td>{{i.mission_type}}</td>
+				<td>{{i.country_nb}}</td>
+				<td>{{i.km_nb}}</td>
+				<td>{{i.reputation}}</td>
+				<td>{{i.reputation_per_hour}}</td>
+				<td>{{i.contract_amount}}</td>
+				<td>{{i.revenue_per_hour}}</td>
+			</tr>
+		{% endfor %}
+	</table>
+{% endblock %}
