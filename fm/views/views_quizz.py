@@ -1,3 +1,5 @@
+# coding=utf-8
+
 import re
 
 import fm
@@ -15,7 +17,7 @@ def quizz(request):
         get_request(URL_CHAT_ENABLE)
         r = get_request(URL_CHAT)
     content = get_quizz_body_content(r)
-    return render_to_response('quizz.html', {'chat':content})
+    return render_to_response('quizz.html', {'chat': content})
 
 
 def answer(request):

@@ -1,3 +1,5 @@
+# coding=utf-8
+
 from app.planes.CommercialPlane import CommercialPlane
 from app.planes.UsablePlane import UsablePlane
 

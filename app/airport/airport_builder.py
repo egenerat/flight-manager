@@ -1,3 +1,5 @@
+# coding=utf-8
+
 from app.airport.Airport import Airport
 from app.airport.Staff import Staff
 from app.airport.airports_parsers import get_country, get_money, get_kerosene_supply, get_kerosene_capacity, \

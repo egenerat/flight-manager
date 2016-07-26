@@ -1,3 +1,5 @@
+# coding=utf-8
+
 import fm
 from app.missions.mission_utils import planes_needed_by_category
 from django.shortcuts import render_to_response
