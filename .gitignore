@@ -68,3 +68,4 @@ settings.py
 app/common/target_urls.py
 app/common/site_strings.py
 app/common/target_strings.py
+app/common/target_parse_strings.py
