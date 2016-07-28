@@ -18,6 +18,9 @@ def force_save_session_to_db():
     session.data = a_string
     session.save()
 
+# TODO
+def read_saved_session_from_db():
+    return ASHttpSession.objects.all()[0]
 
 def save_to_file(content):
     # def save_to_file(content, filename):
