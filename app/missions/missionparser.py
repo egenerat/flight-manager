@@ -72,6 +72,6 @@ def get_ongoing_missions(html_page):
 def subtract(missions_list, ongoing_missions_id):
     result = []
     for i in missions_list:
-        if not i.mission_nb in ongoing_missions_id:
+        if i.mission_nb not in ongoing_missions_id:
             result.append(i)
     return result
