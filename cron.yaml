@@ -1,6 +1,6 @@
 cron:
 - description: refresh
-  url: /fm/start
+  url: /fm/start_parse_missions
   schedule: every monday 05:30
   timezone: Europe/Paris
 
@@ -15,6 +15,6 @@ cron:
   timezone: Europe/Paris
 
 - description: check if there are airports for sale
-  url: /fm/sale_airports
+  url: /fm/start_watcher
   schedule: every 20 minutes
   timezone: Europe/Paris
