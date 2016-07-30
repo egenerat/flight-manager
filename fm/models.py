@@ -1,3 +1,5 @@
+# coding=utf-8
+
 from django.db import models
 import base64
 
@@ -33,10 +35,9 @@ class AirportsToBeSold(models.Model):
 
 
 class ASHttpSession(models.Model):
-
     _data = models.TextField(
-            db_column='data',
-            blank=True)
+        db_column='data',
+        blank=True)
 
     def set_data(self, data):
         self._data = base64.encodestring(data)
