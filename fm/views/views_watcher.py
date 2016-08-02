@@ -3,5 +3,5 @@
 from app.sales.sale_airport_parser import sale_airports
 
 
-def view_watcher(request):
-    return sale_airports(request)
+def view_watcher():
+    sale_airports()
