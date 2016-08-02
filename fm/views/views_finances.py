@@ -6,7 +6,5 @@ from django.http import HttpResponse
 from google.appengine.api import taskqueue
 
 
-def taxes(request):
-    fm.singleton_session.session = request.session
+def view_taxes():
     money_before_taxes()
-    return HttpResponse('Taxes ok!')
