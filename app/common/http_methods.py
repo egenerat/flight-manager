@@ -26,7 +26,7 @@ def login():
 
 
 def wait():
-    time.sleep(0.5 + random.random())
+    time.sleep(0.3 + random.random()/2 )
 
 
 def is_connected(page):
