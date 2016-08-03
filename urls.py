@@ -11,4 +11,5 @@ urlpatterns = patterns('',
     #    {'authentication_form': AuthenticationForm,
     #    'template_name': 'guestbook/login.html',}),
     #(r'^accounts/logout/$', 'django.contrib.auth.views.logout',
+# url(r'^admin/', include(admin.site.urls)),
 )
