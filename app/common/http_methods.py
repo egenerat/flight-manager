@@ -19,7 +19,7 @@ from app.common.constants import USERNAME, PASSWORD, HEADER
 def authenticate_with_server():
     http_session = requests.session()
     http_session.get(LOGIN_PAGE, headers=HEADER)
-    data = {"pseudo": USERNAME, "passe": PASSWORD}
+    data = {"pseudo": USERNAME, "passe": PASSWORD, "souvenir": 1}
     http_session.post(POST_LOGIN_PAGE, data, headers=HEADER)
     logger.warning('LOGIN')
     save_session_in_cache(http_session)
