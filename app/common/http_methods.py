@@ -5,24 +5,26 @@ import re
 import time
 
 from app.common.logger import logger
+from app.common.session_manager import get_session, save_session_in_cache
 from app.common.target_strings import LOGOUT_STRING_1
 from app.common.target_strings import LOGOUT_STRING_2
 from app.common.target_urls import LOGIN_PAGE
 from app.common.target_urls import POST_LOGIN_PAGE
+from fm.databases.database_django import save_session_to_db
 from lib import requests
 from app.common import constants
 from app.common.constants import USERNAME, PASSWORD, HEADER
-from app.common.file_methods import read_login_file, save_to_file
 
 
-def login():
-    s = requests.session()
-    s.get(LOGIN_PAGE, headers=HEADER)
+def authenticate_with_server():
+    http_session = requests.session()
+    http_session.get(LOGIN_PAGE, headers=HEADER)
     data = {"pseudo": USERNAME, "passe": PASSWORD}
-    s.post(POST_LOGIN_PAGE, data, headers=HEADER)
-    save_to_file(s)
+    http_session.post(POST_LOGIN_PAGE, data, headers=HEADER)
     logger.warning('LOGIN')
-    return s
+    save_session_in_cache(http_session)
+    save_session_to_db()
+    return http_session
 
 
 def wait():
@@ -36,20 +38,20 @@ def is_connected(page):
 
 
 def __generic_request(method_name, address, post_data=None):
-    s = read_login_file()
-    if not s:
-        logger.warning('file not found')
-        s = login()
-    result = getattr(s, method_name)(address, data=post_data, headers=constants.HEADER).text
+    http_session = get_session()
+    if not http_session:
+        logger.warning('No previous session found')
+        http_session = authenticate_with_server()
+    result = getattr(http_session, method_name)(address, data=post_data, headers=constants.HEADER).text
     if not is_connected(result):
-        logger.warning('not connected')
-        s = login()
+        logger.warning('Session expired')
+        http_session = authenticate_with_server()
         try:
-            result = getattr(s, method_name)(address, data=post_data, headers=constants.HEADER).text
+            result = getattr(http_session, method_name)(address, data=post_data, headers=constants.HEADER).text
         except:
             wait()
-            result = getattr(s, method_name)(address, data=post_data, headers=constants.HEADER).text
-    save_to_file(s)
+            result = getattr(http_session, method_name)(address, data=post_data, headers=constants.HEADER).text
+    save_session_in_cache(http_session)
     wait()
     return result
 
