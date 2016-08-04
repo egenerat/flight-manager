@@ -14,7 +14,7 @@ from app.common.target_urls import AIRPORT_SHOP_URL, BANK_WITHDRAW_URL, AIRPORT_
     SHOP_USED_TUPOLEV_URL
 from app.planes.concorde_to_be_sold import get_concorde_value_list, generate_email_string
 from app.pm.pm_parser import __get_mp_nb, read_mp
-from fm.databases.database_django import db_get_all_airports_sold, db_remove_all_airports_sold, db_insert_object
+from fm.databases.database import db_get_all_airports_sold, db_remove_all_airports_sold, db_insert_object
 from fm.models import AirportsToBeSold
 
 

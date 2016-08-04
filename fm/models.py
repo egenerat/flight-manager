@@ -31,7 +31,6 @@ class AirportsToBeSold(models.Model):
     cash = models.SmallIntegerField()
     capacity = models.PositiveSmallIntegerField()
     reputation = models.PositiveSmallIntegerField()
-    buy_link = models.CharField(max_length=60, blank=True)
 
 
 class ASHttpSession(models.Model):

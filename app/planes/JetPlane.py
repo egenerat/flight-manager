@@ -1,3 +1,5 @@
+# coding=utf-8
+
 from app.common.target_urls import BUY_JET_URL
 from app.planes.RootPlane import RootPlane
 
@@ -14,14 +16,8 @@ class JetPlane(RootPlane):
     plane_range = 11019
     price = 2390000
     buy_url = BUY_JET_URL
+    plane_capacity = 19
+    speed = 922
 
     def __init__(self, **kwargs):
         super(JetPlane, self).__init__(**kwargs)
-
-    @classmethod
-    def get_plane_range(cls):
-        return cls.plane_range
-
-    @classmethod
-    def get_plane_capacity(cls):
-        return 19

@@ -1,15 +1,7 @@
+# coding=utf-8
+
 from app.planes.planes_util import get_plane_value
 from abc import ABCMeta
-
-
-class abstractstatic(classmethod):
-    __slots__ = ()
-
-    def __init__(self, function):
-        super(abstractstatic, self).__init__(function)
-        function.__isabstractmethod__ = True
-
-    __isabstractmethod__ = True
 
 
 class UsablePlane(object):
@@ -38,11 +30,3 @@ class UsablePlane(object):
 
     def __str__(self):
         return 'Plane {} {}/{}'.format(self.plane_id, self.current_engine_hours, self.maximum_engine_hours)
-
-    @abstractstatic
-    def get_plane_range(cls):
-        pass
-
-    @abstractstatic
-    def get_plane_capacity(cls):
-        pass
