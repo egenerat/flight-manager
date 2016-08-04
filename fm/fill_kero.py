@@ -1,13 +1,16 @@
+# coding=utf-8
+
 import re
 
 from app.airport.Airport import Airport
 from app.airport.airports_methods import get_other_airports_id, switch_to_airport, withdraw_from_alliance
 from app.common.http_methods import get_request, post_request
 from app.common.string_methods import get_amount, exception_if_not_contains
-from app.common.target_strings import SHOP_SUCCESSFUL_USED_KEROSENE
+from app.common.target_strings import SHOP_SUCCESSFUL_KEROSENE, SHOP_NO_SALE
 from app.common.target_urls import SHOP_USED_KEROSENE_URL, QUICK_REFILL_URL, SHOP_BUY_USED_KEROSENE_URL
 
 
+#todo refactor
 def fill_all_airports():
     other_airports = get_other_airports_id()
     # switch on all airports
@@ -66,11 +69,11 @@ def buy_market_kero(quantity, sale_id):
         'mon_champ': sale_id
      }
     response = post_request(SHOP_BUY_USED_KEROSENE_URL, body)
-    exception_if_not_contains(SHOP_SUCCESSFUL_USED_KEROSENE, response)
+    exception_if_not_contains(SHOP_SUCCESSFUL_KEROSENE, response)
 
 
 def extract_available_offers(page):
-    if not re.findall('Aucune vente en cours', page):
+    if not re.findall(SHOP_NO_SALE, page):
         result = re.findall('<td class="Brocante1"><input type="radio" name="mon_champ" value="\d+"></td>[.\S+\n\r\s]*?</tr>', page)
         sell_list = []
         for i in result:

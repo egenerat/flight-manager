@@ -19,21 +19,20 @@ def get_expiry_date():
 def subtract(missions_list, ongoing_missions_id):
     result = []
     for i in missions_list:
-        if not i.mission_nb in ongoing_missions_id:
+        if i.mission_nb not in ongoing_missions_id:
             result.append(i)
     return result
 
 
-def get_real_benefit(a_mission):
+def get_real_benefit(a_mission, plane_value):
     # TODO: to make it accurate:
     # - add the cost of maintenance
     # - add the time of change engines
     # add the part of the engines that may not be used
     # add the cost of staff
-    # TODO not only works for concorde!!!
     revenue = a_mission.contract_amount
-    total_hours = a_mission.time_before_departure + math.ceil(a_mission.km_nb / CONCORDE_SPEED) * 2
-    plane_use = ((a_mission.km_nb * 2) / 500000.0) * CONCORDE_PRICE
+    total_hours = a_mission.time_before_departure + math.ceil(a_mission.km_nb / plane_value) * 2
+    plane_use = ((a_mission.km_nb * 2) / 500000.0) * plane_value
     revenue -= plane_use
     revenue_per_hour = revenue / total_hours
     return int(revenue_per_hour)

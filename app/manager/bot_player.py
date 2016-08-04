@@ -1,4 +1,7 @@
+# coding=utf-8
+
 from app.airport.airport_builder import build_airport
+from app.airport.airport_checker import AirportChecker
 from app.common.http_methods import get_request
 from app.common.target_urls import STAFF_PAGE, AIRPORT_PAGE, MISSION_DASHBOARD, PLANES_PAGE
 from app.missions.missionparser import get_ongoing_missions, subtract
@@ -39,6 +42,10 @@ class BotPlayer(object):
         mission_list = self.missions
         ongoing_missions = self.ongoing_missions
         mission_list = subtract(mission_list, ongoing_missions)
+        checker = AirportChecker(self.airport, self.planes)
+        checker.fix_missing_planes()
         garage = PlaneGarage(self.usable_planes, self.airport)
+        garage.get_kerosene_quantity_needed()
+        garage.get_engines_needed_nb()
         garage.prepare_all_planes()
         accept_all_missions(mission_list, garage.ready_planes)
