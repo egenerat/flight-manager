@@ -1,8 +1,8 @@
-session = None
+# coding=utf-8
 
 airport = None
 
-session_to_as = None
+session_to_server = None
 
 
 def get_airport():
@@ -12,5 +12,6 @@ def get_airport():
 def set_airport(current_airport):
     global airport
     airport = current_airport
-    
+
+# TODO: replace, otherwise deployed on the platform
 local_mode = True
