@@ -1,3 +1,5 @@
+# coding=utf-8
+
 from abc import ABCMeta
 
 
@@ -9,3 +11,4 @@ class RootPlane(object):
         for field in mandatory_fields:
             setattr(self, field, kwargs.pop(field))
         self.required_maintenance = kwargs.pop('required_maintenance', False)
+        self.endlife = kwargs.pop('endlife', False)

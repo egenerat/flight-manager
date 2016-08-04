@@ -27,6 +27,7 @@ def represent_data(_):
     result = {}
     missions_list = []
     for i in country_list:
+        #TODO adapt
         missions_list = db_get_ordered_missions(i, CONCORDE_CAPACITY, CONCORDE_SPEED, 84, '-reputation_per_hour')
         total_reputation_36 = 0
         total_revenue_36 = 0

@@ -10,16 +10,18 @@ import unittest
 
 class TestParser(unittest.TestCase):
 
-    @classmethod
-    def setUpClass(cls):
-        cls.html_page = requests.get(YOUR_MISSIONS_URL).text
-
     def test_parser(self):
+        self.html_page = requests.get(YOUR_MISSIONS_URL).text
         self.missions_list = parse_all_missions_in_page(self.html_page, '1')
-        self.assertEqual(len(self.missions_list), 3)
+        self.assertEqual(len(self.missions_list), 10)
 
     def test_truc(self):
         a = parse_duration_before_departure(MISSION_DEPARTURE_TIME)
+
+    def test_jet_missions(self):
+        html_page2 = requests.get("http://localhost/AS/vos-missions-jet.html").text
+        missions_list = parse_all_missions_in_page(html_page2, '1')
+        self.assertEqual(len(missions_list), 11)
 
 if __name__ == '__main__':
     unittest.main()

@@ -1,7 +1,10 @@
 # coding=utf-8
 
-from app.sales.sale_airport_parser import sale_airports
+from app.sales.sale_airport_parser import get_sale_airports, get_mp
 
 
 def view_watcher():
-    sale_airports()
+    get_sale_airports()
+    get_mp()
+    # get_sale_value_concorde()
+
