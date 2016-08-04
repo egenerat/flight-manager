@@ -7,7 +7,7 @@ import datetime
 
 import math
 
-import fm
+import fm.singleton_session
 from app.airport.airport_builder import build_airport
 from app.common.logger import logger
 from app.common.http_methods import post_request, get_request

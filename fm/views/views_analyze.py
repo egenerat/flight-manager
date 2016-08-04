@@ -1,6 +1,5 @@
 # coding=utf-8
 
-import fm
 from app.missions.mission_utils import planes_needed_by_category
 from django.shortcuts import render_to_response
 
@@ -13,7 +12,7 @@ from app.common.string_methods import format_amount
 from app.common.target_urls import PLANES_PAGE
 from app.parsers.planesparser import build_planes_from_html
 from django.http import HttpResponse
-from fm.databases.database_django import db_get_ordered_missions, db_get_ordered_missions_multi_type
+from fm.databases.database_django import db_get_ordered_missions_multi_type
 
 
 def view_top_missions(_):
@@ -58,7 +57,6 @@ def represent_data(_):
 # TODO cleanup
 def planes_value(request):
     response = ''
-    fm.singleton_session.session = request.session
     other_airports = get_other_airports_id()
     for j in other_airports:
         value_sum = 0
