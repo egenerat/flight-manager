@@ -71,3 +71,4 @@ app/common/target_strings.py
 app/common/target_parse_strings.py
 app/common/target_parse_strings.py
 README_.md
+app/test/parsers/resources_planes_html.py
