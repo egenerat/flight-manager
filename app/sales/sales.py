@@ -1,7 +1,7 @@
 # coding=utf-8
 
 from app.airport.airports_methods import switch_to_airport
-from app.airport.airports_to_be_sold import build_airports_list, find_new_airports
+from app.airport.sale_airports_parser import build_airports_list, find_new_airports
 from app.common.logger import logger
 from app.common.constants import BANK_AIRPORT
 from app.common.constants import PRICE_AIRPORT_AUTOMATIC_PURCHASE
@@ -12,19 +12,9 @@ from app.common.string_methods import string_contains, format_amount
 from app.common.target_strings import SHOP_NO_AIRPORT_SALE
 from app.common.target_urls import AIRPORT_SHOP_URL, BANK_WITHDRAW_URL, AIRPORT_BUY_URL, ALLIANCE_PAGE, \
     SHOP_USED_TUPOLEV_URL
-from app.planes.concorde_to_be_sold import get_concorde_value_list, generate_email_string
 from app.pm.pm_parser import __get_mp_nb, read_mp
 from fm.databases.database import db_get_all_airports_sold, db_remove_all_airports_sold, db_insert_object
 from fm.models import AirportsToBeSold
-
-
-def get_sale_value_concorde():
-    concorde_list = get_concorde_value_list()
-    if len(concorde_list):
-        tmp = generate_email_string(concorde_list)
-        response = tmp['body']
-        concorde_nb = tmp['title']
-        notify('FM: {} Concorde for sale'.format(concorde_nb), response)
 
 
 def get_sale_value_tupolev():
