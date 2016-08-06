@@ -15,12 +15,13 @@ def __get_mp_nb(html_page):
 
 
 def get_pm_ids(pm_box_page):
-    page = get_request(PM_BOX_URL)
-    mp_ids = get_values_from_regex(PM_BOX_PM_IDS_REGEX, page)
+    pm_ids = get_values_from_regex(PM_BOX_PM_IDS_REGEX, pm_box_page)
+    return pm_ids
 
-def read_mp(html_page):
+def read_mp():
     result = ''
-    pm_ids = get_pm_ids(None)
+    pm_box_page = get_request(PM_BOX_URL)
+    pm_ids = get_pm_ids(pm_box_page)
     mp_nb = len(pm_ids)
     for pm_id in pm_ids:
         page = get_request(PM_OPEN_URL.format(pm_id=pm_id))

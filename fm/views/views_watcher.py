@@ -1,6 +1,6 @@
 # coding=utf-8
 
-from app.sales.sale_airport_parser import get_sale_airports, get_mp
+from app.sales.sales import get_sale_airports, get_mp
 
 
 def view_watcher():
