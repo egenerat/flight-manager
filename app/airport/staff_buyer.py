@@ -10,3 +10,7 @@ def hire_pilots(pilots_nb):
 
 def hire_flight_attendants(flight_attendants_nb):
     post_request(HIRE_FLIGHT_ATTENDANTS_URL, {'cq': flight_attendants_nb})
+
+def hire_mechanics(mechanics_nb):
+    #TODO to be implemented
+    pass

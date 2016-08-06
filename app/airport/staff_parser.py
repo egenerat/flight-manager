@@ -12,3 +12,8 @@ def get_pilots(page):
 def get_flight_attendants(page):
     total_flight_attendants, busy_flight_attendants = get_numeric_values_regex(FLIGHT_ATTENDANTS_REGEX, page)
     return total_flight_attendants, busy_flight_attendants
+
+
+def get_mechanics(page):
+    MECHANICS_REGEX = """<strong>(\d+)</strong> m&eacute;caniciens?</td>"""
+    return get_numeric_values_regex(MECHANICS_REGEX, page)[0]
