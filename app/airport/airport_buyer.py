@@ -8,6 +8,8 @@ from app.common.target_parse_strings import CONCORDE_PANEL_AVAILABLE_HTML, ALLIA
 from app.common.target_strings import SHOP_SUCCESSFUL_KEROSENE, SHOP_SUCCESSFUL_ENGINES
 from app.common.target_urls import ALLIANCE_TAKE_CONCORDE_URL, ALLIANCE_PAGE, ALLIANCE_CONCORDE_PANEL_URL, \
     SHOP_ENGINE_4_URL, SHOP_ENGINE_5_URL, SHOP_ENGINE_6_URL, SHOP_KEROSENE_URL, SHOP_BUY_KEROSENE_URL
+from app.planes import UsableSupersonicPlane
+from app.planes.SupersonicPlane import SupersonicPlane
 
 
 def buy_kerosene(litres):
@@ -32,7 +34,11 @@ def buy_missing_planes(plane_class, missing_units):
     # if amount_needed(missing_planes) < self.airport.money:
     #     for aircraft_type, missing_units in missing_planes.iteritems():
         for _ in range(missing_units):
+            if plane_class == SupersonicPlane:
+                if take_concorde_from_alliance():
+                    return
             page = get_request(plane_class.buy_url)
+            # todo check if successful
 
 
 # def buy_missing_planes(plane_class, number):
