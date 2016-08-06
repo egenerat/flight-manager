@@ -18,6 +18,7 @@ def get_pm_ids(pm_box_page):
     pm_ids = get_values_from_regex(PM_BOX_PM_IDS_REGEX, pm_box_page)
     return pm_ids
 
+
 def read_mp():
     result = ''
     pm_box_page = get_request(PM_BOX_URL)

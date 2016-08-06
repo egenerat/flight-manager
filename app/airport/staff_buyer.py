@@ -14,4 +14,3 @@ def hire_flight_attendants(flight_attendants_nb):
 
 def hire_mechanics(mechanics_nb):
     post_request(HIRE_MECHANICS_URL, {'cq': mechanics_nb})
-    pass

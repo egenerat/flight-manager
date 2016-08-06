@@ -3,7 +3,6 @@
 import datetime
 import math
 
-from app.common.constants import CONCORDE_SPEED, CONCORDE_PRICE
 
 MONDAY_DAY_OF_WEEK = 0
 

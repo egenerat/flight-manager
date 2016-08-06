@@ -34,7 +34,8 @@ def parse_duration_before_departure(html_mission):
 
 
 def parse_one_mission(mission_html, country_nb):
-    if not string_contains(MISSION_TOO_SHORT_HTML, mission_html):  # and not string_contains(u"vous n'avez pas d'avion correspondant &agrave; cette mission", mission_html):
+    if not string_contains(MISSION_TOO_SHORT_HTML,
+                           mission_html):  # and not string_contains(u"vous n'avez pas d'avion correspondant &agrave; cette mission", mission_html):
         contract_amount = int(''.join(get_value_from_regex(MISSION_AMOUNT_REGEX, mission_html).split(',')))
         time_before_departure = parse_duration_before_departure(mission_html)
         a_mission = {

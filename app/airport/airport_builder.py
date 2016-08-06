@@ -26,7 +26,7 @@ def build_staff(html_page):
     ready_pilots = total_pilots - busy_pilots
     total_flight_attendants, busy_flight_attendants = get_flight_attendants(html_page)
     ready_flight_attendants = total_flight_attendants - busy_flight_attendants
-    #TODO fill the correct value
+    # TODO fill the correct value
     total_mechanics = get_mechanics(html_page)
     return Staff(total_pilots=total_pilots, total_flight_attendants=total_flight_attendants,
                  total_mechanics=total_mechanics, ready_pilots=ready_pilots,

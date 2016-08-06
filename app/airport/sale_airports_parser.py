@@ -40,6 +40,7 @@ def build_airports_list(page):
 
 
 def __is_element_in_list(a_list, element):
+    # TODO dirty
     result = True
     try:
         a_list.index(element)
