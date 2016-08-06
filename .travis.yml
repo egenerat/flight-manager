@@ -5,4 +5,4 @@ install:
   - pip install requests
 script:
 # - python -m unittest app.test.parsers.test_parsers
-  - python -m unittest discover app
+#  - python -m unittest discover app
