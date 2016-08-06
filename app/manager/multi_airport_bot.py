@@ -32,34 +32,3 @@ class MultiAirportBot(object):
         #                                             '-reputation_per_hour')
         # if are_expired(db_missions)
         return db_missions
-
-        #         engines_nb_stock = current_airport.get_engines_supply()
-        #         engines_nb = get_engines_nb_to_change(ready_planes)
-        #         engines_to_buy = engines_nb - engines_nb_stock
-        #         if engines_to_buy > 0:
-        #             try:
-        #                 current_airport.buy_engines(engines_nb - engines_nb_stock)
-        #             except:
-        #                 logger.error('Could not buy engines')
-        #
-        #
-        #         # TODO: move fill kerosene to check airport? in any case out of bot_player
-        #         capacity = current_airport.get_kerosene_capacity()
-        #         stock = current_airport.get_kerosene_supply()
-        #         difference = capacity - stock
-        #         percentage_fuel = math.ceil((stock / float(capacity)) * 100)
-        #         if percentage_fuel < 70:
-        #             try:
-        #                 current_airport.buy_kerosene(difference)
-        #             except:
-        #                 logger.warning("Couldn't buy kerosene")
-        #                 # not working because the money is < 0
-        #                 money = current_airport.get_money()
-        #                 if money > 0:
-        #                     kerosene_litres = int(money / kerosene_PRICE)
-        #                     logger.info('trying to buy ' + str(kerosene_litres) + ' of kerosene')
-        #                     try:
-        #                         current_airport.buy_kerosene(kerosene_litres)
-        #                     except:
-        #                         logger.error("Really can't buy kerosene")
-        # force_save_session_to_db()
