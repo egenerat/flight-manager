@@ -1,7 +1,7 @@
 # coding=utf-8
 
 from app.airport.airport_buyer import buy_missing_planes, buy_kerosene, buy_engines
-from app.airport.airport_config import planes_config_factory, AirportConfig
+from app.airport.airport_config import AirportConfig
 from app.airport.staff_buyer import hire_flight_attendants, hire_pilots
 from app.airport.staff_buyer import hire_mechanics
 from app.planes.CommercialPlane import CommercialPlane
@@ -23,7 +23,7 @@ class AirportChecker(object):
         self.airport_config = AirportConfig(self.airport)
 
     def check_missing_planes(self):
-        config = planes_config_factory(self.airport)
+        config = self.airport_config.planes_config
         return {
             CommercialPlane: config.commercials_nb - len(self.sorted_planes_dict['commercial_planes']),
             JetPlane: config.jets_nb - len(self.sorted_planes_dict['jet_planes']),
@@ -57,9 +57,9 @@ class AirportChecker(object):
         if self.airport.engines_supply['5'] < engines_5_nb['min']:
             qty_needed = engines_5_nb['max'] - self.airport.engines_supply['5']
             buy_engines(qty_needed, '5')
-        engines_6_nb = self.airport_config.resources_config.engines_6_nb['6']
+        engines_6_nb = self.airport_config.resources_config.engines_6_nb
         if self.airport.engines_supply['6'] < engines_6_nb['min']:
-            qty_needed = engines_6_nb['max'] - self.airport.engines_supply
+            qty_needed = engines_6_nb['max'] - self.airport.engines_supply['6']
             buy_engines(qty_needed, '6')
 
     def fix(self):
