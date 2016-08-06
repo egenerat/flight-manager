@@ -3,6 +3,7 @@
 import datetime
 import re
 from app.common.logger import logger
+from app.common.target_parse_strings import AMOUNT_REGEX
 
 MULTI_SPACE = '[\S+\n\r\s]+'
 
@@ -40,8 +41,10 @@ def get_value_from_regex(regex, string):
     try:
         result = get_values_from_regex(regex, string)[0]
     except:
-        logger.error('String not found: regex: ' + regex + ' in string: ' + string)
-        raise Exception('String not found: regex: ' + regex + ' in string: ' + string)
+        message = 'String not found: regex: {} in string: {}'.format(regex, string)
+        logger.error(message)
+        # TODO replace with more specific exception
+        raise Exception(message)
     return result
 
 
@@ -50,7 +53,7 @@ def get_int_from_regex(regex, string):
 
 
 def get_amount(string):
-    return get_amount_from_regex(u'(-?)(?:(\d+),)?(?:(\d+),)?(?:(\d+),)?(\d+)', string)
+    return get_amount_from_regex(AMOUNT_REGEX, string)
 
 
 # direct call deprecated
