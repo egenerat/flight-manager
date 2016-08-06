@@ -10,7 +10,7 @@ from app.common.constants import CONCORDE_CAPACITY, CONCORDE_SPEED
 from app.common.http_methods import get_request
 from app.common.string_methods import format_amount
 from app.common.target_urls import PLANES_PAGE
-from app.parsers.planesparser import build_planes_from_html
+from app.parsers.planes_parser import build_planes_from_html
 from django.http import HttpResponse
 from fm.databases.database_django import db_get_ordered_missions_multi_type
 
