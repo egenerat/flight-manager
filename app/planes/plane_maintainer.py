@@ -49,7 +49,8 @@ class PlaneMaintainer(object):
                 notify('FM : could not send to maintenance', page)
             else:
                 # TODO case plane maintenance was over, should continue iteration over planes, refresh and run again
-                raise OutdatedPlanesListException()
+                logger.warning("Outdated plane list (not an exception anymore)")
+                # raise OutdatedPlanesListException()
         self.__ready = False
 
     def prepare_plane(self):
