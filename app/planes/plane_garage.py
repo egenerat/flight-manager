@@ -12,7 +12,6 @@ class PlaneGarage(object):
         temp_ready_planes = []
         for i in self.plane_list:
             is_ready = PlaneMaintainer(i, self.airport).prepare_plane()
-            # if returns false, remove from the list
             if is_ready:
                 temp_ready_planes.append(i)
         self.ready_planes = temp_ready_planes
@@ -33,14 +32,3 @@ class PlaneGarage(object):
             if not i.is_fuel_full():
                 result += i.fuel_capacity - i.kerosene
         return result
-
-    #TODO
-    # def buy_missing_planes(self):
-    #     full_planes_nb = self.get_planes_capacity()
-    #     missing_planes = full_planes_nb - self.get_planes_nb()
-    #     if missing_planes > 0:
-    #         try:
-    #             self.buy_missing_concorde(missing_planes)
-    #         except Exception as e:
-    #             logger.error('Could not buy Concorde !')
-    #             notify('Errror AS : Could not buy a Concorde {}\nCould not buy a concorde\n{}'.format(get_airport().get_airport_name(), unicode(e)))

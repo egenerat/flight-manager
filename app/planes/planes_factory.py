@@ -6,18 +6,7 @@ from app.planes.UsableCommercialPlane import UsableCommercialPlane
 from app.planes.UsableJetPlane import UsableJetPlane
 from app.planes.UsableSupersonicPlane import UsableSupersonicPlane
 from app.planes.SupersonicPlane import SupersonicPlane
-
-
-def is_supersonic(string_model):
-    return string_model in [u'Concorde', u'Tu-144']
-
-
-def is_jet(string_model):
-    return string_model in [u'Falcon 7X']
-
-
-def is_regular_plane(string_model):
-    return string_model in [u'B777-200ER']
+from app.planes.planes_util import is_jet, is_regular_plane, is_supersonic
 
 
 def usable_planes_factory(plane_model):
