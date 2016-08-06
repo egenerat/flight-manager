@@ -6,7 +6,7 @@ from app.common.logger import logger
 from app.common.http_methods import get_request
 from app.common.target_urls import STAFF_PAGE, AIRPORT_PAGE, MISSION_DASHBOARD, PLANES_PAGE
 from app.missions.missionparser import get_ongoing_missions, subtract
-from app.parsers.planesparser import build_planes_from_html
+from app.parsers.planes_parser import build_planes_from_html
 from app.planes.plane_garage import PlaneGarage
 from app.planes.planes_util2 import split_planes_list_by_type
 from fm.mission_handler import accept_all_missions

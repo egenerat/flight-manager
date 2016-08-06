@@ -16,4 +16,3 @@ def get_session():
 
 def save_session_in_cache(session):
     fm.singleton_session.session_to_server = session
-
