@@ -35,4 +35,4 @@ def get_planes_capacity(page):
 
 
 def get_airport_name(page):
-    return get_value_from_regex(AIRPORT_NAME_REGEX, page)
+    return get_value_from_regex(AIRPORT_NAME_REGEX, page).encode('utf-8')
