@@ -1,7 +1,7 @@
 # coding=utf-8
 
-from app.common.string_methods import get_numeric_values_regex
-from app.common.target_parse_strings import FLIGHT_ATTENDANTS_REGEX, PILOTS_REGEX
+from app.common.string_methods import get_numeric_values_regex, get_int_from_regex
+from app.common.target_parse_strings import FLIGHT_ATTENDANTS_REGEX, PILOTS_REGEX, MECHANICS_REGEX
 
 
 def get_pilots(page):
@@ -15,5 +15,4 @@ def get_flight_attendants(page):
 
 
 def get_mechanics(page):
-    MECHANICS_REGEX = """<strong>(\d+)</strong> m&eacute;caniciens?</td>"""
-    return get_numeric_values_regex(MECHANICS_REGEX, page)[0]
+    return get_int_from_regex(MECHANICS_REGEX, page)
