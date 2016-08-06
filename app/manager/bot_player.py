@@ -40,14 +40,21 @@ class BotPlayer(object):
         return self.planes['commercial_ready_planes'] + self.planes['supersonic_ready_planes'] + self.planes[
             'jet_ready_planes']
 
+    @property
+    def maintenance_needed_planes(self):
+        temp = self.planes['commercial_planes'] + self.planes['supersonic_planes'] + self.planes[
+            'jet_planes']
+        return [plane for plane in temp if plane.required_maintenance or plane.endlife]
+
     def launch_missions(self):
         mission_list = self.missions
         ongoing_missions = self.ongoing_missions
         mission_list = subtract(mission_list, ongoing_missions)
         checker = AirportChecker(self.airport, self.planes)
         checker.fix()
-        garage = PlaneGarage(self.usable_planes, self.airport)
-        garage.get_kerosene_quantity_needed()
-        garage.get_engines_needed_nb()
+        garage = PlaneGarage(self.usable_planes + self.maintenance_needed_planes, self.airport)
+        # garage.get_kerosene_quantity_needed()
+        # garage.get_engines_needed_nb()
+        #TODO reparse after buying new planes
         garage.prepare_all_planes()
         accept_all_missions(mission_list, garage.ready_planes)

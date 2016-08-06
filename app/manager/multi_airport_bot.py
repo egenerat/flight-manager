@@ -13,8 +13,7 @@ class MultiAirportBot(object):
         other_airports = get_other_airports_id()
         other_airports = filter_airports(other_airports)
         # TODO mock
-        # other_airports = ['125146', '133332'] # 1
-        # other_airports = ['133332'] # 2
+        # other_airports = ['122791']
         for airport_id in other_airports:
             switch_to_airport(airport_id)
             BotPlayer(self.missions).launch_missions()
