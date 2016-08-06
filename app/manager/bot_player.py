@@ -2,7 +2,7 @@
 
 from app.airport.airport_builder import build_airport
 from app.airport.airport_checker import AirportChecker
-from app.common import logger
+from app.common.logger import logger
 from app.common.http_methods import get_request
 from app.common.target_urls import STAFF_PAGE, AIRPORT_PAGE, MISSION_DASHBOARD, PLANES_PAGE
 from app.missions.missionparser import get_ongoing_missions, subtract
