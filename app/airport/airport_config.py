@@ -51,7 +51,7 @@ def staff_config_factory(airport_capacity):
         # 54: StaffConfig(pilots_nb=1, flight_attendants_nb=2, mechanics=1),
         84: StaffConfig(pilots_nb=180, flight_attendants_nb=160, mechanics_nb=40),
         # 114: StaffConfig(pilots_nb=1, flight_attendants_nb=2, mechanics=1),
-        200: StaffConfig(pilots_nb=430, flight_attendants_nb=260, mechanics_nb=120),
+        200: StaffConfig(pilots_nb=420, flight_attendants_nb=260, mechanics_nb=120),
     }[airport_capacity]
 
 
