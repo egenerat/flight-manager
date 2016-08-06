@@ -55,6 +55,6 @@ class BotPlayer(object):
         garage = PlaneGarage(self.usable_planes + self.maintenance_needed_planes, self.airport)
         # garage.get_kerosene_quantity_needed()
         # garage.get_engines_needed_nb()
-        #TODO reparse after buying new planes
+        # TODO reparse after buying new planes
         garage.prepare_all_planes()
         accept_all_missions(mission_list, garage.ready_planes)

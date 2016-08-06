@@ -5,10 +5,9 @@ from app.planes.RootPlane import RootPlane
 
 
 class CommercialPlane(RootPlane):
-
     engines_nb = 2
     limit_change_engines = 50
-    #TODO only if engines upgraded
+    # TODO only if engines upgraded
     maximum_engine_hours = 75
     consumption_per_hour = 7007
     fuel_capacity = 171170

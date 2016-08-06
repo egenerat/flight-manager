@@ -28,7 +28,7 @@ def authenticate_with_server():
 
 
 def wait():
-    time.sleep(0.3 + random.random()/2 )
+    time.sleep(0.3 + random.random() / 2)
 
 
 def is_connected(page):

@@ -1,14 +1,11 @@
 # coding=utf-8
-
-# from app.airport.airport_checker import amount_needed
 from app.airport.airports_methods import withdraw_from_alliance
 from app.common.http_methods import get_request, post_request
 from app.common.string_methods import exception_if_not_contains, get_values_from_regex, string_contains
 from app.common.target_parse_strings import CONCORDE_PANEL_AVAILABLE_HTML, ALLIANCE_CONCORDE_PATTERN_HTML
-from app.common.target_strings import SHOP_SUCCESSFUL_KEROSENE, SHOP_SUCCESSFUL_ENGINES
+from app.common.target_strings import SHOP_SUCCESSFUL_KEROSENE, SHOP_SUCCESSFUL_ENGINES, SHOP_SUCCESSFUL_PLANES
 from app.common.target_urls import ALLIANCE_TAKE_CONCORDE_URL, ALLIANCE_PAGE, ALLIANCE_CONCORDE_PANEL_URL, \
     SHOP_ENGINE_4_URL, SHOP_ENGINE_5_URL, SHOP_ENGINE_6_URL, SHOP_KEROSENE_URL, SHOP_BUY_KEROSENE_URL
-from app.planes import UsableSupersonicPlane
 from app.planes.SupersonicPlane import SupersonicPlane
 
 
@@ -33,28 +30,20 @@ def buy_engines(engines_nb, engine_type):
 def buy_missing_planes(plane_class, missing_units):
     # if amount_needed(missing_planes) < self.airport.money:
     #     for aircraft_type, missing_units in missing_planes.iteritems():
-        for _ in range(missing_units):
-            if plane_class == SupersonicPlane:
-                if take_concorde_from_alliance():
-                    return
-            page = get_request(plane_class.buy_url)
-            # todo check if successful
+    for _ in range(missing_units):
+        if plane_class == SupersonicPlane:
+            if take_concorde_from_alliance():
+                return
+        page = get_request(plane_class.buy_url)
+        try:
+            exception_if_not_contains(SHOP_SUCCESSFUL_PLANES, page, 'Could not buy a plane')
+        except:
+            withdraw_from_alliance(plane_class.price)
+            # TODO be careful, the account may be < 0 before starting
+            exception_if_not_contains(SHOP_SUCCESSFUL_PLANES, page, 'Could not buy a plane')
 
 
-# def buy_missing_planes(plane_class, number):
-#     for _ in range(number):
-#         if take_concorde_from_alliance():
-#             pass
-#         else:
-#             page = get_request(plane_class.buy_url)
-#             try:
-#                 exception_if_not_contains(SHOP_SUCCESSFUL_PLANES, page, 'Could not buy a plane')
-#             except:
-#                 withdraw_from_alliance(plane_class.price)
-#                 page = get_request(plane_class.buy_url)
-#                 exception_if_not_contains(SHOP_SUCCESSFUL_PLANES, page, 'Could not buy a plane')
-
-#TODO adapt all planes
+# TODO adapt all planes
 def take_concorde_from_alliance():
     page = get_request(ALLIANCE_PAGE)
     if string_contains(CONCORDE_PANEL_AVAILABLE_HTML, page):

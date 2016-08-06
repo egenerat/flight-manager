@@ -37,7 +37,6 @@ def get_values_from_regex(regex, string):
 
 
 def get_value_from_regex(regex, string):
-    result = None
     try:
         result = get_values_from_regex(regex, string)[0]
     except:

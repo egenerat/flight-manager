@@ -22,7 +22,7 @@ class MultiAirportBot(object):
             # set_airport(current_airport)
             # current_airport.check()
 
-    #TODO
+    # TODO
     def get_missions(self):
         db_missions = db_get_ordered_missions_multi_type(210, '-reputation_per_hour')
         # if len(list_missions) < 84 or are_missions_expired(list_missions):

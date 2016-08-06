@@ -1,9 +1,10 @@
 import requests
 
 from app.common.target_urls import YOUR_PLANES_URL
-from app.parsers.planes_parser import is_regular_plane, build_planes_from_html
+from app.parsers.planes_parser import build_planes_from_html
 import unittest
 
+from app.planes.planes_util import is_regular_plane
 from app.planes.planes_util2 import split_planes_list_by_type
 
 
