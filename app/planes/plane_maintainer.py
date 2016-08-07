@@ -33,6 +33,7 @@ class PlaneMaintainer(object):
 
     def __scrap_plane(self):
         get_request(SCRAP_PLANE_URL.format(plane_id=self.plane.plane_id))
+        self.__ready = False
 
     def __do_maintenance(self):
         page = None
@@ -55,6 +56,7 @@ class PlaneMaintainer(object):
     def prepare_plane(self):
         if self.plane.endlife:
             self.__scrap_plane()
+            return False
         if self.plane.required_maintenance:
             self.__do_maintenance()
             return False
