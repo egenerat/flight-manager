@@ -13,7 +13,7 @@ def buy_kerosene(litres):
     page = get_request(SHOP_KEROSENE_URL)
     # TODO check if there is kerosene available
     page = post_request(SHOP_BUY_KEROSENE_URL, {'cq': str(litres)})
-    exception_if_not_contains(SHOP_SUCCESSFUL_KEROSENE, page, 'Error : could not buy kerosene')
+    # exception_if_not_contains(SHOP_SUCCESSFUL_KEROSENE, page, 'Error : could not buy kerosene')
 
 
 def buy_engines(engines_nb, engine_type):
@@ -23,7 +23,7 @@ def buy_engines(engines_nb, engine_type):
         '6': SHOP_ENGINE_6_URL,
     }[engine_type]
     page = post_request(url, {'cq': str(engines_nb)})
-    exception_if_not_contains(SHOP_SUCCESSFUL_ENGINES, page, 'Could not buy engines')
+    # exception_if_not_contains(SHOP_SUCCESSFUL_ENGINES, page, 'Could not buy engines')
 
 
 # TODO merge with fix_missing_planes
@@ -40,7 +40,7 @@ def buy_missing_planes(plane_class, missing_units):
         except:
             withdraw_from_alliance(plane_class.price)
             # TODO be careful, the account may be < 0 before starting
-            exception_if_not_contains(SHOP_SUCCESSFUL_PLANES, page, 'Could not buy a plane')
+            # exception_if_not_contains(SHOP_SUCCESSFUL_PLANES, page, 'Could not buy a plane')
 
 
 # TODO adapt all planes
