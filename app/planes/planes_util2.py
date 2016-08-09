@@ -31,3 +31,10 @@ def split_planes_list_by_type(planes_list):
         if isinstance(i, UsableJetPlane) and i.ready:
             result['jet_ready_planes'].append(i)
     return result
+
+
+def unsort_planes(planes_dict):
+    result = []
+    for value in planes_dict.values():
+        result += value
+    return result

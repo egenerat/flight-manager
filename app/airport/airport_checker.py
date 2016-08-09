@@ -7,6 +7,7 @@ from app.airport.staff_buyer import hire_mechanics
 from app.planes.CommercialPlane import CommercialPlane
 from app.planes.JetPlane import JetPlane
 from app.planes.SupersonicPlane import SupersonicPlane
+from app.planes.planes_util2 import unsort_planes
 
 
 def amount_needed(missing_planes):
@@ -32,7 +33,7 @@ class AirportChecker(object):
 
     def fix_missing_planes(self):
         for plane_class, missing_units in self.check_missing_planes().iteritems():
-            if self.airport.planes_capacity > len(self.sorted_planes_dict.values()) and missing_units > 0:
+            if self.airport.planes_capacity > len(unsort_planes(self.sorted_planes_dict)) and missing_units > 0:
                 buy_missing_planes(plane_class, missing_units)
 
     def fix_missing_staff(self):
