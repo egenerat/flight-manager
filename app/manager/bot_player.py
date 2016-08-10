@@ -42,6 +42,7 @@ class BotPlayer(object):
 
     @property
     def maintenance_needed_planes(self):
+        # should be improved to select only planes with status I
         temp = self.planes['commercial_planes'] + self.planes['supersonic_planes'] + self.planes[
             'jet_planes']
         return [plane for plane in temp if plane.required_maintenance or plane.endlife]
@@ -52,6 +53,8 @@ class BotPlayer(object):
         mission_list = subtract(mission_list, ongoing_missions)
         checker = AirportChecker(self.airport, self.planes)
         checker.fix()
+
+        # be careful, also send planes to maintainance with status A
         garage = PlaneGarage(self.usable_planes + self.maintenance_needed_planes, self.airport)
         # garage.get_kerosene_quantity_needed()
         # garage.get_engines_needed_nb()
