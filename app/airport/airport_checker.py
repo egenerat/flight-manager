@@ -32,9 +32,10 @@ class AirportChecker(object):
         }
 
     def fix_missing_planes(self):
-        for plane_class, missing_units in self.check_missing_planes().iteritems():
-            if self.airport.planes_capacity > len(unsort_planes(self.sorted_planes_dict)) and missing_units > 0:
-                buy_missing_planes(plane_class, missing_units)
+        if self.airport.planes_capacity > len(unsort_planes(self.sorted_planes_dict)):
+            for plane_class, missing_units in self.check_missing_planes().iteritems():
+                if missing_units > 0:
+                    buy_missing_planes(plane_class, missing_units)
 
     def fix_missing_staff(self):
         current_staff = self.airport.staff
