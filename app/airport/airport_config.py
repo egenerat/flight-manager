@@ -47,11 +47,12 @@ def staff_config_factory(airport_capacity):
         9: StaffConfig(pilots_nb=20, flight_attendants_nb=16, mechanics_nb=16),
         # 18: StaffConfig(pilots_nb=1, flight_attendants_nb=2, mechanics=1),
         # 27: StaffConfig(pilots_nb=1, flight_attendants_nb=2, mechanics=1),
-        36: StaffConfig(pilots_nb=72, flight_attendants_nb=66, mechanics_nb=32),
+        36: StaffConfig(pilots_nb=80, flight_attendants_nb=55, mechanics_nb=32),
         # 54: StaffConfig(pilots_nb=1, flight_attendants_nb=2, mechanics=1),
-        84: StaffConfig(pilots_nb=180, flight_attendants_nb=160, mechanics_nb=40),
+        84: StaffConfig(pilots_nb=187, flight_attendants_nb=110, mechanics_nb=40),
+        # 185 and 106 in perfect configuration
         # 114: StaffConfig(pilots_nb=1, flight_attendants_nb=2, mechanics=1),
-        200: StaffConfig(pilots_nb=420, flight_attendants_nb=260, mechanics_nb=120),
+        200: StaffConfig(pilots_nb=425, flight_attendants_nb=255, mechanics_nb=120),
     }[airport_capacity]
 
 
