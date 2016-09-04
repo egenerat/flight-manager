@@ -1,8 +1,10 @@
 # coding=utf-8
 
 from app.airport.airports_methods import get_other_airports_id, filter_airports, switch_to_airport
+from app.common.logger import logger
 from app.manager.bot_player import BotPlayer
 from fm.databases.database_django import db_get_ordered_missions_multi_type
+from fm.mission_handler import are_missions_expired, parse_all_missions
 
 
 class MultiAirportBot(object):
@@ -25,10 +27,8 @@ class MultiAirportBot(object):
     # TODO
     def get_missions(self):
         db_missions = db_get_ordered_missions_multi_type(210, '-reputation_per_hour')
-        # if len(list_missions) < 84 or are_missions_expired(list_missions):
-        #     logger.error('Refresh missions')
-        #     update_missions()
-        #     list_missions = db_get_ordered_missions('Suisse', CONCORDE_SPEED, CONCORDE_CAPACITY, MAX_PLANES_NB,
-        #                                             '-reputation_per_hour')
-        # if are_expired(db_missions)
+        if len(db_missions) < 200 or are_missions_expired(db_missions):
+            logger.warning('Refresh missions')
+            parse_all_missions()
+            db_missions = db_get_ordered_missions_multi_type(210, '-reputation_per_hour')
         return db_missions
