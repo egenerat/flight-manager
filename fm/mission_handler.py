@@ -56,8 +56,8 @@ def extract_bonus_from_page(page):
 
 def are_missions_expired(missions):
     # TODO improve environment handling
-    if fm.singleton_session.local_mode:
-        return False
+    # if fm.singleton_session.local_mode:
+    #     return False
     expiry_date = missions[0].expiry_date
     today = datetime.datetime.now()
     return (expiry_date - today) <= datetime.timedelta(0)
