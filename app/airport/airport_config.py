@@ -19,16 +19,14 @@ class PlanesConfig(object):
 def planes_config_factory(airport_capacity):
     return {
         3: PlanesConfig(supersonics_nb=3),
-        9: PlanesConfig(supersonics_nb=7, jets_nb=2),
-        18: PlanesConfig(supersonics_nb=14, jets_nb=4),
-        27: PlanesConfig(supersonics_nb=16, jets_nb=11),
-        36: PlanesConfig(supersonics_nb=19, jets_nb=17),
-        54: PlanesConfig(supersonics_nb=24, jets_nb=30),
-        84: PlanesConfig(supersonics_nb=30, jets_nb=54),
-        114: PlanesConfig(supersonics_nb=43, jets_nb=71),
-        # theory supersonics_nb=64, jets_nb=136
-        # in practice, with 2 planes at the same time on the same mission
-        200: PlanesConfig(supersonics_nb=60, jets_nb=140),
+        9: PlanesConfig(supersonics_nb=9),
+        18: PlanesConfig(supersonics_nb=18),
+        27: PlanesConfig(supersonics_nb=27),
+        36: PlanesConfig(supersonics_nb=36),
+        54: PlanesConfig(supersonics_nb=54),
+        84: PlanesConfig(supersonics_nb=84),
+        114: PlanesConfig(supersonics_nb=98, jets_nb=16),
+        200: PlanesConfig(supersonics_nb=108, jets_nb=92),
     }[airport_capacity]
 
 
@@ -45,14 +43,13 @@ def staff_config_factory(airport_capacity):
     return {
         3: StaffConfig(pilots_nb=6, flight_attendants_nb=8, mechanics_nb=8),
         9: StaffConfig(pilots_nb=20, flight_attendants_nb=16, mechanics_nb=16),
-        # 18: StaffConfig(pilots_nb=1, flight_attendants_nb=2, mechanics=1),
-        # 27: StaffConfig(pilots_nb=1, flight_attendants_nb=2, mechanics=1),
-        36: StaffConfig(pilots_nb=80, flight_attendants_nb=55, mechanics_nb=32),
-        # 54: StaffConfig(pilots_nb=1, flight_attendants_nb=2, mechanics=1),
-        84: StaffConfig(pilots_nb=187, flight_attendants_nb=110, mechanics_nb=40),
-        # 185 and 106 in perfect configuration
-        # 114: StaffConfig(pilots_nb=1, flight_attendants_nb=2, mechanics=1),
-        200: StaffConfig(pilots_nb=425, flight_attendants_nb=255, mechanics_nb=120),
+        18: StaffConfig(pilots_nb=20, flight_attendants_nb=16, mechanics_nb=16),
+        27: StaffConfig(pilots_nb=20, flight_attendants_nb=16, mechanics_nb=16),
+        36: StaffConfig(pilots_nb=85, flight_attendants_nb=56, mechanics_nb=32),
+        54: StaffConfig(pilots_nb=85, flight_attendants_nb=56, mechanics_nb=32),
+        84: StaffConfig(pilots_nb=190, flight_attendants_nb=115, mechanics_nb=40),
+        114: StaffConfig(pilots_nb=190, flight_attendants_nb=115, mechanics_nb=40),
+        200: StaffConfig(pilots_nb=425, flight_attendants_nb=260, mechanics_nb=120),
     }[airport_capacity]
 
 
