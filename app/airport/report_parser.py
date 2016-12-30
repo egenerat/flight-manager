@@ -1,7 +1,5 @@
 # -*- coding: iso-8859-1 -*-
-from app.common.string_methods import everything_between, get_int_from_regex, get_amount_from_regex, get_amount, \
-    get_value_from_regex
-from app.common.target_parse_strings import AMOUNT_REGEX
+from app.common.string_methods import everything_between, get_amount, get_value_from_regex
 
 
 def extract_daily_report(full_html_page):
