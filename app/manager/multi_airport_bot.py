@@ -14,15 +14,16 @@ class MultiAirportBot(object):
     def start(self):
         other_airports = get_other_airports_id()
         other_airports = filter_airports(other_airports)
-        # TODO mock
         # other_airports = ['122791']
         for airport_id in other_airports:
             switch_to_airport(airport_id)
-            BotPlayer(self.missions).launch_missions()
-            #
+            bot = BotPlayer(self.missions)
+            bot.launch_missions()
+            bot.check_report()
+
+            # TODO save the current airport in the singleton/session
             # current_airport = Airport()
             # set_airport(current_airport)
-            # current_airport.check()
 
     # TODO
     def get_missions(self):

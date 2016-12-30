@@ -2,9 +2,11 @@
 
 from app.airport.airport_builder import build_airport
 from app.airport.airport_checker import AirportChecker
+from app.airport.report_parser import report_parser
+from app.common.email_methods import notify
 from app.common.logger import logger
 from app.common.http_methods import get_request
-from app.common.target_urls import STAFF_PAGE, AIRPORT_PAGE, MISSION_DASHBOARD, PLANES_PAGE
+from app.common.target_urls import STAFF_PAGE, AIRPORT_PAGE, MISSION_DASHBOARD, PLANES_PAGE, AIRPORT_REPORT
 from app.missions.missionparser import get_ongoing_missions, subtract
 from app.parsers.planes_parser import build_planes_from_html
 from app.planes.plane_garage import PlaneGarage
@@ -17,6 +19,7 @@ class BotPlayer(object):
         self.airport = self.build_airport()
         self.planes = self.build_planes()
         self.ongoing_missions = self.get_ongoing_missions()
+        self.report = self.build_report()
         self.missions = missions
         logger.info('Airport {}'.format(self.airport.airport_name))
 
@@ -34,6 +37,10 @@ class BotPlayer(object):
     def get_ongoing_missions(self):
         dashboard = get_request(MISSION_DASHBOARD)
         return get_ongoing_missions(dashboard)
+
+    def build_report(self):
+        report_html = get_request(AIRPORT_REPORT)
+        return report_parser(report_html)
 
     @property
     def usable_planes(self):
@@ -61,3 +68,10 @@ class BotPlayer(object):
         # TODO reparse after buying new planes
         garage.prepare_all_planes()
         accept_all_missions(mission_list, garage.ready_planes)
+
+    def check_report(self):
+        daily_report = self.report['daily']
+        daily_crashes_number = daily_report['crashes']
+        if daily_crashes_number > 0:
+            message = '{}: {} crashes'.format(self.airport.airport_name, daily_crashes_number)
+            notify(message, message)
