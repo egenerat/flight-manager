@@ -1,5 +1,6 @@
 # coding=utf-8
-
+from app.airport import airport_buyer
+from app.airport import staff_buyer
 from app.airport.airport_builder import build_airport
 from app.airport.airport_checker import AirportChecker
 from app.airport.report_parser import report_parser
@@ -58,7 +59,7 @@ class BotPlayer(object):
         mission_list = self.missions
         ongoing_missions = self.ongoing_missions
         mission_list = subtract(mission_list, ongoing_missions)
-        checker = AirportChecker(self.airport, self.planes)
+        checker = AirportChecker(self.airport, self.planes, airport_buyer, staff_buyer)
         checker.fix()
 
         # be careful, also send planes to maintainance with status A
