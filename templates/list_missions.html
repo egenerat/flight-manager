@@ -1,6 +1,7 @@
 {% load template_math %}
 
 {% block body_content %}
+	Reputation per week: {{total_reputation_per_week}}
 	<h2>Planes needed by type</h2>
 	{% for key, value in planes_needed.items %}
 		{{key}}: {{value}}<br/>
@@ -13,6 +14,7 @@
 			<th>Mission type</th>
 			<th>Country</th>
 			<th>Km</th>
+			<th>Effective hours</th>
 			<th>Reputation</th>
 			<th>Reputation per hour</th>
 			<th>Revenue</th>
@@ -23,8 +25,9 @@
 			<tr>
 				<td>{{i}}</td>
 				<td>{{i.mission_type}}</td>
-				<td>{{i.country_nb}}</td>
+				<td>{{i.country_nb|country_id_to_name}}</td>
 				<td>{{i.km_nb}}</td>
+				<td>{{i.total_time}}</td>
 				<td>{{i.reputation}}</td>
 				<td>{{i.reputation_per_hour}}</td>
 				<td>{{i.contract_amount}}</td>

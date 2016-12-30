@@ -17,7 +17,7 @@ from app.missions.mission_utils import split_missions_list_by_type, is_possible_
     is_interesting_mission
 from app.planes.planes_util2 import split_planes_list_by_type
 from fm.databases.database import db_insert_object, db_remove_all_missions
-from fm.list_missions import list_missions, list_countries
+from fm.list_missions import list_missions, list_dest_countries_id_by_mission_type
 from fm.models import Mission
 
 
@@ -30,7 +30,7 @@ def enrich_mission_dictionary(mission_dict, expiry_date, country, mission_type):
     a_mission.revenue_per_hour = get_real_benefit(a_mission, plane_class.price)
     total_hours = a_mission.time_before_departure + math.ceil(a_mission.km_nb / plane_class.speed) * 2
     a_mission.total_time = total_hours
-    a_mission.reputation_per_hour = int(a_mission.reputation / total_hours)
+    a_mission.reputation_per_hour = a_mission.reputation / float(total_hours)
     return a_mission
 
 
@@ -39,8 +39,10 @@ def empty_db_missions():
 
 
 def parse_all_missions():
+    #ANALYSIS
+    full_analysis = False
     db_remove_all_missions()
-    result = list_countries()
+    result = list_dest_countries_id_by_mission_type()
     expiry_date = get_expiry_date()
     staff_page = get_request(STAFF_PAGE)
     airport_page = get_request(AIRPORT_PAGE)
@@ -50,7 +52,7 @@ def parse_all_missions():
         mission_list = list_missions(mission_type, countries_list)
         for a_mission_dict in mission_list:
             a_mission = enrich_mission_dictionary(a_mission_dict, expiry_date, country, mission_type)
-            if is_possible_mission(a_mission) and is_interesting_mission(a_mission):
+            if (is_possible_mission(a_mission) and is_interesting_mission(a_mission)) or full_analysis:
                 db_insert_object(a_mission)
 
 

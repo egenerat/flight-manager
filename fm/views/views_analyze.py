@@ -1,12 +1,10 @@
 # coding=utf-8
-
 from app.missions.mission_utils import planes_needed_by_category
 from django.shortcuts import render_to_response
 
 from app.airport.Airport import Airport
 from app.airport.airports_methods import get_other_airports_id
 from app.airport.airports_methods import switch_to_airport
-from app.common.constants import CONCORDE_CAPACITY, CONCORDE_SPEED
 from app.common.http_methods import get_request
 from app.common.string_methods import format_amount
 from app.common.target_urls import PLANES_PAGE
@@ -18,16 +16,23 @@ from fm.databases.database_django import db_get_ordered_missions_multi_type
 def view_top_missions(_):
     mission_list = db_get_ordered_missions_multi_type(200, '-reputation_per_hour')
     nb_planes_needed = planes_needed_by_category(mission_list)
-    return render_to_response('list_missions.html', {'missions': mission_list, 'planes_needed': nb_planes_needed})
+    HOURS_PER_WEEK = 168
+    total_reputation_per_week = 0
+    for i in mission_list:
+        # approximation, because plane can start a same mission before the previous plane came back from the same mission
+        total_reputation_per_week+=i.reputation_per_hour*HOURS_PER_WEEK
+    return render_to_response('list_missions.html', {'missions': mission_list, 'planes_needed': nb_planes_needed, 'total_reputation_per_week':total_reputation_per_week})
 
-
+#TODO DEPRECATED
 def represent_data(_):
     country_list = ['France', 'Italie', 'Suisse', 'Turquie']
     result = {}
     missions_list = []
     for i in country_list:
         #TODO adapt
-        missions_list = db_get_ordered_missions(i, CONCORDE_CAPACITY, CONCORDE_SPEED, 84, '-reputation_per_hour')
+        PLANE_CAPACITY = 100
+        PLANE_SPEED = 2250
+        missions_list = db_get_ordered_missions(i, PLANE_CAPACITY, PLANE_SPEED, 84, '-reputation_per_hour')
         total_reputation_36 = 0
         total_revenue_36 = 0
         total_reputation_54 = 0
