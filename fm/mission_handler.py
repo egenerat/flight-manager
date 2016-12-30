@@ -34,6 +34,10 @@ def enrich_mission_dictionary(mission_dict, expiry_date, country, mission_type):
     return a_mission
 
 
+def empty_db_missions():
+    db_remove_all_missions()
+
+
 def parse_all_missions():
     db_remove_all_missions()
     result = list_countries()
