@@ -37,17 +37,6 @@ def get_real_benefit(a_mission, plane_value):
     return int(revenue_per_hour)
 
 
-def kerosene_consumed(mission, plane):
-    # Un surplus de 3 litres par heure par passager(ou colis) et membre d'équipage. A noter que l'avion consomme 2 fois moins sur le trajet retour.'
-    # Il faut également tenir compte d'une surconsommation liée aux phases de décollage et d' atterrissage.
-    # TODO
-    return 0
-
-
-def hours_consumed(mission_km, plane_speed):
-    hours_float = mission_km / float(plane_speed)
-    return int(math.ceil(hours_float))
-
-
 def is_mission_feasible(mission, plane):
-    return False
+    #TODO
+    raise NotImplemented
