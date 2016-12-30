@@ -16,7 +16,7 @@ def get_other_airports_id():
 
 
 def filter_airports(airports_list):
-    exclude_list = []  # ['133901']
+    exclude_list = ['135841', '135842', '135846', '135847', '135848']
     return [airport for airport in airports_list if airport not in exclude_list]
 
 
