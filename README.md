@@ -12,3 +12,5 @@ Specific datastore
 
 Push updates
 appcfg.py update .
+
+python2.7 dev_appserver.py --automatic_restart=no --max_module_instances=default:1 .
