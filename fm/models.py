@@ -18,7 +18,7 @@ class Mission(models.Model):
     km_nb = models.PositiveSmallIntegerField()
     total_time = models.PositiveSmallIntegerField(null=True)
     revenue_per_hour = models.PositiveSmallIntegerField(null=True)
-    reputation_per_hour = models.PositiveSmallIntegerField(null=True)
+    reputation_per_hour = models.FloatField(null=True)
     mission_type = models.CharField(max_length=1)
 
     def __str__(self):
