@@ -5,7 +5,7 @@ from app.airport.airport_config import AirportConfig
 from app.airport.staff_buyer import hire_flight_attendants, hire_pilots
 from app.airport.staff_buyer import hire_mechanics
 from app.planes.CommercialPlane import CommercialPlane
-from app.planes.JetGXPlane import JetGSPlane
+from app.planes.JetGXPlane import JetGXPlane
 from app.planes.SupersonicTUPlane import SupersonicTUPlane
 from app.planes.planes_util2 import get_planes_nb_from_sorted_dict
 
@@ -27,7 +27,7 @@ class AirportChecker(object):
         config = self.airport_config.planes_config
         return {
             CommercialPlane: config.commercials_nb - len(self.sorted_planes_dict['commercial_planes']),
-            JetGSPlane: config.jets_nb - len(self.sorted_planes_dict['jet_planes']),
+            JetGXPlane: config.jets_nb - len(self.sorted_planes_dict['jet_planes']),
             SupersonicTUPlane: config.supersonics_nb - len(self.sorted_planes_dict['supersonic_planes']),
         }
 
