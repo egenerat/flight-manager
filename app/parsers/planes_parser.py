@@ -6,7 +6,7 @@ from app.common.target_parse_strings import PLANE_MODEL_REGEX, PLANE_ID_REGEX, P
     PLANE_KM_REGEX, PLANE_ENGINES_HOURS_REGEX, END_PLANES_TABLE_HTML, BEGIN_PLANES_TABLE_HTML
 from app.common.target_strings import PLANE_MAINTAINANCE_ONGOING, PLANE_IN_SALE, PLANE_MAINTENANCE_NEEDED, \
     PLANE_OVER_500K
-from app.planes.planes_factory import usable_planes_factory, planes_factory
+from app.planes.planes_factory import planes_factory
 
 
 def __get_model(html_line):
@@ -43,7 +43,7 @@ def build_plane_from_line(html_line):
         km_nb = get_amount_from_regex(PLANE_KM_REGEX, html_line)
         current_engine_hours = hours[0]
         maximum_engine_hours = hours[1]
-        return usable_planes_factory(plane_model)(plane_id=plane_id, ready=ready,
+        return planes_factory(plane_model)(plane_id=plane_id, ready=ready,
                                                   required_maintenance=required_maintenance,
                                                   status=status, kerosene=kerosene,
                                                   current_engine_hours=current_engine_hours, km=km_nb,
