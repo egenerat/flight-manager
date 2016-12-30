@@ -2,6 +2,7 @@
 import pickle
 
 import fm.singleton_session
+from app.missions.mission_utils import is_possible_mission
 from fm.models import Mission, AirportsToBeSold, ASHttpSession
 
 
@@ -29,9 +30,21 @@ def db_count_missions():
     return Mission.objects.count()
 
 
+def filter_missions_analysis(missions):
+    result = []
+    result_no_commercial = []
+    for a_mission in missions:
+        if is_possible_mission(a_mission):
+            result.append(a_mission)
+            if a_mission.mission_type in ["4", "5"]:
+                result_no_commercial.append(a_mission)
+    return result
+
+
 def db_get_ordered_missions_multi_type(nb_returned_missions, criteria):
+    # TODO should read origin_country
     missions = Mission.objects.all().filter(reputation_per_hour__gt=0).order_by(criteria)
-    # missions = filter_impossible_missions(missions)
+    missions = filter_missions_analysis(missions)
     return missions[:nb_returned_missions]
 
 
