@@ -7,7 +7,8 @@ from app.common.logger import logger
 from django.http import HttpResponse
 # noinspection PyUnresolvedReferences
 from fm.databases.database_django import save_session_to_db
-from fm.views.views_missions import view_launch_missions, view_parse_missions
+# noinspection PyUnresolvedReferences
+from fm.views.views_missions import view_launch_missions, view_parse_missions, view_empty_db_missions
 # noinspection PyUnresolvedReferences
 from fm.views.views_finances import view_taxes
 # noinspection PyUnresolvedReferences
