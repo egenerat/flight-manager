@@ -1,10 +1,10 @@
 # coding=utf-8
 
 from app.planes.UsablePlane import UsablePlane
-from app.planes.SupersonicPlane import SupersonicPlane
+from app.planes.SupersonicCCPlane import SupersonicCCPlane
 
 
-class UsableSupersonicPlane(SupersonicPlane, UsablePlane):
+class UsableSupersonicPlane(SupersonicCCPlane, UsablePlane):
 
     def __init__(self, **kwargs):
         kwargs['maximum_engine_hours'] = self.maximum_engine_hours

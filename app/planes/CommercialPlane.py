@@ -17,6 +17,7 @@ class CommercialPlane(RootPlane):
     buy_url = BUY_COMMERCIAL_URL
     plane_capacity = 440
     plane_range = 23721
+    speed = 971
 
     def __init__(self, **kwargs):
         super(CommercialPlane, self).__init__(**kwargs)

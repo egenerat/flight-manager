@@ -1,8 +1,8 @@
 # coding=utf-8
 
 from app.planes.CommercialPlane import CommercialPlane
-from app.planes.JetPlane import JetPlane
-from app.planes.SupersonicPlane import SupersonicPlane
+from app.planes.JetDSPlane import JetDSPlane
+from app.planes.SupersonicCCPlane import SupersonicCCPlane
 
 
 def split_missions_list_by_type(missions_list):
@@ -30,8 +30,8 @@ def find_plane_class_for_mission(mission):
         '1': CommercialPlane,
         '2': CommercialPlane,
         '3': CommercialPlane,
-        '4': SupersonicPlane,
-        '5': JetPlane
+        '4': SupersonicCCPlane,
+        '5': JetDSPlane
     }[mission.mission_type]
 
 
@@ -41,7 +41,7 @@ def is_possible_mission(mission):
 
 
 def is_interesting_mission(mission):
-    return mission.reputation_per_hour > 5 and mission.revenue_per_hour > 0
+    return mission.reputation_per_hour > 10 and mission.revenue_per_hour > 0
 
 
 def sort_missions_by_type(mission_list):

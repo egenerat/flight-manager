@@ -5,8 +5,8 @@ from app.airport.airport_config import AirportConfig
 from app.airport.staff_buyer import hire_flight_attendants, hire_pilots
 from app.airport.staff_buyer import hire_mechanics
 from app.planes.CommercialPlane import CommercialPlane
-from app.planes.JetPlane import JetPlane
-from app.planes.SupersonicPlane import SupersonicPlane
+from app.planes.JetGXPlane import JetGSPlane
+from app.planes.SupersonicTUPlane import SupersonicTUPlane
 from app.planes.planes_util2 import get_planes_nb_from_sorted_dict
 
 
@@ -27,15 +27,16 @@ class AirportChecker(object):
         config = self.airport_config.planes_config
         return {
             CommercialPlane: config.commercials_nb - len(self.sorted_planes_dict['commercial_planes']),
-            JetPlane: config.jets_nb - len(self.sorted_planes_dict['jet_planes']),
-            SupersonicPlane: config.supersonics_nb - len(self.sorted_planes_dict['supersonic_planes']),
+            JetGSPlane: config.jets_nb - len(self.sorted_planes_dict['jet_planes']),
+            SupersonicTUPlane: config.supersonics_nb - len(self.sorted_planes_dict['supersonic_planes']),
         }
 
     def fix_missing_planes(self):
-        if self.airport.planes_capacity > get_planes_nb_from_sorted_dict(self.sorted_planes_dict):
+        total_missing_planes = self.airport.planes_capacity - get_planes_nb_from_sorted_dict(self.sorted_planes_dict)
+        if total_missing_planes > 0:
             for plane_class, missing_units in self.check_missing_planes().iteritems():
                 if missing_units > 0:
-                    buy_missing_planes(plane_class, missing_units)
+                    buy_missing_planes(plane_class, min(missing_units, total_missing_planes))
 
     def fix_missing_staff(self):
         current_staff = self.airport.staff
