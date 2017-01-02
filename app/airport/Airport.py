@@ -8,3 +8,6 @@ class Airport(object):
         for field in mandatory_fields:
             setattr(self, field, kwargs.pop(field))
             # TODO Move the list of planes as a property of the airport
+
+    def __str__(self):
+        return 'Airport {} H{} {}'.format(self.airport_name, self.planes_capacity, self.country)
