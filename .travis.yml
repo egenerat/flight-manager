@@ -4,8 +4,9 @@ python:
 install:
 - pip install requests
 script:
+- "./script.sh"
 - python -m unittest discover app
 before_install:
 - openssl aes-256-cbc -K $encrypted_046cc4d61ee9_key -iv $encrypted_046cc4d61ee9_iv
-  -in config_files.tar.enc -out config_files.tar -d
-- tar xvf config_files.tar
+  -in archive.tar.enc -out archive.tar -d
+- tar xvf archive.tar

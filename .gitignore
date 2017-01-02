@@ -63,12 +63,19 @@ target/
 
 .idea/
 
-app/common/constants.py
+README_.md
+
+tests_util/test_pages/
+archive.tar
+
 settings.py
+
+app/common/constants.py
+app/common/constants_strategy.py
 app/common/target_urls.py
-app/common/site_strings.py
 app/common/target_strings.py
 app/common/target_parse_strings.py
-app/common/target_parse_strings.py
-README_.md
 app/test/parsers/resources_planes_html.py
+
+config_files.tar
+tests_util/test_pages.tar
