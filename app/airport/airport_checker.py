@@ -1,9 +1,8 @@
 # coding=utf-8
 
 from app.airport.airport_config import AirportConfig
-from app.planes.CommercialPlane import CommercialPlane
-from app.planes.JetGXPlane import JetGXPlane
-from app.planes.SupersonicTUPlane import SupersonicTUPlane
+from app.common.constants_strategy import JET_MODEL_TO_BE_PURCHASED, COMMERCIAL_MODEL_TO_BE_PURCHASED, \
+    SUPERSONIC_MODEL_TO_BE_PURCHASED
 from app.planes.planes_util2 import get_planes_nb_from_sorted_dict
 
 
@@ -25,9 +24,9 @@ class AirportChecker(object):
     def check_missing_planes(self):
         config = self.airport_config.planes_config
         return {
-            CommercialPlane: config.commercials_nb - len(self.sorted_planes_dict['commercial_planes']),
-            JetGXPlane: config.jets_nb - len(self.sorted_planes_dict['jet_planes']),
-            SupersonicTUPlane: config.supersonics_nb - len(self.sorted_planes_dict['supersonic_planes']),
+            COMMERCIAL_MODEL_TO_BE_PURCHASED: config.commercials_nb - len(self.sorted_planes_dict['commercial_planes']),
+            JET_MODEL_TO_BE_PURCHASED: config.jets_nb - len(self.sorted_planes_dict['jet_planes']),
+            SUPERSONIC_MODEL_TO_BE_PURCHASED: config.supersonics_nb - len(self.sorted_planes_dict['supersonic_planes']),
         }
 
     def fix_missing_planes(self):

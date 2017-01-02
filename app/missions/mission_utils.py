@@ -1,8 +1,5 @@
 # coding=utf-8
-
-from app.planes.CommercialPlane import CommercialPlane
-from app.planes.JetDSPlane import JetDSPlane
-from app.planes.SupersonicCCPlane import SupersonicCCPlane
+from app.common.constants_strategy import JET_MODEL_TO_BE_USED, COMMERCIAL_MODEL_TO_BE_USED, SUPERSONIC_MODEL_TO_BE_USED
 
 
 def split_missions_list_by_type(missions_list):
@@ -27,11 +24,11 @@ def split_missions_list_by_type(missions_list):
 
 def find_plane_class_for_mission(mission):
     return {
-        '1': CommercialPlane,
-        '2': CommercialPlane,
-        '3': CommercialPlane,
-        '4': SupersonicCCPlane,
-        '5': JetDSPlane
+        '1': COMMERCIAL_MODEL_TO_BE_USED,
+        '2': COMMERCIAL_MODEL_TO_BE_USED,
+        '3': COMMERCIAL_MODEL_TO_BE_USED,
+        '4': SUPERSONIC_MODEL_TO_BE_USED,
+        '5': JET_MODEL_TO_BE_USED
     }[mission.mission_type]
 
 
