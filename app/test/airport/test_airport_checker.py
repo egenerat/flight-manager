@@ -16,7 +16,7 @@ class TestAirportParser(unittest.TestCase):
             SupersonicCCPlane: 3,
         }
         amount = amount_needed(missing_planes)
-        self.assertEqual(amount, 43900000)
+        self.assertEqual(43900000, amount)
 
 if __name__ == '__main__':
     unittest.main()

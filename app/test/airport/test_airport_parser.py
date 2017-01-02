@@ -1,4 +1,4 @@
-# -*- coding: iso-8859-1 -*-
+# coding=utf-8
 import requests
 
 from app.airport.airports_parsers import get_country, get_money, get_kerosene_supply, get_kerosene_capacity, \
@@ -15,33 +15,32 @@ class TestAirportParser(unittest.TestCase):
 
     def test_country(self):
         country = get_country(self.__html_page)
-        self.assertEqual(country, 'France')
+        self.assertEqual('Égypte', country)
 
     def test_money(self):
         country = get_money(self.__html_page)
-        self.assertEqual(country, 2444908)
+        self.assertEqual(2444908, country)
 
     def test_kerosene_supply(self):
         country = get_kerosene_supply(self.__html_page)
-        self.assertEqual(country, 2009391)
+        self.assertEqual(2009391, country)
 
     def test_kerosene_capacity(self):
         country = get_kerosene_capacity(self.__html_page)
-        self.assertEqual(country, 2500000)
+        self.assertEqual(2500000, country)
 
     def test_engines_supply(self):
         engines_supply = get_engines_supply(self.__html_page)
-        self.assertEqual(engines_supply['5'], 1000)
-        self.assertEqual(engines_supply['6'], 2)
+        self.assertEqual(1000, engines_supply['5'])
+        self.assertEqual(2, engines_supply['6'])
 
     def test_planes_capacity(self):
         country = get_planes_capacity(self.__html_page)
-        self.assertEqual(country, 9)
+        self.assertEqual(9, country)
 
     def test_airport_name(self):
         country = get_airport_name(self.__html_page)
-        self.assertEqual(country, 'Roissy')
-
+        self.assertEqual('Roissy aéroport', country)
 
 if __name__ == '__main__':
     unittest.main()
