@@ -14,16 +14,16 @@ class TestParserStaff(unittest.TestCase):
 
     def test_pilots(self):
         total_pilots, busy_pilots = get_pilots(self.__html_page)
-        self.assertEqual(total_pilots, 166)
-        self.assertEqual(busy_pilots, 148)
+        self.assertEqual(166, total_pilots)
+        self.assertEqual(148, busy_pilots)
 
     def test_flight_attendants(self):
         total_flight_attendants, busy_flight_attendants = get_flight_attendants(self.__html_page)
-        self.assertEqual(total_flight_attendants, 156)
-        self.assertEqual(busy_flight_attendants, 136)
+        self.assertEqual(156, total_flight_attendants)
+        self.assertEqual(136, busy_flight_attendants)
 
     def test_mechanics(self):
-        self.assertEqual(get_mechanics(self.__html_page), 36)
+        self.assertEqual(36, get_mechanics(self.__html_page))
 
 if __name__ == '__main__':
     unittest.main()

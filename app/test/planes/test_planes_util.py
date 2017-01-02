@@ -8,7 +8,7 @@ class TestPlanesUtils(unittest.TestCase):
         distance = 10
         speed = 6
         dur = duration_mission(distance, speed)
-        self.assertEqual(dur, 2)
+        self.assertEqual(2, dur)
 
     def test_consumption(self):
         duration = 7
@@ -16,7 +16,7 @@ class TestPlanesUtils(unittest.TestCase):
         passengers_nb = 19
         staff_nb = 4
         consumption = calculate_total_consumption_mission(duration, conso_per_hour, passengers_nb, staff_nb)
-        self.assertEqual(consumption, 16579.5)
+        self.assertEqual(16579.5, consumption)
 
     def test_real_autonomy(self):
         kerosene_capacity = 18050
@@ -25,7 +25,7 @@ class TestPlanesUtils(unittest.TestCase):
         passengers_nb = 19
         staff_nb = 4
         real_autonomy = calculate_real_autonomy_one_way(speed, kerosene_capacity, conso_per_hour, passengers_nb, staff_nb)
-        self.assertEqual(real_autonomy, 6454)
+        self.assertEqual(6454, real_autonomy)
 
 if __name__ == '__main__':
     unittest.main()

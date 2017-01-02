@@ -14,7 +14,7 @@ class TestParserStaff(unittest.TestCase):
 
     def test_daily_crashes(self):
         daily_crashes = report_parser(self.__html_page)['daily']['crashes']
-        self.assertEqual(daily_crashes, 1234)
+        self.assertEqual(1234, daily_crashes)
 
 if __name__ == '__main__':
     unittest.main()

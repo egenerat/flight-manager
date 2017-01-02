@@ -9,8 +9,8 @@ class TestParserOnePlane(unittest.TestCase):
 
     def test_plane_in_maintenance(self):
         self.plane = build_plane_from_line(plane_in_maintenance)
-        self.assertEqual(type(self.plane), Commercial7Plane)
-        self.assertEqual(self.plane.ready, False)
+        self.assertEqual(Commercial7Plane, type(self.plane))
+        self.assertFalse(self.plane.ready)
 
 
 if __name__ == '__main__':

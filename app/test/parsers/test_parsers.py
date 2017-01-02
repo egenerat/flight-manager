@@ -30,12 +30,12 @@ class TestParser(unittest.TestCase):
         #   all inactive
         #   20 in maintenance
         self.planes_list = build_planes_from_html(self.html_page)
-        self.assertEqual(len(self.planes_list), 186)
+        self.assertEqual(186, len(self.planes_list))
         planes_by_type = split_planes_list_by_type(self.planes_list)
-        self.assertEqual(len(planes_by_type['supersonic_planes']), 97)
-        self.assertEqual(len(planes_by_type['commercial_planes']), 89)
-        self.assertEqual(len(planes_by_type['supersonic_ready_planes']), 0)
-        self.assertEqual(len(planes_by_type['commercial_ready_planes']), 69)
+        self.assertEqual(97, len(planes_by_type['supersonic_planes']))
+        self.assertEqual(89, len(planes_by_type['commercial_planes']))
+        self.assertEqual(0, len(planes_by_type['supersonic_ready_planes']))
+        self.assertEqual(69, len(planes_by_type['commercial_ready_planes']))
 
 
 if __name__ == '__main__':

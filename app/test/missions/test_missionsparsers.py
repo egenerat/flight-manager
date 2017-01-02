@@ -13,7 +13,7 @@ class TestParser(unittest.TestCase):
     def test_parser(self):
         self.html_page = requests.get(YOUR_MISSIONS_URL).text
         self.missions_list = parse_all_missions_in_page(self.html_page, '1')
-        self.assertEqual(len(self.missions_list), 10)
+        self.assertEqual(10, len(self.missions_list))
 
     def test_truc(self):
         a = parse_duration_before_departure(TEST_MISSION_DEPARTURE_TIME)
@@ -21,7 +21,7 @@ class TestParser(unittest.TestCase):
     def test_jet_missions(self):
         html_page2 = requests.get("http://localhost/AS/vos-missions-jet.html").text
         missions_list = parse_all_missions_in_page(html_page2, '1')
-        self.assertEqual(len(missions_list), 11)
+        self.assertEqual(11, len(missions_list))
 
 if __name__ == '__main__':
     unittest.main()
