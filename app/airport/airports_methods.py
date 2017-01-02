@@ -1,5 +1,5 @@
 # coding=utf-8
-
+from app.common.constants import EXCLUDE_LIST
 from app.common.http_methods import get_request, post_request
 from app.common.string_methods import get_amount_from_regex, \
     exception_if_not_contains, get_values_from_regex
@@ -16,8 +16,7 @@ def get_other_airports_id():
 
 
 def filter_airports(airports_list):
-    exclude_list = ['135841', '135842', '135846', '135847', '135848']
-    return [airport for airport in airports_list if airport not in exclude_list]
+    return [airport for airport in airports_list if airport not in EXCLUDE_LIST]
 
 
 def switch_to_airport(airport_id):
