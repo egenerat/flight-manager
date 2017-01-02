@@ -14,7 +14,7 @@ class MultiAirportBot(object):
     def start(self):
         other_airports = get_other_airports_id()
         other_airports = filter_airports(other_airports)
-        # other_airports = ['122791']
+        # other_airports = ['123456']
         for airport_id in other_airports:
             switch_to_airport(airport_id)
             bot = BotPlayer(self.missions)
