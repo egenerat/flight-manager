@@ -3,7 +3,7 @@ from app.common.target_urls import BUY_JET_GX_URL, BUY_JET_GS_URL
 from app.planes.JetPlane import JetPlane
 
 
-class JetGXPlane(JetPlane):
+class JetGSPlane(JetPlane):
 
     engines_nb = 2
     consumption_per_hour = 1735
@@ -17,4 +17,4 @@ class JetGXPlane(JetPlane):
     speed = 904
 
     def __init__(self, **kwargs):
-        super(JetGXPlane, self).__init__(**kwargs)
+        super(JetGSPlane, self).__init__(**kwargs)
