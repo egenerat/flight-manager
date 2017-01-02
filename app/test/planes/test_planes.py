@@ -27,7 +27,7 @@ class TestParser(unittest.TestCase):
 
     def test_range_jet(self):
         plane_class = JetGXPlane
-        self.assertEqual(9999, plane_class.plane_range)
+        self.assertEqual(14480, plane_class.plane_range)
 
 
 if __name__ == '__main__':
