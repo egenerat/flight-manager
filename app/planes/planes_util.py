@@ -5,7 +5,7 @@ from app.common.constants import MAX_KM, KEROSENE_PRICE
 
 
 # do not add dependency to CommercialPlane here, otherwise cyclic dependency
-from app.common.target_parse_strings import SUPERSONICS_MODELS_HTML, COMMERCIAL_MODELS_HTML, JETS_MODELS_HTML
+from app.common.target_strings import SUPERSONICS_MODELS_HTML, COMMERCIAL_MODELS_HTML, JETS_MODELS_HTML
 
 
 def get_plane_value(new_plane_value, km, kerosene_qty):
