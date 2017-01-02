@@ -1,3 +1,6 @@
+sudo: required
+services:
+- docker
 language: python
 python:
 - '2.7'
@@ -5,6 +8,9 @@ install:
 - pip install requests
 script:
 - "./script.sh"
+- export WEBSERVER_TEST_PAGES_IP=$(docker inspect -f '{{range .NetworkSettings.Networks}}{{.IPAddress}}{{end}}'
+  webserver_test_pages)
+- echo $WEBSERVER_TEST_PAGES_IP
 - python -m unittest discover app
 before_install:
 - openssl aes-256-cbc -K $encrypted_046cc4d61ee9_key -iv $encrypted_046cc4d61ee9_iv
