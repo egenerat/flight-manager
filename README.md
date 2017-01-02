@@ -1,4 +1,4 @@
-# gae-django
+# Flight-manager
 Python Django application deployed on Google App Engine
 
 
