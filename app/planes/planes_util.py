@@ -41,3 +41,26 @@ def is_jet(string_model):
 
 def is_regular_plane(string_model):
     return string_model in COMMERCIAL_MODELS_HTML
+
+
+if __name__ == '__main__':
+    passengers_nb = 19
+    staff_nb = 4
+
+    speed = 922
+    kerosene_capacity = 18050
+    conso_per_hour = 1510
+    autonomy = calculate_real_autonomy_one_way(speed, kerosene_capacity, conso_per_hour, passengers_nb, staff_nb)
+    print("DS 7X: {}".format(autonomy))
+
+    speed = 904
+    kerosene_capacity = 24000
+    conso_per_hour = 1735
+    autonomy = calculate_real_autonomy_one_way(speed, kerosene_capacity, conso_per_hour, passengers_nb, staff_nb)
+    print("GS 550: {}".format(autonomy))
+
+    speed = 905
+    kerosene_capacity = 25382
+    conso_per_hour = 2014
+    autonomy = calculate_real_autonomy_one_way(speed, kerosene_capacity, conso_per_hour, passengers_nb, staff_nb)
+    print("GX XRS: {}".format(autonomy))

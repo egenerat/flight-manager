@@ -1,5 +1,5 @@
 # coding=utf-8
-from app.common.target_urls import BUY_JET_GX_URL, BUY_JET_GS_URL
+from app.common.target_urls import BUY_JET_GS_URL
 from app.planes.JetPlane import JetPlane
 
 
