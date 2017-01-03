@@ -44,10 +44,10 @@ def build_plane_from_line(html_line):
         current_engine_hours = hours[0]
         maximum_engine_hours = hours[1]
         return planes_factory(plane_model)(plane_id=plane_id, ready=ready,
-                                                  required_maintenance=required_maintenance,
-                                                  status=status, kerosene=kerosene,
-                                                  current_engine_hours=current_engine_hours, km=km_nb,
-                                                  maximum_engine_hours=maximum_engine_hours)
+                                           required_maintenance=required_maintenance,
+                                           status=status, kerosene=kerosene,
+                                           current_engine_hours=current_engine_hours, km=km_nb,
+                                           maximum_engine_hours=maximum_engine_hours)
 
 
 def build_planes_from_html(html):

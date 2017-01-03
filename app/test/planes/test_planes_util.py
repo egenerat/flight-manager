@@ -1,6 +1,7 @@
 import unittest
 
-from app.planes.planes_util import duration_mission, calculate_total_consumption_mission, calculate_real_autonomy_one_way
+from app.planes.planes_util import duration_mission, calculate_total_consumption_mission,\
+    calculate_real_autonomy_one_way
 
 
 class TestPlanesUtils(unittest.TestCase):
@@ -24,7 +25,8 @@ class TestPlanesUtils(unittest.TestCase):
         conso_per_hour = 1510
         passengers_nb = 19
         staff_nb = 4
-        real_autonomy = calculate_real_autonomy_one_way(speed, kerosene_capacity, conso_per_hour, passengers_nb, staff_nb)
+        real_autonomy = calculate_real_autonomy_one_way(speed, kerosene_capacity, conso_per_hour, passengers_nb,
+                                                        staff_nb)
         self.assertEqual(6454, real_autonomy)
 
 if __name__ == '__main__':
