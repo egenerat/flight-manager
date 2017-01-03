@@ -7,6 +7,7 @@ class PlaneGarage(object):
     def __init__(self, plane_list, airport):
         self.plane_list = plane_list
         self.airport = airport
+        self.ready_planes = None
 
     def prepare_all_planes(self):
         temp_ready_planes = []

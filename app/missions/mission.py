@@ -38,5 +38,5 @@ def get_real_benefit(a_mission, plane_value):
 
 
 def is_mission_feasible(mission, plane):
-    #TODO
+    # TODO
     raise NotImplemented

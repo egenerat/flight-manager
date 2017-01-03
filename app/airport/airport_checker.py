@@ -18,7 +18,7 @@ class AirportChecker(object):
         self.airport = airport
         self.sorted_planes_dict = sorted_planes_dict
         self.airport_config = AirportConfig(self.airport)
-        self.injected_airport_buyer = injected_airport_buyer
+        self.airport_buyer = injected_airport_buyer
         self.injected_staff_buyer = injected_staff_buyer
 
     def check_missing_planes(self):
@@ -34,7 +34,7 @@ class AirportChecker(object):
         if total_missing_planes > 0:
             for plane_class, missing_units in self.check_missing_planes().iteritems():
                 if missing_units > 0:
-                    self.injected_airport_buyer.buy_missing_planes(plane_class, min(missing_units, total_missing_planes))
+                    self.airport_buyer.buy_missing_planes(plane_class, min(missing_units, total_missing_planes))
 
     def fix_missing_staff(self):
         current_staff = self.airport.staff
@@ -53,15 +53,15 @@ class AirportChecker(object):
         kerosene_config = self.airport_config.resources_config.kerosene
         if self.airport.kerosene_supply < kerosene_config['min']:
             qty_needed = kerosene_config['max'] - self.airport.kerosene_supply
-            self.injected_airport_buyer.buy_kerosene(qty_needed)
+            self.airport_buyer.buy_kerosene(qty_needed)
         engines_5_nb = self.airport_config.resources_config.engines_5_nb
         if self.airport.engines_supply['5'] < engines_5_nb['min']:
             qty_needed = engines_5_nb['max'] - self.airport.engines_supply['5']
-            self.injected_airport_buyer.buy_engines(qty_needed, '5')
+            self.airport_buyer.buy_engines(qty_needed, '5')
         engines_6_nb = self.airport_config.resources_config.engines_6_nb
         if self.airport.engines_supply['6'] < engines_6_nb['min']:
             qty_needed = engines_6_nb['max'] - self.airport.engines_supply['6']
-            self.injected_airport_buyer.buy_engines(qty_needed, '6')
+            self.airport_buyer.buy_engines(qty_needed, '6')
 
     def fix(self):
         self.fix_missing_planes()
