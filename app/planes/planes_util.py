@@ -17,19 +17,27 @@ def duration_mission(distance, speed):
     return math.ceil(distance / float(speed))
 
 
-def calculate_total_consumption_mission(duration, conso_per_hour, passengers_nb, staff_nb):
+def calculate_total_consumption_one_way(duration, conso_per_hour, passengers_nb, staff_nb):
+    #TODO improve calculation
     # formula is flight_hours * (consumption_per_hour + 3*(passengers_nb+staff))*3/2
     # replacing time by distance/speed
-    return duration * (conso_per_hour + 3 * (passengers_nb + staff_nb)) * (3 / 2.0)
+    return duration * (conso_per_hour + 3 * (passengers_nb + staff_nb))
 
 
 def calculate_real_autonomy_one_way(speed, kerosene_capacity, conso_per_hour, passengers_nb, staff_nb):
     max_duration = 0
-    while calculate_total_consumption_mission(max_duration, conso_per_hour, passengers_nb,
-                                              staff_nb) < kerosene_capacity:
+    while calculate_total_consumption_one_way(max_duration, conso_per_hour, passengers_nb,
+                                              staff_nb) * 3/2.0 < kerosene_capacity:
         max_duration += 1
     return (max_duration - 1) * speed
 
+
+def calculate_autonomy_with_stopover(speed, kerosene_capacity, conso_per_hour, passengers_nb, staff_nb):
+    max_duration = 0
+    while calculate_total_consumption_one_way(max_duration, conso_per_hour, passengers_nb,
+                                              staff_nb) < kerosene_capacity:
+        max_duration += 1
+    return (max_duration - 1) * speed
 
 def is_supersonic(string_model):
     return string_model in SUPERSONICS_MODELS_HTML
@@ -51,7 +59,9 @@ if __name__ == '__main__':
     kerosene_capacity = 18050
     conso_per_hour = 1510
     autonomy = calculate_real_autonomy_one_way(speed, kerosene_capacity, conso_per_hour, passengers_nb, staff_nb)
+    autonomy2 = calculate_autonomy_with_stopover(speed, kerosene_capacity, conso_per_hour, passengers_nb, staff_nb)
     print("DS 7X: {}".format(autonomy))
+    print("DS 7X: {}".format(autonomy2))
 
     speed = 904
     kerosene_capacity = 24000
@@ -59,8 +69,9 @@ if __name__ == '__main__':
     autonomy = calculate_real_autonomy_one_way(speed, kerosene_capacity, conso_per_hour, passengers_nb, staff_nb)
     print("GS 550: {}".format(autonomy))
 
-    speed = 905
-    kerosene_capacity = 25382
-    conso_per_hour = 2014
+    speed = 2250
+    kerosene_capacity = 119500
+    conso_per_hour = 25625
     autonomy = calculate_real_autonomy_one_way(speed, kerosene_capacity, conso_per_hour, passengers_nb, staff_nb)
-    print("GX XRS: {}".format(autonomy))
+    print("CC: {}".format(autonomy))
+    print("CC: {}".format(autonomy2))

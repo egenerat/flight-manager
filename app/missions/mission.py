@@ -30,6 +30,8 @@ def get_real_benefit(a_mission, plane_value):
     # add the part of the engines that may not be used
     # add the cost of staff
     revenue = a_mission.contract_amount
+    if a_mission['stopover']:
+        revenue += a_mission['stopover']['contract_plus_bonus']
     total_hours = a_mission.time_before_departure + math.ceil(a_mission.km_nb / plane_value) * 2
     plane_use = ((a_mission.km_nb * 2) / 500000.0) * plane_value
     revenue -= plane_use

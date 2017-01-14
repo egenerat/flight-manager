@@ -7,7 +7,6 @@ import datetime
 
 import math
 
-import fm.singleton_session
 from app.airport.airport_builder import build_airport
 from app.common.logger import logger
 from app.common.http_methods import post_request, get_request
@@ -30,7 +29,11 @@ def enrich_mission_dictionary(mission_dict, expiry_date, country, mission_type):
     a_mission.revenue_per_hour = get_real_benefit(a_mission, plane_class.price)
     total_hours = a_mission.time_before_departure + math.ceil(a_mission.km_nb / plane_class.speed) * 2
     a_mission.total_time = total_hours
-    a_mission.reputation_per_hour = a_mission.reputation / float(total_hours)
+    total_reputation = a_mission.reputation
+    if mission_dict['stopover']:
+        total_reputation += mission_dict['stopover']['reputation']
+        a_mission.reputation = total_reputation
+    a_mission.reputation_per_hour = total_reputation / float(total_hours)
     return a_mission
 
 
