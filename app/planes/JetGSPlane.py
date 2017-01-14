@@ -10,7 +10,8 @@ class JetGSPlane(JetPlane):
     fuel_capacity = 24000
     minimum_kerosene_before_mission = fuel_capacity
     # 8 (max hours one way) * speed * 2 (2 ways)
-    plane_range = 14464
+    plane_range = 7232
+    plane_range_stopover = plane_range
     price = 2800000
     buy_url = BUY_JET_GS_URL
     plane_capacity = 19

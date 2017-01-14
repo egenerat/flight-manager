@@ -10,7 +10,8 @@ from app.common.string_methods import get_value_from_regex, everything_between, 
 from app.common.target_parse_strings import MISSION_AMOUNT_REGEX, MISSION_DEPARTURE_DATE_REGEX, MISSION_TOO_SHORT_HTML, \
     MISSION_DISTANCE_REGEX, MISSIONS_FLIGHT_ATTENDANTS_NB_REGEX, MISSION_REPUTATION_REGEX, MISSIONS_PILOTS_NB_REGEX, \
     MISSION_ID_REGEX, MISSION_PASSENGERS_CARGO_NB_REGEX, MISSIONS_BEGIN_TABLE_HTML, MISSIONS_END_TABLE_HTML, \
-    MISSIONS_LINE_SPLIT_HTML, MISSIONS_ONGOING_ID_REGEX, HTML_SELECT_ID_REGEX, STOPOVER_STRING
+    MISSIONS_LINE_SPLIT_HTML, MISSIONS_ONGOING_ID_REGEX, HTML_SELECT_ID_REGEX, STOPOVER_STRING, \
+    STOPOVER_TRAVELLERS_NB_REGEX, STOPOVER_REPUTATION_REGEX, STOPOVER_REVENUE_REGEX
 
 
 def get_country_list(html_page):
@@ -35,9 +36,9 @@ def parse_duration_before_departure(html_mission):
 
 def parse_stopover(stopover_html):
     return {
-        'reputation': get_int_from_regex('<td class="fiche1">R&eacute;putation &agrave; gagner</td>\s+<td class="fiche2">(\d+)</td>', stopover_html),
-        'travellers_nb': get_int_from_regex('<td class="fiche1">Passagers/marchandises au retour</td>\s+<td class="fiche2">(\d+)</td>', stopover_html),
-        'contract_plus_bonus': get_amount(get_value_from_regex('<td class="fiche1">Contrat \+ BONUS</td>\s+<td class="fiche2">(.+?) \$</td>', stopover_html))
+        'reputation': get_int_from_regex(STOPOVER_REPUTATION_REGEX, stopover_html),
+        'travellers_nb': get_int_from_regex(STOPOVER_TRAVELLERS_NB_REGEX, stopover_html),
+        'revenue': get_amount(get_value_from_regex(STOPOVER_REVENUE_REGEX, stopover_html))
     }
 
 

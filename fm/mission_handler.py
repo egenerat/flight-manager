@@ -17,10 +17,12 @@ from app.missions.mission_utils import split_missions_list_by_type, is_possible_
 from app.planes.planes_util2 import split_planes_list_by_type
 from fm.databases.database import db_insert_object, db_remove_all_missions
 from fm.list_missions import list_missions, list_dest_countries_id_by_mission_type
-from fm.models import Mission
+from fm.models import Mission, Stopover
 
 
 def enrich_mission_dictionary(mission_dict, expiry_date, country, mission_type):
+    stopover_dict = mission_dict.pop('stopover')
+    stopover = None
     a_mission = Mission(**mission_dict)
     a_mission.expiry_date = expiry_date.replace(tzinfo=None)
     a_mission.origin_country = country
@@ -30,11 +32,16 @@ def enrich_mission_dictionary(mission_dict, expiry_date, country, mission_type):
     total_hours = a_mission.time_before_departure + math.ceil(a_mission.km_nb / plane_class.speed) * 2
     a_mission.total_time = total_hours
     total_reputation = a_mission.reputation
-    if mission_dict['stopover']:
-        total_reputation += mission_dict['stopover']['reputation']
+    if stopover_dict:
+        stopover = Stopover(**stopover_dict)
+        a_mission.stopover = stopover
+        total_reputation += stopover.reputation
         a_mission.reputation = total_reputation
     a_mission.reputation_per_hour = total_reputation / float(total_hours)
-    return a_mission
+    return {
+        'a_mission': a_mission,
+        'stopover': stopover
+    }
 
 
 def empty_db_missions():
@@ -54,9 +61,12 @@ def parse_all_missions():
     for mission_type, countries_list in result.iteritems():
         mission_list = list_missions(mission_type, countries_list)
         for a_mission_dict in mission_list:
-            a_mission = enrich_mission_dictionary(a_mission_dict, expiry_date, country, mission_type)
+            enriched_data = enrich_mission_dictionary(a_mission_dict, expiry_date, country, mission_type)
+            a_mission = enriched_data['a_mission']
             if (is_possible_mission(a_mission) and is_interesting_mission(a_mission)) or full_analysis:
                 db_insert_object(a_mission)
+                if enriched_data['stopover']:
+                    db_insert_object(enriched_data['stopover'])
 
 
 def extract_bonus_from_page(page):

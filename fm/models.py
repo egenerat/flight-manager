@@ -20,7 +20,7 @@ class Mission(models.Model):
     revenue_per_hour = models.PositiveSmallIntegerField(null=True)
     reputation_per_hour = models.FloatField(null=True)
     mission_type = models.CharField(max_length=1)
-    stopover = models.ForeignKey('Stopover', on_delete=models.CASCADE)
+    stopover = models.OneToOneField('Stopover', on_delete=models.CASCADE, null=True)
 
     def __str__(self):
         return "Mission {}".format(self.mission_nb)

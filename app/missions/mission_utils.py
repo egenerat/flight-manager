@@ -34,7 +34,7 @@ def find_plane_class_for_mission(mission):
 
 def is_possible_mission(mission):
     plane_class = find_plane_class_for_mission(mission)
-    if mission['stopover']:
+    if mission.stopover:
         result = mission.km_nb < plane_class.plane_range_stopover
     else:
         result = mission.km_nb < plane_class.plane_range
