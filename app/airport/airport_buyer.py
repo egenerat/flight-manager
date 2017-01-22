@@ -3,7 +3,7 @@ from app.airport.airports_methods import withdraw_from_alliance
 from app.common.http_methods import get_request, post_request
 from app.common.string_methods import exception_if_not_contains, get_values_from_regex, string_contains
 from app.common.target_parse_strings import CONCORDE_PANEL_AVAILABLE_HTML, ALLIANCE_CONCORDE_PATTERN_HTML
-from app.common.target_strings import SHOP_SUCCESSFUL_KEROSENE, SHOP_SUCCESSFUL_ENGINES, SHOP_SUCCESSFUL_PLANES
+from app.common.target_strings import SHOP_SUCCESSFUL_PLANES
 from app.common.target_urls import ALLIANCE_TAKE_CONCORDE_URL, ALLIANCE_PAGE, ALLIANCE_CONCORDE_PANEL_URL, \
     SHOP_ENGINE_4_URL, SHOP_ENGINE_5_URL, SHOP_ENGINE_6_URL, SHOP_KEROSENE_URL, SHOP_BUY_KEROSENE_URL
 from app.planes.SupersonicPlane import SupersonicPlane
