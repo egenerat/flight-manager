@@ -1,4 +1,4 @@
-# -*- coding: iso-8859-15 -*-
+# coding=utf-8
 
 import datetime
 import re
@@ -41,7 +41,7 @@ def get_value_from_regex(regex, string):
     try:
         result = get_values_from_regex(regex, string)[0]
     except:
-        message = 'String not found: regex: {} in string: {}'.format(regex, string)
+        message = 'String not found: regex: {} in string: {}'.format(regex.encode('utf-8'), string.encode('utf-8'))
         logger.error(message)
         # TODO replace with more specific exception
         raise Exception(message)
