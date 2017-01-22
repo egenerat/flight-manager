@@ -17,7 +17,7 @@ class PlaneMaintainer(object):
     def __change_engines(self):
         result = post_request(CHANGE_ENGINES_URL.format(plane_id=self.plane.plane_id),
                               {'id_moteur': self.plane.replacement_engines_type})
-        if not string_contains("L'avion va bien recevoir ses nouveaux moteurs, dur&eacute;e : 2 heures.", result):
+        if not string_contains(u"L'avion va bien recevoir ses nouveaux moteurs, durée : 2 heures.", result):
             # TODO parse the answer
             logger.warning('Error while changing engines')
         self.__ready = False
@@ -26,7 +26,7 @@ class PlaneMaintainer(object):
         fuel_qty = self.plane.fuel_capacity - self.plane.kerosene
         confirm_page = post_request(FILL_FUEL_URL.format(plane_id=self.plane.plane_id),
                                     {'cq': fuel_qty})
-        if not string_contains('Vous avez ajout&eacute; .+ litres? de k&eacute;ros&egrave;ne dans votre avion !',
+        if not string_contains(u'Vous avez ajouté .+ litres? de kérosène dans votre avion !',
                                confirm_page):
             logger.warning('Error when filling fuel')
             self.__ready = False
@@ -39,10 +39,10 @@ class PlaneMaintainer(object):
         page = None
         try:
             page = get_request(MAINTENANCE_URL.format(plane_id=self.plane.plane_id))
-            exception_if_not_contains('Votre avion est maintenant en maintenance', page)
+            exception_if_not_contains(u'Votre avion est maintenant en maintenance', page)
         except:
             logger.error('Problem sending to maintenance')
-            if not string_contains("en mission, en maintenance ou n'a pas plus de 100,000 km sans maintenance",
+            if not string_contains(u"en mission, en maintenance ou n'a pas plus de 100,000 km sans maintenance",
                                    page):
                 # case when the current airport has changed
                 # case not enough mecanicians
