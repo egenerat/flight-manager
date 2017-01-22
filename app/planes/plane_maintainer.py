@@ -1,10 +1,17 @@
 # coding=utf-8
-
+from app.common.constants import MAIN_AIRPORT_NAME
+from app.common.constants_strategy import SUPERSONIC_MODEL_TO_BE_PURCHASED, JET_MODEL_TO_BE_PURCHASED, \
+    COMMERCIAL_MODEL_TO_BE_PURCHASED
 from app.common.logger import logger
 from app.common.email_methods import notify
 from app.common.http_methods import get_request, post_request
 from app.common.string_methods import string_contains, exception_if_not_contains
-from app.common.target_urls import CHANGE_ENGINES_URL, FILL_FUEL_URL, SCRAP_PLANE_URL, MAINTENANCE_URL
+from app.common.target_strings import ALLIANCE_PUT_PLANE_SUCCESSFUL
+from app.common.target_urls import CHANGE_ENGINES_URL, FILL_FUEL_URL, SCRAP_PLANE_URL, MAINTENANCE_URL, \
+    ALLIANCE_PUT_PLANE
+from app.planes.CommercialPlane import CommercialPlane
+from app.planes.JetPlane import JetPlane
+from app.planes.SupersonicPlane import SupersonicPlane
 
 
 class PlaneMaintainer(object):
@@ -54,6 +61,8 @@ class PlaneMaintainer(object):
         self.__ready = False
 
     def prepare_plane(self):
+        if self.airport.airport_name == MAIN_AIRPORT_NAME:
+            self.removing_planes()
         if self.plane.endlife:
             self.__scrap_plane()
             return False
@@ -66,3 +75,16 @@ class PlaneMaintainer(object):
         if not self.plane.is_fuel_full():
             self.__fill_fuel()
         return self.__ready
+
+    def removing_planes(self):
+        if isinstance(self.plane, SupersonicPlane) and not isinstance(self.plane, SUPERSONIC_MODEL_TO_BE_PURCHASED):
+            put_plane_alliance(self.plane.plane_id)
+        elif isinstance(self.plane, JetPlane) and not isinstance(self.plane, JET_MODEL_TO_BE_PURCHASED):
+            put_plane_alliance(self.plane.plane_id)
+        elif isinstance(self.plane, CommercialPlane) and not isinstance(self.plane, COMMERCIAL_MODEL_TO_BE_PURCHASED):
+            put_plane_alliance(self.plane.plane_id)
+
+
+def put_plane_alliance(plane_id):
+    response = post_request(ALLIANCE_PUT_PLANE, {'cq':1, 'la_variete': str(plane_id)})
+    return ALLIANCE_PUT_PLANE_SUCCESSFUL in response
