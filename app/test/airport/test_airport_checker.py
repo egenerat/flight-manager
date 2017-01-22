@@ -1,4 +1,4 @@
-# -*- coding: iso-8859-1 -*-
+# coding=utf-8
 from app.airport.airport_checker import amount_needed
 import unittest
 

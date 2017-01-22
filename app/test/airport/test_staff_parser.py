@@ -1,7 +1,7 @@
-# -*- coding: iso-8859-1 -*-
-import requests
+# coding=utf-8
 
 from app.airport.staff_parser import get_pilots, get_flight_attendants, get_mechanics
+from app.common.http_methods_unittests import get_request
 from app.common.target_urls import STAFF_PAGE_TEST
 import unittest
 
@@ -10,7 +10,7 @@ class TestParserStaff(unittest.TestCase):
 
     @classmethod
     def setUpClass(cls):
-        cls.__html_page = requests.get(STAFF_PAGE_TEST).text
+        cls.__html_page = get_request(STAFF_PAGE_TEST)
 
     def test_pilots(self):
         total_pilots, busy_pilots = get_pilots(self.__html_page)

@@ -6,7 +6,7 @@ from app.common.target_parse_strings import FUEL_CAPACITY_REGEX, FUEL_STOCK_REGE
 
 
 def get_country(page):
-    country = get_value_from_regex(AIRPORT_COUNTRY_NAME_REGEX, page).encode('utf-8')
+    country = get_value_from_regex(AIRPORT_COUNTRY_NAME_REGEX, page)
     return country
 
 
@@ -35,4 +35,4 @@ def get_planes_capacity(page):
 
 
 def get_airport_name(page):
-    return get_value_from_regex(AIRPORT_NAME_REGEX, page).encode('utf-8')
+    return get_value_from_regex(AIRPORT_NAME_REGEX, page)
