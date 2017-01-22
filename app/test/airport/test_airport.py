@@ -1,7 +1,7 @@
 # coding=utf-8
-import requests
 
 from app.airport.Airport import Airport
+from app.common.http_methods_unittests import get_request
 from app.common.target_urls import MY_AIRPORT
 import unittest
 
@@ -10,7 +10,7 @@ class TestAirport(unittest.TestCase):
 
     @classmethod
     def setUpClass(cls):
-        cls.__html_page = requests.get(MY_AIRPORT).text
+        cls.__html_page = get_request(MY_AIRPORT)
 
     def test_str(self):
         airport = Airport(country='Égypte',
