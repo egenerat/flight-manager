@@ -1,5 +1,5 @@
 # coding=utf-8
-from app.common.string_methods import get_value_from_regex, get_amount, get_int_from_regex
+from app.common.string_methods import get_value_from_regex, get_amount
 
 
 class PlaneSpecificationParser(object):

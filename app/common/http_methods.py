@@ -13,7 +13,6 @@ from app.common.target_urls import LOGIN_PAGE
 from app.common.target_urls import POST_LOGIN_PAGE
 from fm.databases.database_django import save_session_to_db
 from lib import requests
-from app.common import constants
 from app.common.constants import USERNAME, PASSWORD, HEADER
 
 parser = HTMLParser()

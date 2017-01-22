@@ -1,7 +1,6 @@
 # coding=utf-8
 from abc import ABCMeta
 
-from app.common.target_urls import BUY_JET_DS_URL
 from app.planes.RootPlane import RootPlane
 
 
