@@ -1,6 +1,7 @@
 # coding=utf-8
 
 from app.airport.airport_config import AirportConfig
+from app.common.constants import MAIN_AIRPORT_NAME
 from app.common.constants_strategy import JET_MODEL_TO_BE_PURCHASED, COMMERCIAL_MODEL_TO_BE_PURCHASED, \
     SUPERSONIC_MODEL_TO_BE_PURCHASED
 from app.planes.planes_util2 import get_planes_nb_from_sorted_dict
@@ -30,11 +31,16 @@ class AirportChecker(object):
         }
 
     def fix_missing_planes(self):
-        total_missing_planes = self.airport.planes_capacity - get_planes_nb_from_sorted_dict(self.sorted_planes_dict)
-        if total_missing_planes > 0:
-            for plane_class, missing_units in self.check_missing_planes().iteritems():
-                if missing_units > 0:
-                    self.airport_buyer.buy_missing_planes(plane_class, min(missing_units, total_missing_planes))
+        new_planes = False
+        if self.airport.airport_name == MAIN_AIRPORT_NAME:
+            total_missing_planes = self.airport.planes_capacity - get_planes_nb_from_sorted_dict(self.sorted_planes_dict)
+            if total_missing_planes > 0:
+                new_planes = True
+                for plane_class, missing_units in self.check_missing_planes().iteritems():
+                    if missing_units > 0:
+                        self.airport_buyer.buy_missing_planes(plane_class, min(missing_units, total_missing_planes))
+                        #TODO new_planes var should be set with the result of buying_missing_planes
+        return new_planes
 
     def fix_missing_staff(self):
         current_staff = self.airport.staff
