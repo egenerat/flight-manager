@@ -1,8 +1,8 @@
 # coding=utf-8
-import requests
 
 from app.airport.airports_parsers import get_country, get_money, get_kerosene_supply, get_kerosene_capacity, \
     get_engines_supply, get_planes_capacity, get_airport_name
+from app.common.http_methods_unittests import get_request
 from app.common.target_urls import MY_AIRPORT
 import unittest
 
@@ -11,11 +11,11 @@ class TestAirportParser(unittest.TestCase):
 
     @classmethod
     def setUpClass(cls):
-        cls.__html_page = requests.get(MY_AIRPORT).text
+        cls.__html_page = get_request(MY_AIRPORT)
 
     def test_country(self):
         country = get_country(self.__html_page)
-        self.assertEqual('Égypte', country)
+        self.assertEqual(u'Égypte', country)
 
     def test_money(self):
         country = get_money(self.__html_page)
@@ -40,7 +40,7 @@ class TestAirportParser(unittest.TestCase):
 
     def test_airport_name(self):
         country = get_airport_name(self.__html_page)
-        self.assertEqual('Roissy aéroport', country)
+        self.assertEqual(u'Roissy aéroport', country)
 
 if __name__ == '__main__':
     unittest.main()

@@ -1,5 +1,4 @@
-import requests
-
+from app.common.http_methods_unittests import get_request
 from app.common.target_urls import YOUR_PLANES_URL
 from app.parsers.planes_parser import build_planes_from_html
 import unittest
@@ -21,7 +20,7 @@ class TestParser(unittest.TestCase):
 
     @classmethod
     def setUpClass(cls):
-        cls.html_page = requests.get(YOUR_PLANES_URL).text
+        cls.html_page = get_request(YOUR_PLANES_URL)
 
     def test_parser(self):
         # 97 Concorde

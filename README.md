@@ -14,3 +14,6 @@ Push updates
 `appcfg.py update .`
 
 `python2.7 dev_appserver.py --automatic_restart=no --max_module_instances=default:1 .`
+
+Download code from app engine
+`appcfg.py -A [YOUR_APP_ID] -V [YOUR_APP_VERSION] download_app [OUTPUT_DIR]`

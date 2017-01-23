@@ -1,7 +1,6 @@
-# -*- coding: iso-8859-1 -*-
+# coding=utf-8
 
-import requests
-
+from app.common.http_methods_unittests import get_request
 from app.common.target_urls import YOUR_MISSIONS_URL, YOUR_MISSIONS_JET_URL
 from app.missions.missionparser import parse_all_missions_in_page, parse_stopover
 import unittest
@@ -11,14 +10,19 @@ class TestParser(unittest.TestCase):
 
     @classmethod
     def setUpClass(cls):
-        cls.html_page = requests.get(YOUR_MISSIONS_URL).text
+        cls.html_page = get_request(YOUR_MISSIONS_URL)
         cls.missions_list = parse_all_missions_in_page(cls.html_page, '1')
+
+    def test_parser(self):
+        self.html_page = get_request(YOUR_MISSIONS_URL)
+        self.missions_list = parse_all_missions_in_page(self.html_page, '1')
+        self.assertEqual(10, len(self.missions_list))
 
     def test_nb_missions_page(self):
         self.assertEqual(10, len(self.missions_list))
 
     def test_jet_missions(self):
-        html_page2 = requests.get(YOUR_MISSIONS_JET_URL).text
+        html_page2 = get_request(YOUR_MISSIONS_JET_URL)
         missions_list = parse_all_missions_in_page(html_page2, '1')
         self.assertEqual(11, len(missions_list))
 
@@ -42,11 +46,11 @@ class TestParser(unittest.TestCase):
         self.assertTrue(stopover_details)
 
     def test_stopover(self):
-        stopover_html = requests.get("http://localhost/test_pages/stopover_details.html").text
+        stopover_html = get_request("http://localhost/test_pages/stopover_details.html")
         a_stopover = parse_stopover(stopover_html)
         self.assertEqual(29, a_stopover['reputation'])
         self.assertEqual(7, a_stopover['travellers_nb'])
-        self.assertEqual(25930, a_stopover['contract_plus_bonus'])
+        self.assertEqual(25930, a_stopover['revenue'])
 
 if __name__ == '__main__':
     unittest.main()

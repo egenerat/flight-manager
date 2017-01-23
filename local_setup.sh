@@ -1,0 +1,1 @@
+openssl aes-256-cbc -K $encrypted_key -iv $encrypted_iv  -in archive.tar.enc2 -out archive.tar -d

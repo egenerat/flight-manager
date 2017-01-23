@@ -1,9 +1,9 @@
-# -*- coding: iso-8859-1 -*-
+# coding=utf-8
 from app.common.string_methods import everything_between, get_amount, get_value_from_regex
 
 
 def extract_daily_report(full_html_page):
-    return everything_between(full_html_page, u"<u>Bilan de la journ&eacute;e</u> :<br /><br />", u"La variation se calcule sur la comparaison de la valeur")
+    return everything_between(full_html_page, u"<u>Bilan de la journée</u> :<br /><br />", u"La variation se calcule sur la comparaison de la valeur")
 
 
 def extract_crash_number(html_report):
