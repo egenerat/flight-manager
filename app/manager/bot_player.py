@@ -4,6 +4,7 @@ from app.airport import staff_buyer
 from app.airport.airport_builder import build_airport
 from app.airport.airport_checker import AirportChecker
 from app.airport.report_parser import report_parser
+from app.common.constants import MAIN_AIRPORT_NAME
 from app.common.email_methods import notify
 from app.common.logger import logger
 from app.common.http_methods import get_request
@@ -13,6 +14,7 @@ from app.parsers.planes_parser import build_planes_from_html
 from app.planes.plane_garage import PlaneGarage
 from app.planes.planes_util2 import split_planes_list_by_type
 from fm.mission_handler import accept_all_missions
+from fm.notifications import notify_plane_crashes
 
 
 class BotPlayer(object):
@@ -22,7 +24,7 @@ class BotPlayer(object):
         self.ongoing_missions = self.get_ongoing_missions()
         self.report = self.build_report()
         self.missions = missions
-        logger.info('Airport {}'.format(self.airport.airport_name))
+        logger.info('Airport {}'.format(self.airport.airport_name.encode('utf-8')))
 
     def build_airport(self):
         staff_page = get_request(STAFF_PAGE)
@@ -74,5 +76,8 @@ class BotPlayer(object):
         daily_report = self.report['daily']
         daily_crashes_number = daily_report['crashes']
         if daily_crashes_number > 0:
-            message = '{}: {} crashes'.format(self.airport.airport_name, daily_crashes_number)
-            notify(message, message)
+            if self.airport.airport_name == MAIN_AIRPORT_NAME:
+                notify_plane_crashes(self.airport.airport_name, daily_crashes_number)
+
+    def refresh_planes(self):
+        self.planes = self.build_planes()
