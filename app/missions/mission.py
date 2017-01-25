@@ -3,6 +3,7 @@
 import datetime
 import math
 
+from app.planes.planes_util import duration_mission, calculate_total_consumption_one_way, COEFFICIENT
 
 MONDAY_DAY_OF_WEEK = 0
 
@@ -38,5 +39,10 @@ def get_real_benefit(a_mission, plane_value):
 
 
 def is_mission_feasible(mission, plane):
-    # TODO
-    raise NotImplemented
+    is_stopover = False
+    total_consumption = calculate_total_consumption_one_way(duration_mission(mission.km_nb, plane.speed),
+                                                            plane.consumption_per_hour, mission.travellers_nb,
+                                                            mission.pilots_nb + mission.flight_attendants_nb)
+    if not is_stopover:
+        total_consumption *= 3/2.0
+    return total_consumption < COEFFICIENT * plane.fuel_capacity
