@@ -16,12 +16,12 @@ class TestMission(object):
 
 class TestParser(unittest.TestCase):
 
-    def test_parser(self):
+    def test_feasible(self):
         mission = TestMission(km_nb=4000, travellers_nb=0, pilots_nb=0, flight_attendants_nb=0)
         plane = SupersonicTUPlane(plane_id=0, ready=True)
         self.assertTrue(is_mission_feasible(mission, plane))
 
-    def test_parser(self):
+    def test_not_feasible(self):
         mission = TestMission(km_nb=5000, travellers_nb=0, pilots_nb=0, flight_attendants_nb=0)
         plane = SupersonicTUPlane(plane_id=0, ready=True)
         self.assertFalse(is_mission_feasible(mission, plane))
