@@ -12,7 +12,7 @@ from app.airport.airport_builder import build_airport
 from app.common.logger import logger
 from app.common.http_methods import post_request, get_request
 from app.common.target_urls import GENERIC_ACCEPT_MISSION, AIRPORT_PAGE, STAFF_PAGE
-from app.missions.mission import get_real_benefit, get_expiry_date
+from app.missions.mission import get_real_benefit, get_expiry_date, is_mission_feasible
 from app.missions.mission_utils import split_missions_list_by_type, is_possible_mission, find_plane_class_for_mission, \
     is_interesting_mission
 from app.planes.planes_util2 import split_planes_list_by_type
@@ -82,8 +82,7 @@ def __accept_mission(country_id, plane_id, mission_id, mission_type):
     return bonus
 
 
-def temp(plane_list, a_mission):
-    plane_id = plane_list.pop().plane_id
+def accept_one_mission(plane_id, a_mission):
     try:
         bonus = __accept_mission(a_mission.country_nb, plane_id, a_mission.mission_nb, a_mission.mission_type)
     except Exception as e:
@@ -92,12 +91,22 @@ def temp(plane_list, a_mission):
         # notify('FM : bug while accepting mission', get_airport().get_airport_name() + '\nThere was a bug while accepting mission :\n' + str(exception_text))
 
 
+def accept_all_missions_one_type(plane_list, mission_list):
+    found = False
+    for a_plane in plane_list:
+        mission_remaining = []
+        for a_mission in mission_list:
+            if not found and is_mission_feasible(a_mission, a_plane):
+                accept_one_mission(a_plane.plane_id, a_mission)
+                found = True
+            else:
+                mission_remaining.append(a_mission)
+        mission_list = mission_remaining
+
+
 def accept_all_missions(missions_list, plane_list):
     sorted_planes = split_planes_list_by_type(plane_list)
     sorted_missions = split_missions_list_by_type(missions_list)
-    for a_mission in sorted_missions['missions_for_commercial'][:len(sorted_planes['commercial_ready_planes'])]:
-        temp(sorted_planes['commercial_ready_planes'], a_mission)
-    for a_mission in sorted_missions['missions_for_supersonics'][:len(sorted_planes['supersonic_ready_planes'])]:
-        temp(sorted_planes['supersonic_ready_planes'], a_mission)
-    for a_mission in sorted_missions['missions_for_jet'][:len(sorted_planes['jet_ready_planes'])]:
-        temp(sorted_planes['jet_ready_planes'], a_mission)
+    accept_all_missions_one_type(sorted_planes['commercial_ready_planes'], sorted_missions['missions_for_commercial'])
+    accept_all_missions_one_type(sorted_planes['supersonic_ready_planes'], sorted_missions['missions_for_supersonics'])
+    accept_all_missions_one_type(sorted_planes['jet_ready_planes'], sorted_missions['missions_for_jet'])
