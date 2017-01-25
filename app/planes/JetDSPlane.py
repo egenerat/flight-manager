@@ -12,7 +12,7 @@ class JetDSPlane(JetPlane):
     minimum_kerosene_before_mission = fuel_capacity
     # 7 (max hours one way) * speed * 2 (2 ways)
     plane_range = 6454
-    plane_range_stopover = plane_range
+    plane_range_stopover = 10142
     price = 2390000
     buy_url = BUY_JET_DS_URL
     plane_capacity = 19
