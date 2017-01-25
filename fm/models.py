@@ -40,6 +40,11 @@ class AirportsToBeSold(models.Model):
     reputation = models.PositiveSmallIntegerField()
 
 
+class Notification(models.Model):
+    last_date = models.DateTimeField()
+    plane_crashes = models.PositiveSmallIntegerField()
+
+
 class ASHttpSession(models.Model):
     _data = models.TextField(
         db_column='data',
