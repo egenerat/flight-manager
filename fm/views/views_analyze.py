@@ -26,8 +26,10 @@ def view_top_missions(_):
     total_reputation_per_week = 0
     for i in mission_list:
         # approximation, because plane can start a same mission before the previous plane came back from the same mission
-        total_reputation_per_week+=i.reputation_per_hour*HOURS_PER_WEEK
-    return render_to_response('list_missions.html', {'missions': mission_list, 'planes_needed': nb_planes_needed, 'total_reputation_per_week':total_reputation_per_week})
+        total_reputation_per_week += i.reputation_per_hour * HOURS_PER_WEEK
+    return render_to_response('list_missions.html', {'missions': mission_list,
+                                                     'planes_needed': nb_planes_needed,
+                                                     'total_reputation_per_week': int(total_reputation_per_week)})
 
 
 def view_compare_planes(_):
