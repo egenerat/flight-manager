@@ -1,0 +1,2 @@
+class StringNotFoundException(Exception):
+    pass

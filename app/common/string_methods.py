@@ -2,6 +2,8 @@
 
 import datetime
 import re
+
+from app.common.exceptions.string_not_found import StringNotFoundException
 from app.common.logger import logger
 from app.common.target_parse_strings import AMOUNT_REGEX
 
@@ -42,9 +44,7 @@ def get_value_from_regex(regex, string):
         result = get_values_from_regex(regex, string)[0]
     except:
         message = 'String not found: regex: {} in string: {}'.format(regex.encode('utf-8'), string.encode('utf-8'))
-        logger.error(message)
-        # TODO replace with more specific exception
-        raise Exception(message)
+        raise StringNotFoundException(message)
     return result
 
 
