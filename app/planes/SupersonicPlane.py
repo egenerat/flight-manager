@@ -7,7 +7,7 @@ from app.planes.RootPlane import RootPlane
 class SupersonicPlane(RootPlane):
 
     engines_nb = 4
-    limit_change_engines = 95
+    limit_change_engines = 93
     maximum_engine_hours = 100
     replacement_engines_type = '6'
 

@@ -7,7 +7,7 @@ from app.planes.RootPlane import RootPlane
 class JetPlane(RootPlane):
 
     # To be reduced further with stopover
-    limit_change_engines = 59
+    limit_change_engines = 51
     maximum_engine_hours = 75
     replacement_engines_type = '5'
 
