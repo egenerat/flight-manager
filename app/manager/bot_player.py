@@ -5,7 +5,6 @@ from app.airport.airport_builder import build_airport
 from app.airport.airport_checker import AirportChecker
 from app.airport.report_parser import report_parser
 from app.common.constants import MAIN_AIRPORT_NAME
-from app.common.email_methods import notify
 from app.common.logger import logger
 from app.common.http_methods import get_request
 from app.common.target_urls import STAFF_PAGE, AIRPORT_PAGE, MISSION_DASHBOARD, PLANES_PAGE, AIRPORT_REPORT

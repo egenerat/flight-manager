@@ -4,7 +4,6 @@ import datetime
 import re
 
 from app.common.exceptions.string_not_found import StringNotFoundException
-from app.common.logger import logger
 from app.common.target_parse_strings import AMOUNT_REGEX
 
 MULTI_SPACE = '[\S+\n\r\s]+'

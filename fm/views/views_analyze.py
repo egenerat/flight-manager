@@ -18,11 +18,12 @@ from app.parsers.planes_parser import build_planes_from_html
 from django.http import HttpResponse
 from fm.databases.database_django import db_get_ordered_missions_multi_type
 
+HOURS_PER_WEEK = 168
+
 
 def view_top_missions(_):
     mission_list = db_get_ordered_missions_multi_type(200, '-reputation_per_hour')
     nb_planes_needed = planes_needed_by_category(mission_list)
-    HOURS_PER_WEEK = 168
     total_reputation_per_week = 0
     for i in mission_list:
         # approximation, because plane can start a same mission before the previous plane came back from the same mission
@@ -33,7 +34,7 @@ def view_top_missions(_):
 
 
 def view_compare_planes(_):
-    result = {"list":[]}
+    result = {"list": []}
     for i in range(1, 9):
         url = SHOP_ONE_CONSTRUCTOR_PAGE.format(shop_constructor_id=i)
         page = get_request(url)
@@ -46,20 +47,20 @@ def view_compare_planes(_):
                 'plane_model': spec.get_plane_model(),
                 'speed': spec.get_speed(),
                 'capacity': spec.get_kerosene_capacity(),
-                #'engines_nb': spec.get_engine_nb(),
+                # 'engines_nb': spec.get_engine_nb(),
                 'consumption': spec.get_kerosene_consumption(),
                 'price': spec.get_price()
             })
     return HttpResponse(json.dumps(result), content_type="application/json")
 
 
-#TODO DEPRECATED
+# TODO DEPRECATED
 def represent_data(_):
     country_list = ['France', 'Italie', 'Suisse', 'Turquie']
     result = {}
     missions_list = []
     for i in country_list:
-        #TODO adapt
+        # TODO adapt
         PLANE_CAPACITY = 100
         PLANE_SPEED = 2250
         missions_list = db_get_ordered_missions(i, PLANE_CAPACITY, PLANE_SPEED, 84, '-reputation_per_hour')

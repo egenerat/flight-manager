@@ -1,6 +1,6 @@
 import unittest
 
-from app.planes.planes_util import duration_mission, calculate_total_consumption_mission,\
+from app.planes.planes_util import duration_mission,\
     calculate_real_autonomy_one_way
 
 

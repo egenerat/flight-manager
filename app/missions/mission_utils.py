@@ -44,7 +44,7 @@ def is_possible_mission(mission):
 
 def is_interesting_mission(mission):
     # if mission.revenue_per_hour < 0, plane usage > revenues
-    return mission.reputation_per_hour > MISSION_REPUTATION_MINIMUM_INTERESTING #and mission.revenue_per_hour > 0
+    return mission.reputation_per_hour > MISSION_REPUTATION_MINIMUM_INTERESTING  # and mission.revenue_per_hour > 0
 
 
 def sort_missions_by_type(mission_list):

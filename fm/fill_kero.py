@@ -10,7 +10,7 @@ from app.common.target_strings import SHOP_SUCCESSFUL_KEROSENE, SHOP_NO_SALE
 from app.common.target_urls import SHOP_USED_KEROSENE_URL, QUICK_REFILL_URL, SHOP_BUY_USED_KEROSENE_URL
 
 
-#todo refactor
+# todo refactor
 def fill_all_airports():
     other_airports = get_other_airports_id()
     # switch on all airports
@@ -67,14 +67,15 @@ def buy_market_kero(quantity, sale_id):
     body = {
         'cq': quantity,
         'mon_champ': sale_id
-     }
+    }
     response = post_request(SHOP_BUY_USED_KEROSENE_URL, body)
     exception_if_not_contains(SHOP_SUCCESSFUL_KEROSENE, response)
 
 
 def extract_available_offers(page):
     if not re.findall(SHOP_NO_SALE, page):
-        result = re.findall('<td class="Brocante1"><input type="radio" name="mon_champ" value="\d+"></td>[.\S+\n\r\s]*?</tr>', page)
+        result = re.findall(
+            '<td class="Brocante1"><input type="radio" name="mon_champ" value="\d+"></td>[.\S+\n\r\s]*?</tr>', page)
         sell_list = []
         for i in result:
             sell_id = re.findall('<input type="radio" name="mon_champ" value="(\d+)">', i)[0]
@@ -85,7 +86,7 @@ def extract_available_offers(page):
                 'sell_id': sell_id,
                 'quantity': quantity,
                 'price': price
-               }
+            }
             sell_list.append(obj)
         sell_list = sorted(sell_list, key=lambda i: i['price'])
         return sell_list

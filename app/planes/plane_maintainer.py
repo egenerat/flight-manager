@@ -86,15 +86,17 @@ class PlaneMaintainer(object):
 
 
 def put_plane_alliance(plane_id):
-    response = post_request(ALLIANCE_PUT_PLANE, {'cq':1, 'la_variete': str(plane_id)})
+    response = post_request(ALLIANCE_PUT_PLANE, {'cq': 1, 'la_variete': str(plane_id)})
     return ALLIANCE_PUT_PLANE_SUCCESSFUL in response
 
 
-def take_planes_alliance(planes_nb):
+def take_planes_alliance(nb_planes_required):
     alliance_page = get_request(ALLIANCE_PAGE)
     available_plane_types = get_values_from_regex(u'<a href="(.*)" class="lien">Détails</a>', alliance_page)
+    planes_available = []
     for plane_type in available_plane_types:
         page = get_request('{}/{}'.format(SITE, plane_type))
         planes_available = get_values_from_regex(u'<a href="(.*)" class="lien">Retirer</a>', page)
-    for i in range(0, planes_nb):
+    nb_planes_available = len(planes_available)
+    for i in range(0, min(nb_planes_required, nb_planes_available)):
         get_request('{}/{}'.format(SITE, planes_available[i]))

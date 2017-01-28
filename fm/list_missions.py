@@ -23,7 +23,7 @@ def list_dest_countries_id_by_mission_type():
     """ returns the list of countries available for each mission_type """
     result = {}
     mission_types = ["4", "5"]
-    #ANALYSIS
+    # ANALYSIS
     # mission_types = ["1", "2", "3", "4", "5"]
     for i in mission_types:
         html_page = get_request(GENERIC_MISSION_PAGE.format(mission_type=i))
@@ -32,7 +32,3 @@ def list_dest_countries_id_by_mission_type():
     # import itertools
     # print("{} requests to be sent".format(len(list(itertools.chain.from_iterable(result.values())))))
     return result
-
-
-
-

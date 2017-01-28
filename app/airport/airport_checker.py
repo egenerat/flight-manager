@@ -40,7 +40,7 @@ class AirportChecker(object):
                 for plane_class, missing_units in self.check_missing_planes().iteritems():
                     if missing_units > 0:
                         self.airport_buyer.buy_missing_planes(plane_class, min(missing_units, total_missing_planes))
-                        #TODO new_planes var should be set with the result of buying_missing_planes
+                        # TODO new_planes var should be set with the result of buying_missing_planes
             else:
                 take_planes_alliance(total_missing_planes)
         return new_planes

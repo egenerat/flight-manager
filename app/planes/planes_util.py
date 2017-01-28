@@ -7,6 +7,8 @@ from app.common.constants import MAX_KM, KEROSENE_PRICE
 from app.common.target_strings import SUPERSONICS_MODELS_HTML, COMMERCIAL_MODELS_HTML, JETS_MODELS_HTML
 
 COEFFICIENT = 0.965
+
+
 # COEFFICIENT = 1
 
 # concorde: around 0.965
@@ -23,7 +25,7 @@ def duration_mission(distance, speed):
 
 
 def calculate_total_consumption_one_way(duration, conso_per_hour, passengers_nb, staff_nb):
-    #TODO improve calculation
+    # TODO improve calculation
     # formula is flight_hours * (consumption_per_hour + 3*(passengers_nb+staff))*3/2
     # replacing time by distance/speed
     return duration * (conso_per_hour + 3 * (passengers_nb + staff_nb))
@@ -32,7 +34,7 @@ def calculate_total_consumption_one_way(duration, conso_per_hour, passengers_nb,
 def calculate_real_autonomy_one_way(speed, kerosene_capacity, conso_per_hour, passengers_nb, staff_nb):
     max_duration = 0
     while calculate_total_consumption_one_way(max_duration, conso_per_hour, passengers_nb,
-                                              staff_nb) * 3/2.0 < COEFFICIENT * kerosene_capacity:
+                                              staff_nb) * 3 / 2.0 < COEFFICIENT * kerosene_capacity:
         max_duration += 1
     return (max_duration - 1) * speed
 
@@ -43,6 +45,7 @@ def calculate_autonomy_with_stopover(speed, kerosene_capacity, conso_per_hour, p
                                               staff_nb) < COEFFICIENT * kerosene_capacity:
         max_duration += 1
     return (max_duration - 1) * speed
+
 
 def is_supersonic(string_model):
     return string_model in SUPERSONICS_MODELS_HTML
@@ -258,12 +261,12 @@ if __name__ == '__main__':
             "plane_model": "B777-200ER"
         }]
     supersonics_plane = [{
-            "capacity": 119500,
-            "price": 12590000,
-            "speed": 2250,
-            "consumption": 25625,
-            "plane_model": "Concorde"
-        },
+        "capacity": 119500,
+        "price": 12590000,
+        "speed": 2250,
+        "consumption": 25625,
+        "plane_model": "Concorde"
+    },
         {
             "capacity": 112300,
             "price": 14285000,
@@ -273,12 +276,12 @@ if __name__ == '__main__':
         }
     ]
     jet_planes = [{
-            "capacity": 6775,
-            "price": 1600000,
-            "speed": 850,
-            "consumption": 850,
-            "plane_model": "Challenger 300"
-        },
+        "capacity": 6775,
+        "price": 1600000,
+        "speed": 850,
+        "consumption": 850,
+        "plane_model": "Challenger 300"
+    },
         {
             "capacity": 9500,
             "price": 1980000,
@@ -415,8 +418,10 @@ if __name__ == '__main__':
 
     plane_list = jet_planes
     for plane in plane_list:
-        plane['autonomy_one_way'] = calculate_real_autonomy_one_way(plane['speed'], plane['capacity'], plane['consumption'], passengers_nb, staff_nb)
-        plane['autonomy_stopover'] = calculate_autonomy_with_stopover(plane['speed'], plane['capacity'], plane['consumption'], passengers_nb, staff_nb)
+        plane['autonomy_one_way'] = calculate_real_autonomy_one_way(plane['speed'], plane['capacity'],
+                                                                    plane['consumption'], passengers_nb, staff_nb)
+        plane['autonomy_stopover'] = calculate_autonomy_with_stopover(plane['speed'], plane['capacity'],
+                                                                      plane['consumption'], passengers_nb, staff_nb)
         # print("{}: {}".format(plane['plane_model'], plane['autonomy_one_way']))
         # print("{}: {}".format(plane['plane_model'], plane['autonomy_stopover']))
     # print('='*50)

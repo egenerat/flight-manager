@@ -56,7 +56,7 @@ def empty_db_missions():
 
 def parse_all_missions():
     switch_to_airport(PARSER_AIRPORT_ID)
-    #ANALYSIS
+    # ANALYSIS
     full_analysis = False
     db_remove_all_missions()
     result = list_dest_countries_id_by_mission_type()
@@ -99,7 +99,8 @@ def __accept_mission(country_id, plane_id, mission_id, mission_type, stopover):
         log_message += ' + stopover'
         post_data.update({'active_escale': '1'})
     page = post_request(
-        GENERIC_ACCEPT_MISSION.format(mission_type=mission_type, mission_id=mission_id, country_id=country_id), post_data)
+        GENERIC_ACCEPT_MISSION.format(mission_type=mission_type, mission_id=mission_id, country_id=country_id),
+        post_data)
     logger.info(log_message)
     try:
         bonus = extract_bonus_from_page(page)
@@ -112,7 +113,8 @@ def __accept_mission(country_id, plane_id, mission_id, mission_type, stopover):
 def accept_one_mission(plane_id, a_mission):
     try:
         has_stopover = a_mission.stopover is not None
-        bonus = __accept_mission(a_mission.country_nb, plane_id, a_mission.mission_nb, a_mission.mission_type, has_stopover)
+        bonus = __accept_mission(a_mission.country_nb, plane_id, a_mission.mission_nb, a_mission.mission_type,
+                                 has_stopover)
     except Exception as e:
         exception_text = traceback.format_exc()
         logger.error(exception_text)
