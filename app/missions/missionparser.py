@@ -6,11 +6,12 @@ import re
 
 from app.common.constants import TIME_DIFFERENCE
 from app.common.string_methods import get_value_from_regex, everything_between, \
-    date_from_regex_result, get_int_from_regex, string_contains
+    date_from_regex_result, get_int_from_regex, string_contains, get_amount
 from app.common.target_parse_strings import MISSION_AMOUNT_REGEX, MISSION_DEPARTURE_DATE_REGEX, MISSION_TOO_SHORT_HTML, \
     MISSION_DISTANCE_REGEX, MISSIONS_FLIGHT_ATTENDANTS_NB_REGEX, MISSION_REPUTATION_REGEX, MISSIONS_PILOTS_NB_REGEX, \
     MISSION_ID_REGEX, MISSION_PASSENGERS_CARGO_NB_REGEX, MISSIONS_BEGIN_TABLE_HTML, MISSIONS_END_TABLE_HTML, \
-    MISSIONS_LINE_SPLIT_HTML, MISSIONS_ONGOING_ID_REGEX, HTML_SELECT_ID_REGEX
+    MISSIONS_LINE_SPLIT_HTML, MISSIONS_ONGOING_ID_REGEX, HTML_SELECT_ID_REGEX, STOPOVER_STRING, \
+    STOPOVER_TRAVELLERS_NB_REGEX, STOPOVER_REPUTATION_REGEX, STOPOVER_REVENUE_REGEX
 
 
 def get_country_list(html_page):
@@ -33,21 +34,31 @@ def parse_duration_before_departure(html_mission):
     return compute_time_before_departure(departure_date)
 
 
+def parse_stopover(stopover_html):
+    return {
+        'reputation': get_int_from_regex(STOPOVER_REPUTATION_REGEX, stopover_html),
+        'travellers_nb': get_int_from_regex(STOPOVER_TRAVELLERS_NB_REGEX, stopover_html),
+        'revenue': get_amount(get_value_from_regex(STOPOVER_REVENUE_REGEX, stopover_html))
+    }
+
+
 def parse_one_mission(mission_html, country_nb):
     if not string_contains(MISSION_TOO_SHORT_HTML,
                            mission_html):  # and not string_contains(u"vous n'avez pas d'avion correspondant &agrave; cette mission", mission_html):
         contract_amount = int(''.join(get_value_from_regex(MISSION_AMOUNT_REGEX, mission_html).split(',')))
         time_before_departure = parse_duration_before_departure(mission_html)
+        mission_nb = get_int_from_regex(MISSION_ID_REGEX, mission_html)
         a_mission = {
             'country_nb': int(country_nb),
-            'mission_nb': get_int_from_regex(MISSION_ID_REGEX, mission_html),
+            'mission_nb': mission_nb,
             'travellers_nb': get_int_from_regex(MISSION_PASSENGERS_CARGO_NB_REGEX, mission_html),
             'contract_amount': contract_amount,
             'reputation': get_int_from_regex(MISSION_REPUTATION_REGEX, mission_html),
             'pilots_nb': get_int_from_regex(MISSIONS_PILOTS_NB_REGEX, mission_html),
             'flight_attendants_nb': get_int_from_regex(MISSIONS_FLIGHT_ATTENDANTS_NB_REGEX, mission_html),
             'time_before_departure': time_before_departure,
-            'km_nb': get_int_from_regex(MISSION_DISTANCE_REGEX, mission_html)
+            'km_nb': get_int_from_regex(MISSION_DISTANCE_REGEX, mission_html),
+            'stopover': STOPOVER_STRING in mission_html
         }
         return a_mission
 

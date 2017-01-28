@@ -1,5 +1,11 @@
 # coding=utf-8
+import json
+
+import re
+
+from app.common.target_parse_strings import SHOP_PARSE_MODELS_REGEX
 from app.missions.mission_utils import planes_needed_by_category
+from app.standalone.PlaneSpecificationParser import PlaneSpecificationParser
 from django.shortcuts import render_to_response
 
 from app.airport.Airport import Airport
@@ -7,7 +13,7 @@ from app.airport.airports_methods import get_other_airports_id
 from app.airport.airports_methods import switch_to_airport
 from app.common.http_methods import get_request
 from app.common.string_methods import format_amount
-from app.common.target_urls import PLANES_PAGE
+from app.common.target_urls import PLANES_PAGE, SHOP_ONE_CONSTRUCTOR_PAGE, SITE
 from app.parsers.planes_parser import build_planes_from_html
 from django.http import HttpResponse
 from fm.databases.database_django import db_get_ordered_missions_multi_type
@@ -20,8 +26,32 @@ def view_top_missions(_):
     total_reputation_per_week = 0
     for i in mission_list:
         # approximation, because plane can start a same mission before the previous plane came back from the same mission
-        total_reputation_per_week+=i.reputation_per_hour*HOURS_PER_WEEK
-    return render_to_response('list_missions.html', {'missions': mission_list, 'planes_needed': nb_planes_needed, 'total_reputation_per_week':total_reputation_per_week})
+        total_reputation_per_week += i.reputation_per_hour * HOURS_PER_WEEK
+    return render_to_response('list_missions.html', {'missions': mission_list,
+                                                     'planes_needed': nb_planes_needed,
+                                                     'total_reputation_per_week': int(total_reputation_per_week)})
+
+
+def view_compare_planes(_):
+    result = {"list":[]}
+    for i in range(1, 9):
+        url = SHOP_ONE_CONSTRUCTOR_PAGE.format(shop_constructor_id=i)
+        page = get_request(url)
+        results = re.findall(SHOP_PARSE_MODELS_REGEX, page)
+        for j in results:
+            url2 = SITE + "/" + j
+            plane_details_html = get_request(url2)
+            spec = PlaneSpecificationParser(plane_details_html)
+            result['list'].append({
+                'plane_model': spec.get_plane_model(),
+                'speed': spec.get_speed(),
+                'capacity': spec.get_kerosene_capacity(),
+                #'engines_nb': spec.get_engine_nb(),
+                'consumption': spec.get_kerosene_consumption(),
+                'price': spec.get_price()
+            })
+    return HttpResponse(json.dumps(result), content_type="application/json")
+
 
 #TODO DEPRECATED
 def represent_data(_):

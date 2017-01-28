@@ -12,7 +12,8 @@ class Commercial7Plane(CommercialPlane):
     price = 1350000
     buy_url = BUY_COMMERCIAL_URL
     plane_capacity = 440
-    plane_range = 23721
+    plane_range = 11860
+    plane_range_stopover = plane_range
     speed = 971
 
     def __init__(self, **kwargs):

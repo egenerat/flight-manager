@@ -31,6 +31,8 @@ def get_real_benefit(a_mission, plane_value):
     # add the part of the engines that may not be used
     # add the cost of staff
     revenue = a_mission.contract_amount
+    if a_mission.stopover:
+        revenue += a_mission.stopover.revenue
     total_hours = a_mission.time_before_departure + math.ceil(a_mission.km_nb / plane_value) * 2
     plane_use = ((a_mission.km_nb * 2) / 500000.0) * plane_value
     revenue -= plane_use
@@ -39,7 +41,7 @@ def get_real_benefit(a_mission, plane_value):
 
 
 def is_mission_feasible(mission, plane):
-    is_stopover = False
+    is_stopover = mission.stopover is not None
     total_consumption = calculate_total_consumption_one_way(duration_mission(mission.km_nb, plane.speed),
                                                             plane.consumption_per_hour, mission.travellers_nb,
                                                             mission.pilots_nb + mission.flight_attendants_nb)

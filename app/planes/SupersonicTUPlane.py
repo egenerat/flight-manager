@@ -8,7 +8,8 @@ class SupersonicTUPlane(SupersonicPlane):
     fuel_capacity = 112300
     consumption_per_hour = 26180
     speed = 2430
-    plane_range = 4 * speed
+    plane_range = 2 * speed
+    plane_range_stopover = 3 * speed
     minimum_kerosene_before_mission = fuel_capacity
     price = 14285000
     buy_url = BUY_SUPERSONIC_TU_URL

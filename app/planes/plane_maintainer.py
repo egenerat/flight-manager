@@ -5,10 +5,10 @@ from app.common.constants_strategy import SUPERSONIC_MODEL_TO_BE_PURCHASED, JET_
 from app.common.logger import logger
 from app.common.email_methods import notify
 from app.common.http_methods import get_request, post_request
-from app.common.string_methods import string_contains, exception_if_not_contains
+from app.common.string_methods import string_contains, exception_if_not_contains, get_values_from_regex
 from app.common.target_strings import ALLIANCE_PUT_PLANE_SUCCESSFUL
 from app.common.target_urls import CHANGE_ENGINES_URL, FILL_FUEL_URL, SCRAP_PLANE_URL, MAINTENANCE_URL, \
-    ALLIANCE_PUT_PLANE
+    ALLIANCE_PUT_PLANE, ALLIANCE_PAGE, SITE
 from app.planes.CommercialPlane import CommercialPlane
 from app.planes.JetPlane import JetPlane
 from app.planes.SupersonicPlane import SupersonicPlane
@@ -88,3 +88,13 @@ class PlaneMaintainer(object):
 def put_plane_alliance(plane_id):
     response = post_request(ALLIANCE_PUT_PLANE, {'cq':1, 'la_variete': str(plane_id)})
     return ALLIANCE_PUT_PLANE_SUCCESSFUL in response
+
+
+def take_planes_alliance(planes_nb):
+    alliance_page = get_request(ALLIANCE_PAGE)
+    available_plane_types = get_values_from_regex(u'<a href="(.*)" class="lien">Détails</a>', alliance_page)
+    for plane_type in available_plane_types:
+        page = get_request('{}/{}'.format(SITE, plane_type))
+        planes_available = get_values_from_regex(u'<a href="(.*)" class="lien">Retirer</a>', page)
+    for i in range(0, planes_nb):
+        get_request('{}/{}'.format(SITE, planes_available[i]))

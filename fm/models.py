@@ -20,9 +20,16 @@ class Mission(models.Model):
     revenue_per_hour = models.PositiveSmallIntegerField(null=True)
     reputation_per_hour = models.FloatField(null=True)
     mission_type = models.CharField(max_length=1)
+    stopover = models.OneToOneField('Stopover', on_delete=models.CASCADE, null=True)
 
     def __str__(self):
         return "Mission {}".format(self.mission_nb)
+
+
+class Stopover(models.Model):
+    revenue = models.PositiveSmallIntegerField(null=True)
+    reputation = models.PositiveSmallIntegerField(null=True)
+    travellers_nb = models.PositiveSmallIntegerField(max_length=1)
 
 
 class AirportsToBeSold(models.Model):
