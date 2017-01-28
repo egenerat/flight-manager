@@ -17,3 +17,7 @@ Push updates
 
 Download code from app engine
 `appcfg.py -A [YOUR_APP_ID] -V [YOUR_APP_VERSION] download_app [OUTPUT_DIR]`
+
+appcfg.py list_versions .
+
+appcfg.py set_default_version .
