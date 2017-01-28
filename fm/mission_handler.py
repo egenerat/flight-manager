@@ -1,6 +1,5 @@
 # coding=utf-8
 
-import re
 import traceback
 
 import datetime
@@ -8,8 +7,12 @@ import datetime
 import math
 
 from app.airport.airport_builder import build_airport
+from app.airport.airports_methods import switch_to_airport
+from app.common.constants import PARSER_AIRPORT_ID
+from app.common.exceptions.string_not_found import StringNotFoundException
 from app.common.logger import logger
 from app.common.http_methods import post_request, get_request
+from app.common.string_methods import get_amount, get_value_from_regex
 from app.common.target_urls import GENERIC_ACCEPT_MISSION, AIRPORT_PAGE, STAFF_PAGE
 from app.missions.mission import get_real_benefit, get_expiry_date, is_mission_feasible
 from app.missions.mission_utils import split_missions_list_by_type, is_possible_mission, find_plane_class_for_mission, \
@@ -35,8 +38,11 @@ def enrich_mission_dictionary(mission_dict, expiry_date, country, mission_type):
     if stopover_dict:
         stopover = Stopover(**stopover_dict)
         a_mission.stopover = stopover
+        # stopover lasts one hour in the remote airport
+        a_mission.total_time += 1
         total_reputation += stopover.reputation
         a_mission.reputation = total_reputation
+        a_mission.contract_amount += stopover.revenue
     a_mission.reputation_per_hour = total_reputation / float(total_hours)
     return {
         'a_mission': a_mission,
@@ -49,6 +55,7 @@ def empty_db_missions():
 
 
 def parse_all_missions():
+    switch_to_airport(PARSER_AIRPORT_ID)
     #ANALYSIS
     full_analysis = False
     db_remove_all_missions()
@@ -64,13 +71,15 @@ def parse_all_missions():
             enriched_data = enrich_mission_dictionary(a_mission_dict, expiry_date, country, mission_type)
             a_mission = enriched_data['a_mission']
             if (is_possible_mission(a_mission) and is_interesting_mission(a_mission)) or full_analysis:
+                a_stopover = enriched_data['stopover']
+                if a_stopover:
+                    db_insert_object(a_stopover)
+                    a_mission.stopover = a_stopover
                 db_insert_object(a_mission)
-                if enriched_data['stopover']:
-                    db_insert_object(enriched_data['stopover'])
 
 
 def extract_bonus_from_page(page):
-    return re.findall('BONUS de <strong>(\d+),(\d+)</strong>', page)
+    return get_amount(get_value_from_regex('BONUS de <strong>(.+)</strong>', page))
 
 
 def are_missions_expired(missions):
@@ -82,22 +91,28 @@ def are_missions_expired(missions):
     return (expiry_date - today) <= datetime.timedelta(0)
 
 
-def __accept_mission(country_id, plane_id, mission_id, mission_type):
+def __accept_mission(country_id, plane_id, mission_id, mission_type, stopover):
     bonus = None
-    logger.info('accept mission: {} with plane {}'.format(mission_id, plane_id))
+    log_message = 'accept mission {} with plane {}'.format(mission_id, plane_id)
+    post_data = {'id_avion': str(plane_id)}
+    if stopover:
+        log_message += ' + stopover'
+        post_data.update({'active_escale': '1'})
     page = post_request(
-        GENERIC_ACCEPT_MISSION.format(mission_type=mission_type, mission_id=mission_id, country_id=country_id),
-        {'id_avion': str(plane_id)})
-    # Be careful, if re.findall()[0], may introduce list index out of range exception!
-    temp_bonus = extract_bonus_from_page(page)
-    if len(temp_bonus) == 1:
-        bonus = int(temp_bonus[0][0] + temp_bonus[0][1])
+        GENERIC_ACCEPT_MISSION.format(mission_type=mission_type, mission_id=mission_id, country_id=country_id), post_data)
+    logger.info(log_message)
+    try:
+        bonus = extract_bonus_from_page(page)
+    except StringNotFoundException:
+        error_message = get_value_from_regex('<strong>(.*)</strong>', page)
+        logger.error(error_message)
     return bonus
 
 
 def accept_one_mission(plane_id, a_mission):
     try:
-        bonus = __accept_mission(a_mission.country_nb, plane_id, a_mission.mission_nb, a_mission.mission_type)
+        has_stopover = a_mission.stopover is not None
+        bonus = __accept_mission(a_mission.country_nb, plane_id, a_mission.mission_nb, a_mission.mission_type, has_stopover)
     except Exception as e:
         exception_text = traceback.format_exc()
         logger.error(exception_text)
@@ -105,8 +120,8 @@ def accept_one_mission(plane_id, a_mission):
 
 
 def accept_all_missions_one_type(plane_list, mission_list):
-    found = False
     for a_plane in plane_list:
+        found = False
         mission_remaining = []
         for a_mission in mission_list:
             if not found and is_mission_feasible(a_mission, a_plane):
