@@ -6,8 +6,6 @@ import re
 from app.common.exceptions.string_not_found import StringNotFoundException
 from app.common.target_parse_strings import AMOUNT_REGEX
 
-MULTI_SPACE = '[\S+\n\r\s]+'
-
 
 def format_amount(amount):
     result = amount / 1000000
@@ -71,10 +69,3 @@ def string_contains(regex, string):
 def exception_if_not_contains(regex, string, message=''):
     if not string_contains(regex, string):
         raise Exception('Regex error : string not found. ' + message)
-
-
-def string_methods_test():
-    string = "-10,198,127 $"
-    is_valid = get_amount(string) == -10198127
-    return '{}: {}\n'.format(string, is_valid)
-
