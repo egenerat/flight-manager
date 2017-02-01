@@ -26,7 +26,7 @@ class MultiAirportBot(object):
             # set_airport(current_airport)
 
 
-def get_missions(self):
+def get_missions():
     db_missions = db_get_ordered_missions_multi_type(200, '-reputation_per_hour')
     if len(db_missions) < 200 or are_missions_expired(db_missions):
         logger.warning('Refresh missions')
