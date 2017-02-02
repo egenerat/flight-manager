@@ -36,6 +36,10 @@ class TestParser(unittest.TestCase):
         self.assertEqual(0, len(planes_by_type['supersonic_ready_planes']))
         self.assertEqual(69, len(planes_by_type['commercial_ready_planes']))
 
+    def test_parser(self):
+        html_page = get_request("http://localhost/test_pages/your_planes_no_plane.html")
+        self.planes_list = build_planes_from_html(html_page)
+        self.assertEqual(0, len(self.planes_list))
 
 if __name__ == '__main__':
     unittest.main()
