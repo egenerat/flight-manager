@@ -63,6 +63,8 @@ class PlaneMaintainer(object):
     def prepare_plane(self):
         if self.airport.airport_name == MAIN_AIRPORT_NAME:
             self.removing_planes()
+        else:
+            self.removing_planes_minor_airports()
         if self.plane.endlife:
             self.__scrap_plane()
             return False
@@ -83,6 +85,15 @@ class PlaneMaintainer(object):
             put_plane_alliance(self.plane.plane_id)
         elif isinstance(self.plane, CommercialPlane) and not isinstance(self.plane, COMMERCIAL_MODEL_TO_BE_PURCHASED):
             put_plane_alliance(self.plane.plane_id)
+
+    def removing_planes_minor_airports(self):
+        if isinstance(self.plane, SupersonicPlane) and isinstance(self.plane, SUPERSONIC_MODEL_TO_BE_PURCHASED):
+            put_plane_alliance(self.plane.plane_id)
+        elif isinstance(self.plane, JetPlane) and isinstance(self.plane, JET_MODEL_TO_BE_PURCHASED):
+            put_plane_alliance(self.plane.plane_id)
+        elif isinstance(self.plane, CommercialPlane) and isinstance(self.plane, COMMERCIAL_MODEL_TO_BE_PURCHASED):
+            put_plane_alliance(self.plane.plane_id)
+
 
 
 def put_plane_alliance(plane_id):
