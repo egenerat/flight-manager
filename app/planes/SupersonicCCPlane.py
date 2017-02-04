@@ -1,6 +1,6 @@
 # coding=utf-8
 
-from app.common.target_urls import BUY_SUPERSONIC_CC_URL
+from app.common.target_urls import SHOP_CC_ID
 from app.planes.SupersonicPlane import SupersonicPlane
 
 
@@ -13,7 +13,7 @@ class SupersonicCCPlane(SupersonicPlane):
     plane_range_stopover = 3 * speed
     minimum_kerosene_before_mission = fuel_capacity
     price = 12590000
-    buy_url = BUY_SUPERSONIC_CC_URL
+    shop_plane_type = SHOP_CC_ID
     plane_capacity = 100
 
     def __init__(self, **kwargs):

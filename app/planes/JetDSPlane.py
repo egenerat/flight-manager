@@ -1,6 +1,6 @@
 # coding=utf-8
 
-from app.common.target_urls import BUY_JET_DS_URL
+from app.common.target_urls import SHOP_DS_ID
 from app.planes.JetPlane import JetPlane
 
 
@@ -14,7 +14,7 @@ class JetDSPlane(JetPlane):
     plane_range = 6454
     plane_range_stopover = 10142
     price = 2390000
-    buy_url = BUY_JET_DS_URL
+    shop_plane_type = SHOP_DS_ID
     plane_capacity = 19
     speed = 922
 
