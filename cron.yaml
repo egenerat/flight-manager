@@ -13,8 +13,3 @@ cron:
   url: /fm/start_taxes
   schedule: every monday 03:30
   timezone: Europe/Paris
-
-- description: check if there are airports for sale
-  url: /fm/start_watcher
-  schedule: every 20 minutes
-  timezone: Europe/Paris
