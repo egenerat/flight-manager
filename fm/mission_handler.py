@@ -60,6 +60,7 @@ def parse_all_missions():
     full_analysis = False
     db_remove_all_missions()
     result = list_dest_countries_id_by_mission_type()
+    # result = {'4':[u'1'], '5':[u'1']}
     expiry_date = get_expiry_date()
     staff_page = get_request(STAFF_PAGE)
     airport_page = get_request(AIRPORT_PAGE)

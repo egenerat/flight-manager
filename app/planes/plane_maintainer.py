@@ -95,7 +95,6 @@ class PlaneMaintainer(object):
             put_plane_alliance(self.plane.plane_id)
 
 
-
 def put_plane_alliance(plane_id):
     response = post_request(ALLIANCE_PUT_PLANE, {'cq': 1, 'la_variete': str(plane_id)})
     return ALLIANCE_PUT_PLANE_SUCCESSFUL in response
