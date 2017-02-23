@@ -1,6 +1,6 @@
 # coding=utf-8
 from app.common.target_urls import SHOP_TU_ID
-from app.planes.SupersonicPlane import SupersonicPlane
+from app.planes.supersonic_plane import SupersonicPlane
 
 
 class SupersonicTUPlane(SupersonicPlane):

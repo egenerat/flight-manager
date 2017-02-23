@@ -1,4 +1,4 @@
-from app.planes.Commercial7Plane import Commercial7Plane
+from app.planes.commercial7plane4 import Commercial7Plane4
 from app.parsers.planes_parser import build_plane_from_line
 import unittest
 
@@ -9,7 +9,7 @@ class TestParserOnePlane(unittest.TestCase):
 
     def test_plane_in_maintenance(self):
         self.plane = build_plane_from_line(plane_in_maintenance)
-        self.assertEqual(Commercial7Plane, type(self.plane))
+        self.assertEqual(Commercial7Plane4, type(self.plane))
         self.assertFalse(self.plane.ready)
 
 

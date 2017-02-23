@@ -1,10 +1,10 @@
 # coding=utf-8
 
 from app.common.target_urls import SHOP_COMMERCIAL_ID
-from app.planes.CommercialPlane import CommercialPlane
+from app.planes.commercial_plane import CommercialPlane
 
 
-class Commercial7Plane(CommercialPlane):
+class Commercial7Plane4(CommercialPlane):
     engines_nb = 2
     consumption_per_hour = 7007
     fuel_capacity = 171170
@@ -17,4 +17,4 @@ class Commercial7Plane(CommercialPlane):
     speed = 971
 
     def __init__(self, **kwargs):
-        super(Commercial7Plane, self).__init__(**kwargs)
+        super(Commercial7Plane4, self).__init__(**kwargs)

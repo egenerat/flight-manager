@@ -9,9 +9,9 @@ from app.common.string_methods import string_contains, exception_if_not_contains
 from app.common.target_strings import ALLIANCE_PUT_PLANE_SUCCESSFUL
 from app.common.target_urls import CHANGE_ENGINES_URL, FILL_FUEL_URL, SCRAP_PLANE_URL, MAINTENANCE_URL, \
     ALLIANCE_PUT_PLANE, ALLIANCE_PAGE, SITE
-from app.planes.CommercialPlane import CommercialPlane
-from app.planes.JetPlane import JetPlane
-from app.planes.SupersonicPlane import SupersonicPlane
+from app.planes.commercial_plane import CommercialPlane
+from app.planes.jet_plane import JetPlane
+from app.planes.supersonic_plane import SupersonicPlane
 
 
 class PlaneMaintainer(object):
@@ -61,10 +61,10 @@ class PlaneMaintainer(object):
         self.__ready = False
 
     def prepare_plane(self):
-        if self.airport.airport_name == MAIN_AIRPORT_NAME:
-            self.removing_planes()
-        else:
-            self.removing_planes_minor_airports()
+        # if self.airport.airport_name == MAIN_AIRPORT_NAME:
+        #     self.removing_planes()
+        # else:
+        #     self.removing_planes_minor_airports()
         if self.plane.endlife:
             self.__scrap_plane()
             return False

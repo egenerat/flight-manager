@@ -1,7 +1,7 @@
 # coding=utf-8
 
 from app.common.target_urls import SHOP_CC_ID
-from app.planes.SupersonicPlane import SupersonicPlane
+from app.planes.supersonic_plane import SupersonicPlane
 
 
 class SupersonicCCPlane(SupersonicPlane):

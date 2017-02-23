@@ -1,8 +1,8 @@
 # coding=utf-8
 
-from app.planes.CommercialPlane import CommercialPlane
-from app.planes.JetPlane import JetPlane
-from app.planes.SupersonicPlane import SupersonicPlane
+from app.planes.commercial_plane import CommercialPlane
+from app.planes.jet_plane import JetPlane
+from app.planes.supersonic_plane import SupersonicPlane
 
 
 def split_planes_list_by_type(planes_list):

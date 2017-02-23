@@ -3,7 +3,7 @@
 from app.missions.mission import is_mission_feasible
 import unittest
 
-from app.planes.SupersonicTUPlane import SupersonicTUPlane
+from app.planes.supersonic_tu_plane import SupersonicTUPlane
 
 
 class TestMission(object):

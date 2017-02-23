@@ -1,7 +1,7 @@
 # coding=utf-8
 from abc import ABCMeta
 
-from app.planes.RootPlane import RootPlane
+from app.planes.root_plane import RootPlane
 
 
 class SupersonicPlane(RootPlane):

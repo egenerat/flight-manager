@@ -2,16 +2,16 @@
 from app.airport.airport_checker import amount_needed
 import unittest
 
-from app.planes.Commercial7Plane import Commercial7Plane
-from app.planes.JetDSPlane import JetDSPlane
-from app.planes.SupersonicCCPlane import SupersonicCCPlane
+from app.planes.commercial7plane4 import Commercial7Plane4
+from app.planes.jet_ds_plane import JetDSPlane
+from app.planes.supersonic_cc_plane import SupersonicCCPlane
 
 
 class TestAirportParser(unittest.TestCase):
 
     def test_amount_needed(self):
         missing_planes = {
-            Commercial7Plane: 1,
+            Commercial7Plane4: 1,
             JetDSPlane: 2,
             SupersonicCCPlane: 3,
         }

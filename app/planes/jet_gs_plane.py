@@ -1,6 +1,6 @@
 # coding=utf-8
 from app.common.target_urls import SHOP_GS_ID
-from app.planes.JetPlane import JetPlane
+from app.planes.jet_plane import JetPlane
 
 
 class JetGSPlane(JetPlane):

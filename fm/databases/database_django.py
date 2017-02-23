@@ -3,11 +3,12 @@ import pickle
 
 import fm.singleton_session
 from app.missions.mission_utils import is_possible_mission
-from fm.models import Mission, AirportsToBeSold, ASHttpSession, Notification
+from fm.models import Mission, AirportsToBeSold, ASHttpSession, Notification, Stopover
 
 
 def db_remove_all_missions():
     Mission.objects.all().delete()
+    Stopover.objects.all().delete()
 
 
 def db_get_all_missions():
