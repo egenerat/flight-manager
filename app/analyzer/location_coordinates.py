@@ -1,5 +1,5 @@
-from geopy import Nominatim
-from geopy.distance import vincenty
+from lib.geopy import Nominatim
+from lib.geopy.distance import vincenty
 
 # https://pypi.python.org/pypi/geopy/1.11.0
 # https://www.distancecalculator.net/about.php
