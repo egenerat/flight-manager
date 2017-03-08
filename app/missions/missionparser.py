@@ -11,7 +11,7 @@ from app.common.target_parse_strings import MISSION_AMOUNT_REGEX, MISSION_DEPART
     MISSION_DISTANCE_REGEX, MISSIONS_FLIGHT_ATTENDANTS_NB_REGEX, MISSION_REPUTATION_REGEX, MISSIONS_PILOTS_NB_REGEX, \
     MISSION_ID_REGEX, MISSION_PASSENGERS_CARGO_NB_REGEX, MISSIONS_BEGIN_TABLE_HTML, MISSIONS_END_TABLE_HTML, \
     MISSIONS_LINE_SPLIT_HTML, MISSIONS_ONGOING_ID_REGEX, HTML_SELECT_ID_REGEX, STOPOVER_STRING, \
-    STOPOVER_TRAVELLERS_NB_REGEX, STOPOVER_REPUTATION_REGEX, STOPOVER_REVENUE_REGEX
+    STOPOVER_TRAVELLERS_NB_REGEX, STOPOVER_REPUTATION_REGEX, STOPOVER_REVENUE_REGEX, MISSION_CITY_PARSER
 
 
 def get_country_list(html_page):
@@ -58,7 +58,8 @@ def parse_one_mission(mission_html, country_nb):
             'flight_attendants_nb': get_int_from_regex(MISSIONS_FLIGHT_ATTENDANTS_NB_REGEX, mission_html),
             'time_before_departure': time_before_departure,
             'km_nb': get_int_from_regex(MISSION_DISTANCE_REGEX, mission_html),
-            'stopover': STOPOVER_STRING in mission_html
+            'stopover': STOPOVER_STRING in mission_html,
+            'city_name': get_value_from_regex(MISSION_CITY_PARSER, mission_html)
         }
         return a_mission
 

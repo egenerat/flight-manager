@@ -8,6 +8,7 @@ class Mission(models.Model):
     expiry_date = models.DateTimeField()
     origin_country = models.CharField(max_length=30, blank=True)
     country_nb = models.PositiveSmallIntegerField()
+    city_name = models.CharField(max_length=30)
     mission_nb = models.PositiveSmallIntegerField()
     travellers_nb = models.PositiveSmallIntegerField()
     contract_amount = models.PositiveIntegerField()
