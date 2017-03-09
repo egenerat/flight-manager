@@ -2,9 +2,12 @@ import csv
 
 
 # "Austria","Vienna"
+from app.analyzer.data.data_filepath import CAPITALS_CSV_FILE
+
+
 def parse_country_capital():
     result = {}
-    with open("app/analyzer/data/input/country-capital.csv", 'r') as f:
+    with open(CAPITALS_CSV_FILE, 'r') as f:
         reader = csv.reader(f, delimiter=',', quotechar='"')
         for row in reader:
             result[row[0]] = row[1]
