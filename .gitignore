@@ -71,6 +71,7 @@ archive.tar
 
 settings.py
 
+app/analyzer/data
 app/common/constants.py
 app/common/constants_strategy.py
 app/common/target_urls.py
