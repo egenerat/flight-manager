@@ -3,8 +3,16 @@ import json
 
 import re
 
+import copy
+
+from app.analyzer.globetrotter import Globetrotter, simulate_reputation_mission, filter_top_n_missions
+from app.analyzer.location import Location
+from app.analyzer.location_coordinates import LocationCoordinates
+from app.common.countries import countries
 from app.common.target_parse_strings import SHOP_PARSE_MODELS_REGEX
-from app.missions.mission_utils import planes_needed_by_category
+from app.missions.mission_utils import planes_needed_by_category, sort_missions_by_type, is_possible_mission, \
+    find_plane_class_for_mission
+from app.planes.planes_util import duration_mission_one_way
 from app.standalone.PlaneSpecificationParser import PlaneSpecificationParser
 from django.shortcuts import render_to_response
 
@@ -28,9 +36,12 @@ def view_top_missions(_):
     for i in mission_list:
         # approximation, because plane can start a same mission before the previous plane came back from the same mission
         total_reputation_per_week += i.reputation_per_hour * HOURS_PER_WEEK
-    return render_to_response('list_missions.html', {'missions': mission_list,
-                                                     'planes_needed': nb_planes_needed,
-                                                     'total_reputation_per_week': int(total_reputation_per_week)})
+    return render_to_response('list_missions.html',
+                              {
+                                  'missions': mission_list,
+                                  'planes_needed': nb_planes_needed,
+                                  'total_reputation_per_week': int(total_reputation_per_week)
+                              })
 
 
 def view_compare_planes(_):
@@ -54,40 +65,86 @@ def view_compare_planes(_):
     return HttpResponse(json.dumps(result), content_type="application/json")
 
 
-# TODO DEPRECATED
-def represent_data(_):
-    country_list = ['France', 'Italie', 'Suisse', 'Turquie']
+def view_missions_ratios(_):
     result = {}
-    missions_list = []
-    for i in country_list:
-        # TODO adapt
-        PLANE_CAPACITY = 100
-        PLANE_SPEED = 2250
-        missions_list = db_get_ordered_missions(i, PLANE_CAPACITY, PLANE_SPEED, 84, '-reputation_per_hour')
-        total_reputation_36 = 0
-        total_revenue_36 = 0
-        total_reputation_54 = 0
-        total_revenue_54 = 0
-        total_reputation_84 = 0
-        total_revenue_84 = 0
-        for idx, a_mission in enumerate(missions_list):
-            total_revenue_84 += a_mission.revenue_per_hour
-            total_reputation_84 += a_mission.reputation_per_hour
-            if idx < 54:
-                total_revenue_54 += a_mission.revenue_per_hour
-                total_reputation_54 += a_mission.reputation_per_hour
-            if idx < 36:
-                total_revenue_36 += a_mission.revenue_per_hour
-                total_reputation_36 += a_mission.reputation_per_hour
-        result[i] = {
-            'total_reputation_84': total_reputation_84 / 84,
-            'total_revenue_84': total_revenue_84 / 84,
-            'total_reputation_54': total_reputation_54 / 54,
-            'total_revenue_54': total_revenue_54 / 54,
-            'total_reputation_36': total_reputation_36 / 36,
-            'total_revenue_36': total_revenue_36 / 36,
+    mission_list = db_get_ordered_missions_multi_type(400, '-reputation_per_hour')
+    sorted_missions = sort_missions_by_type(mission_list)
+    for mission_type in sorted_missions:
+        min = 100
+        max = -1
+        min_stopover = 100
+        max_stopover = -1
+        for a_mission in sorted_missions[mission_type]:
+            reputation_ratio = a_mission.reputation / float(a_mission.km_nb)
+            if not a_mission.stopover:
+                if reputation_ratio < min:
+                    min = reputation_ratio
+                if reputation_ratio > max:
+                    max = reputation_ratio
+            else:
+                if reputation_ratio < min_stopover:
+                    min_stopover = reputation_ratio
+                if reputation_ratio > max_stopover:
+                    max_stopover = reputation_ratio
+        result[mission_type] = {
+            'min': min,
+            'max': max,
+            'min_stopover': min_stopover,
+            'max_stopover': max_stopover
         }
-    return render_to_response('missions.html', {'result': result, 'missions': missions_list})
+        # approximation, because plane can start a same mission before the previous plane came back from the same mission
+    return HttpResponse(json.dumps(result), content_type="application/json")
+
+
+def view_list_all_destination_cities(_):
+    mission_list = db_get_ordered_missions_multi_type(1000, '-reputation_per_hour')
+    result = []
+    for i in mission_list:
+        if (countries[str(i.country_nb)], i.city_name) not in result:
+            result.append((countries[str(i.country_nb)], i.city_name))
+    return HttpResponse(json.dumps(result), content_type="application/json")
+
+
+def view_globetrotter(_):
+    response = ''
+    mission_list = db_get_ordered_missions_multi_type(10000, '-reputation_per_hour')
+    globetrotter = Globetrotter()
+    locator = LocationCoordinates()
+    fr_loc = Location()
+    origin_dict = globetrotter.get_origin_airports_location()
+    countries_list = []
+    for an_origin in origin_dict:
+        total_reputation_country = 0
+        possible_missions = []
+        for a_mission in mission_list:
+            a_destination_loc = fr_loc.get_location(a_mission.city_name, countries.get(str(a_mission.country_nb)))
+            origin_loc = origin_dict.get(an_origin)
+            if a_destination_loc and origin_loc:
+                simulated_distance = locator.distance_2_points(origin_loc, a_destination_loc)
+                clone_mission = copy.deepcopy(a_mission)
+                clone_mission.km_nb = simulated_distance
+                if is_possible_mission(clone_mission):
+                    simulated_reputation = simulate_reputation_mission(
+                        clone_mission.mission_type,
+                        clone_mission.stopover is not None,
+                        clone_mission.km_nb
+                    )
+                    # TODO !! Simulated duration is not correct as it does not take into account waiting time + 1h
+                    simulated_duration = duration_mission_one_way(
+                        clone_mission.km_nb,
+                        clone_mission.time_before_departure + find_plane_class_for_mission(clone_mission).speed * 2
+                    )
+                    clone_mission.reputation_per_hour = simulated_reputation / simulated_duration
+                    possible_missions.append((clone_mission, clone_mission.reputation_per_hour))
+        country, city = an_origin
+        top_missions = filter_top_n_missions(possible_missions, 200)
+        for a_mission, reputation_per_hour in top_missions:
+            total_reputation_country += a_mission.reputation_per_hour * HOURS_PER_WEEK
+        countries_list.append((country, int(total_reputation_country), len(possible_missions)))
+    countries_list.sort(key=lambda tup: tup[1], reverse=True)
+    for a_country, total_reputation, possible_missions_nb in countries_list:
+        response += "{}: {} {} missions<br/>".format(a_country, total_reputation, possible_missions_nb)
+    return HttpResponse(response)
 
 
 # TODO cleanup
