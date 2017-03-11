@@ -2,7 +2,6 @@
 import unittest
 
 from app.analyzer.airport_finder import AirportFinder
-from app.analyzer.capital_finder import CapitalFinder
 
 
 class TestAirportFinder(unittest.TestCase):
