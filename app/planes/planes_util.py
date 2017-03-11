@@ -20,7 +20,7 @@ def get_plane_value(new_plane_value, km, kerosene_qty):
     return int(value)
 
 
-def duration_mission(distance, speed):
+def duration_mission_one_way(distance, speed):
     return math.ceil(distance / float(speed))
 
 

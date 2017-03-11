@@ -1,6 +1,6 @@
 import unittest
 
-from app.planes.planes_util import duration_mission,\
+from app.planes.planes_util import duration_mission_one_way,\
     calculate_real_autonomy_one_way
 
 
@@ -8,7 +8,7 @@ class TestPlanesUtils(unittest.TestCase):
     def test_duration(self):
         distance = 10
         speed = 6
-        dur = duration_mission(distance, speed)
+        dur = duration_mission_one_way(distance, speed)
         self.assertEqual(2, dur)
 
     def test_consumption(self):
