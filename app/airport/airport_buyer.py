@@ -43,15 +43,17 @@ def buy_missing_planes(plane_class, missing_units):
 
 
 def buy_plane_from_shop(plane_type_id):
-    return get_request(SHOP_GENERIC_URL.format(plane_type_id))
+    return get_request(SHOP_GENERIC_URL.format(plane_type_id=plane_type_id))
 
 
 def take_plane_from_alliance(plane_type_id):
     page = get_request(ALLIANCE_PAGE)
     if string_contains(PLANE_PANEL_AVAILABLE_HTML.format(plane_type=plane_type_id), page):
         page = get_request(ALLIANCE_PLANE_PANEL_URL.format(plane_type=plane_type_id))
-        plane_id = get_values_from_regex(ALLIANCE_CONCORDE_PATTERN_HTML, page)[0]
-        page = get_request(ALLIANCE_TAKE_PLANE_URL.format(plane_id=plane_id))
-        if ALLIANCE_TAKE_PLANE_SUCCESSFUL in page:
-            return True
+        planes_id = get_values_from_regex(ALLIANCE_CONCORDE_PATTERN_HTML, page)
+        if len(planes_id):
+            plane_id = planes_id[0]
+            page = get_request(ALLIANCE_TAKE_PLANE_URL.format(plane_id=plane_id))
+            if ALLIANCE_TAKE_PLANE_SUCCESSFUL in page:
+                return True
     return False

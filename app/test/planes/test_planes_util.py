@@ -1,7 +1,7 @@
 import unittest
 
 from app.planes.planes_util import duration_mission_one_way,\
-    calculate_real_autonomy_one_way
+    calculate_real_autonomy_one_way, calculate_total_consumption_one_way
 
 
 class TestPlanesUtils(unittest.TestCase):
@@ -16,8 +16,8 @@ class TestPlanesUtils(unittest.TestCase):
         conso_per_hour = 1510
         passengers_nb = 19
         staff_nb = 4
-        consumption = calculate_total_consumption_mission(duration, conso_per_hour, passengers_nb, staff_nb)
-        self.assertEqual(16579.5, consumption)
+        consumption = calculate_total_consumption_one_way(duration, conso_per_hour, passengers_nb, staff_nb)
+        self.assertEqual(11053, consumption)
 
     def test_real_autonomy(self):
         kerosene_capacity = 18050

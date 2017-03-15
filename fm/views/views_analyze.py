@@ -113,7 +113,6 @@ def view_globetrotter(_):
     origin_dict = globetrotter.get_origin_airports_location()
     countries_list = []
 
-
     # DEBUG
     emirates_missions = []
     emirates_total_reputation = 0
@@ -159,14 +158,14 @@ def view_globetrotter(_):
             emirates_total_reputation = int(total_reputation_country)
             for mission, reput in top_missions:
                 emirates_missions.append(mission)
-    countries_list.sort(key=lambda tup: tup[1], reverse=True)
-    return render_to_response('list_origin_countries.html', {'countries_list': countries_list})
     # return render_to_response('list_missions.html',
     #                               {
     #                                   'missions': emirates_missions,
     #                                   'planes_needed': {},
     #                                   'total_reputation_per_week': emirates_total_reputation
     #                               })
+    countries_list.sort(key=lambda tup: tup[1], reverse=True)
+    return render_to_response('list_origin_countries.html', {'countries_list': countries_list})
 
 
 # TODO cleanup

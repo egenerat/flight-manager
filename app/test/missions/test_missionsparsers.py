@@ -31,6 +31,7 @@ class TestParser(unittest.TestCase):
         self.assertEqual(1, simple_mission['country_nb'])
         self.assertEqual(378, simple_mission['mission_nb'])
         self.assertEqual(504, simple_mission['travellers_nb'])
+        self.assertEquals('Edmonton', simple_mission['city_name'])
         self.assertEqual(287040, simple_mission['contract_amount'])
         self.assertEqual(152, simple_mission['reputation'])
         self.assertEqual(3, simple_mission['pilots_nb'])

@@ -9,6 +9,7 @@ def should_notify():
     pass
 
 
+# needs to be reset at the same time the crash counter is reset
 def are_notifications_expired():
     return False
 

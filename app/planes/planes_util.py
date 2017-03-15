@@ -60,9 +60,6 @@ def is_regular_plane(string_model):
 
 
 if __name__ == '__main__':
-    passengers_nb = 19
-    staff_nb = 4
-
     commercial_planes = [
         {
             "capacity": 73000,
@@ -163,6 +160,13 @@ if __name__ == '__main__':
             "plane_model": "A380"
         },
         {
+            "capacity": 325000,
+            "price": 3700000,
+            "speed": 1134,
+            "consumption": 15470,
+            "plane_model": "A380_IV"
+        },
+        {
             "capacity": 13890,
             "price": 350000,
             "speed": 825,
@@ -231,6 +235,13 @@ if __name__ == '__main__':
             "speed": 890,
             "consumption": 7700,
             "plane_model": "B777-200ER"
+        },
+        {
+            "capacity": 171170,
+            "price": 1350000,
+            "speed": 970,
+            "consumption": 7007,
+            "plane_model": "B777-200ER_IV"
         },
         {
             "capacity": 202290,
@@ -416,15 +427,15 @@ if __name__ == '__main__':
             "plane_model": "Gulfstream 550"
         }]
 
-    plane_list = jet_planes
+    passengers_nb = 50
+    staff_nb = 4
+    plane_list = commercial_planes
     for plane in plane_list:
         plane['autonomy_one_way'] = calculate_real_autonomy_one_way(plane['speed'], plane['capacity'],
                                                                     plane['consumption'], passengers_nb, staff_nb)
         plane['autonomy_stopover'] = calculate_autonomy_with_stopover(plane['speed'], plane['capacity'],
                                                                       plane['consumption'], passengers_nb, staff_nb)
-        # print("{}: {}".format(plane['plane_model'], plane['autonomy_one_way']))
-        # print("{}: {}".format(plane['plane_model'], plane['autonomy_stopover']))
-    # print('='*50)
+
     criteria = 'autonomy_one_way'
     # criteria = 'autonomy_stopover'
     ordered = sorted(plane_list, key=lambda k: k[criteria])
