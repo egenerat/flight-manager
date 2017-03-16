@@ -6,7 +6,7 @@ language: python
 python:
 - '2.7'
 install:
-- pip install requests mockito
+- pip install requests mockito geopy
 script:
 - "./script.sh"
 - export WEBSERVER_TEST_PAGES_IP=$(docker inspect -f '{{range .NetworkSettings.Networks}}{{.IPAddress}}{{end}}'
