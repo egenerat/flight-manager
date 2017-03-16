@@ -1,8 +1,7 @@
 # -*- coding: utf-8 -*-
 import unittest
 
-# from app.airport.airport_buyer import take_plane_from_alliance
-from app.common.http_methods import get_request
+from app.common.http_methods_unittests import get_request
 from app.common.string_methods import string_contains, get_values_from_regex
 from app.common.target_parse_strings import PLANE_PANEL_AVAILABLE_HTML, ALLIANCE_CONCORDE_PATTERN_HTML
 from app.common.target_urls import ALLIANCE_PAGE, ALLIANCE_PLANE_PANEL_URL, ALLIANCE_TAKE_PLANE_URL

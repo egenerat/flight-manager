@@ -7,7 +7,7 @@ from app.common.http_methods_unittests import get_request
 class TestAllianceParser(unittest.TestCase):
     @classmethod
     def setUpClass(cls):
-        html_page = get_request("http://172.17.0.1/test_pages/planes_shop_3rf_page_details.html")
+        html_page = get_request("http://localhost/test_pages/planes_shop_3rf_page_details.html")
         cls.parser = AllianceParser(html_page=html_page)
 
     @unittest.skip("Not implemented yet")
