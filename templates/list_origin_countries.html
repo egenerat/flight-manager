@@ -1,0 +1,24 @@
+{% load humanize %}
+
+{% block body_content %}
+	<h2>Countries comparison</h2>
+	<table style="width:100%">
+		<tr>
+			<th>Country</th>
+			<th>Reputation per week</th>
+			<th>Possible missions</th>
+			<th>Supersonic number</th>
+			<th>Jet numbers</th>
+		</tr>
+
+		{% for a_country, total_reputation, possible_missions_nb, supersonic_nb, jet_nb in countries_list%}
+			<tr>
+				<td>{{a_country}}</td>
+				<td>{{total_reputation|intcomma}}</td>
+				<td>{{possible_missions_nb}}</td>
+				<td>{{supersonic_nb}}</td>
+				<td>{{jet_nb}}</td>
+			</tr>
+		{% endfor %}
+	</table>
+{% endblock %}
