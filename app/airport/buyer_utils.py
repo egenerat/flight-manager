@@ -1,4 +1,4 @@
-# coding=utf-8
+# -*- coding: utf-8 -*-
 
 def amount_needed(missing_planes):
     amount = 0

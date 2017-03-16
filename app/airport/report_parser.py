@@ -1,4 +1,4 @@
-# coding=utf-8
+# -*- coding: utf-8 -*-
 from app.common.string_methods import everything_between, get_amount, get_value_from_regex
 
 

@@ -1,4 +1,4 @@
-# coding=utf-8
+# -*- coding: utf-8 -*-
 import unittest
 
 # from app.airport.airport_buyer import take_plane_from_alliance

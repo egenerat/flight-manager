@@ -1,4 +1,4 @@
-# coding=utf-8
+# -*- coding: utf-8 -*-
 
 from app.airport.airports_methods import switch_to_airport
 from app.airport.sale_airports_parser import build_airports_list, find_new_airports

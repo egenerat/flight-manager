@@ -1,4 +1,4 @@
-# coding=utf-8
+# -*- coding: utf-8 -*-
 import unittest
 
 from app.analyzer.location_coordinates import LocationCoordinates

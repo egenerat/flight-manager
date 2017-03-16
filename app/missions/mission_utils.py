@@ -1,4 +1,4 @@
-# coding=utf-8
+# -*- coding: utf-8 -*-
 from app.common.constants import MISSION_REPUTATION_MINIMUM_INTERESTING
 from app.common.constants_strategy import JET_MODEL_TO_BE_USED, COMMERCIAL_MODEL_TO_BE_USED, SUPERSONIC_MODEL_TO_BE_USED
 

@@ -1,4 +1,4 @@
-# coding=utf-8
+# -*- coding: utf-8 -*-
 
 from app.airport.airports_methods import money_before_taxes
 

@@ -1,4 +1,4 @@
-# coding=utf-8
+# -*- coding: utf-8 -*-
 
 from app.airport.staff_parser import get_pilots, get_flight_attendants, get_mechanics
 from app.common.http_methods_unittests import get_request

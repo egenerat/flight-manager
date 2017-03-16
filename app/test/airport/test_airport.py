@@ -1,4 +1,4 @@
-# coding=utf-8
+# -*- coding: utf-8 -*-
 
 from app.airport.Airport import Airport
 from app.common.http_methods_unittests import get_request

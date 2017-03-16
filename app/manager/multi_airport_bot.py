@@ -1,4 +1,4 @@
-# coding=utf-8
+# -*- coding: utf-8 -*-
 
 from app.airport.airports_methods import get_other_airports_id, filter_airports, switch_to_airport
 from app.common.logger import logger

@@ -1,4 +1,4 @@
-# coding=utf-8
+# -*- coding: utf-8 -*-
 from app.common.target_parse_strings import JET_F7X, JET_GX, JET_GS, SUPERSONIC_CC, SUPERSONIC_TU, COMMERCIAL_7
 from app.planes.jet_gs_plane import JetGSPlane
 from app.planes.commercial7plane4 import Commercial7Plane4

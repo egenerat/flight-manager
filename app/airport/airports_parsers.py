@@ -1,4 +1,4 @@
-# coding=utf-8
+# -*- coding: utf-8 -*-
 
 from app.common.string_methods import get_value_from_regex, get_amount_from_regex, get_int_from_regex
 from app.common.target_parse_strings import FUEL_CAPACITY_REGEX, FUEL_STOCK_REGEX, AIRPORT_PLANES_CAPACITY, \

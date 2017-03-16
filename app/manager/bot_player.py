@@ -1,4 +1,4 @@
-# coding=utf-8
+# -*- coding: utf-8 -*-
 from app.airport import airport_buyer
 from app.airport import staff_buyer
 from app.airport.airport_builder import build_airport

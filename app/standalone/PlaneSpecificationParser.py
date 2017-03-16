@@ -1,4 +1,4 @@
-# coding=utf-8
+# -*- coding: utf-8 -*-
 from app.common.string_methods import get_value_from_regex, get_amount
 
 

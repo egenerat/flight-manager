@@ -1,4 +1,4 @@
-# coding=utf-8
+# -*- coding: utf-8 -*-
 
 from app.common.target_urls import SHOP_COMMERCIAL_ID
 from app.planes.commercial_plane import CommercialPlane

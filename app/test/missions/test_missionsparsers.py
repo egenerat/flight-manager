@@ -1,4 +1,4 @@
-# coding=utf-8
+# -*- coding: utf-8 -*-
 
 from app.common.http_methods_unittests import get_request
 from app.common.target_urls import YOUR_MISSIONS_URL, YOUR_MISSIONS_JET_URL

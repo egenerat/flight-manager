@@ -1,4 +1,4 @@
-# coding=utf-8
+# -*- coding: utf-8 -*-
 
 import fm.singleton_session
 from fm.databases.database_django import read_session_from_db, is_session_in_db

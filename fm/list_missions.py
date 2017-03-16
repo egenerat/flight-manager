@@ -1,4 +1,4 @@
-# coding=utf-8
+# -*- coding: utf-8 -*-
 
 from app.common.http_methods import post_request, get_request
 from app.common.target_urls import GENERIC_MISSION_PAGE, MISSION_STOPOVER

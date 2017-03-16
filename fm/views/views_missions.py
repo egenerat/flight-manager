@@ -1,4 +1,4 @@
-# coding=utf-8
+# -*- coding: utf-8 -*-
 
 from app.manager.multi_airport_bot import MultiAirportBot
 from django.http import HttpResponse

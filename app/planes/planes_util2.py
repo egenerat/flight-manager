@@ -1,4 +1,4 @@
-# coding=utf-8
+# -*- coding: utf-8 -*-
 
 from app.planes.commercial_plane import CommercialPlane
 from app.planes.jet_plane import JetPlane

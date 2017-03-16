@@ -1,4 +1,4 @@
-# coding=utf-8
+# -*- coding: utf-8 -*-
 
 from app.airport.report_parser import report_parser
 from app.common.http_methods_unittests import get_request

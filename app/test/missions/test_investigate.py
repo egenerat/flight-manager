@@ -1,4 +1,4 @@
-# coding=utf-8
+# -*- coding: utf-8 -*-
 from app.common.http_methods_unittests import get_request
 from app.missions.investigate_crash import parse_flights_overview, flights_overview
 import unittest

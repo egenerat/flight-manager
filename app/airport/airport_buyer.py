@@ -1,4 +1,4 @@
-# coding=utf-8
+# -*- coding: utf-8 -*-
 from app.airport.airports_methods import withdraw_from_alliance
 from app.common.http_methods import get_request, post_request
 from app.common.string_methods import exception_if_not_contains, get_values_from_regex, string_contains

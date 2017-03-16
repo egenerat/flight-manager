@@ -1,4 +1,4 @@
-# coding=utf-8
+# -*- coding: utf-8 -*-
 
 from app.airport.Airport import Airport
 from app.airport.Staff import Staff

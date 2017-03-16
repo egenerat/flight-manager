@@ -1,4 +1,4 @@
-# coding=utf-8
+# -*- coding: utf-8 -*-
 
 from app.airport.airport_config import AirportConfig
 from app.common.constants import MAIN_AIRPORT_NAME

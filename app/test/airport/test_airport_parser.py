@@ -1,4 +1,4 @@
-# coding=utf-8
+# -*- coding: utf-8 -*-
 
 from app.airport.airports_parsers import get_country, get_money, get_kerosene_supply, get_kerosene_capacity, \
     get_engines_supply, get_planes_capacity, get_airport_name

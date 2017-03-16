@@ -1,4 +1,4 @@
-# coding=utf-8
+# -*- coding: utf-8 -*-
 
 from app.missions.mission import is_mission_feasible, get_expiry_date
 import unittest

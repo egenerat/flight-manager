@@ -1,4 +1,4 @@
-# coding=utf-8
+# -*- coding: utf-8 -*-
 from abc import ABCMeta
 
 from app.planes.root_plane import RootPlane

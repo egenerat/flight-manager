@@ -1,4 +1,4 @@
-# coding=utf-8
+# -*- coding: utf-8 -*-
 import unittest
 
 from app.analyzer.capital_finder import CapitalFinder

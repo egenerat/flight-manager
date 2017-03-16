@@ -1,4 +1,4 @@
-# coding=utf-8
+# -*- coding: utf-8 -*-
 import unittest
 
 from app.airport.buyer_utils import amount_needed

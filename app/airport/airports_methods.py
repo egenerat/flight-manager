@@ -1,4 +1,4 @@
-# coding=utf-8
+# -*- coding: utf-8 -*-
 from app.common.constants import EXCLUDE_LIST
 from app.common.http_methods import get_request, post_request
 from app.common.string_methods import get_amount_from_regex, \

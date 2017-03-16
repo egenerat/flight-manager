@@ -1,4 +1,4 @@
-# coding=utf-8
+# -*- coding: utf-8 -*-
 
 from abc import ABCMeta
 from app.planes.planes_util import get_plane_value

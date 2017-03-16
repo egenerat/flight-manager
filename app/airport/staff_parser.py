@@ -1,4 +1,4 @@
-# coding=utf-8
+# -*- coding: utf-8 -*-
 
 from app.common.string_methods import get_numeric_values_regex, get_int_from_regex
 from app.common.target_parse_strings import FLIGHT_ATTENDANTS_REGEX, PILOTS_REGEX, MECHANICS_REGEX
