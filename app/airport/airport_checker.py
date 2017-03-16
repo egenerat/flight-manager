@@ -8,13 +8,6 @@ from app.planes.plane_maintainer import take_planes_alliance
 from app.planes.planes_util2 import get_planes_nb_from_sorted_dict
 
 
-def amount_needed(missing_planes):
-    amount = 0
-    for aircraft_type, missing_units in missing_planes.iteritems():
-        amount += missing_units * aircraft_type.price
-    return amount
-
-
 class AirportChecker(object):
     def __init__(self, airport, sorted_planes_dict, injected_airport_buyer, injected_staff_buyer):
         self.airport = airport
