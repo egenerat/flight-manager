@@ -9,9 +9,9 @@ from app.common.target_urls import ALLIANCE_TAKE_PLANE_URL, ALLIANCE_PAGE, ALLIA
 
 
 def buy_kerosene(litres):
-    page = get_request(SHOP_KEROSENE_URL)
+    get_request(SHOP_KEROSENE_URL)
     # TODO check if there is kerosene available
-    page = post_request(SHOP_BUY_KEROSENE_URL, {'cq': str(litres)})
+    post_request(SHOP_BUY_KEROSENE_URL, {'cq': str(litres)})
     # exception_if_not_contains(SHOP_SUCCESSFUL_KEROSENE, page, 'Error : could not buy kerosene')
 
 
@@ -21,7 +21,7 @@ def buy_engines(engines_nb, engine_type):
         '5': SHOP_ENGINE_5_URL,
         '6': SHOP_ENGINE_6_URL,
     }[engine_type]
-    page = post_request(url, {'cq': str(engines_nb)})
+    post_request(url, {'cq': str(engines_nb)})
     # exception_if_not_contains(SHOP_SUCCESSFUL_ENGINES, page, 'Could not buy engines')
 
 

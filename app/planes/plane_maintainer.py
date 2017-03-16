@@ -1,5 +1,4 @@
 # -*- coding: utf-8 -*-
-from app.common.constants import MAIN_AIRPORT_NAME
 from app.common.constants_strategy import SUPERSONIC_MODEL_TO_BE_PURCHASED, JET_MODEL_TO_BE_PURCHASED, \
     COMMERCIAL_MODEL_TO_BE_PURCHASED
 from app.common.logger import logger

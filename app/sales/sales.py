@@ -50,7 +50,7 @@ def get_sale_airports():
                 switch_to_airport(BANK_AIRPORT)
                 # in case account < 0
                 amount_to_withdraw = i['price'] * 1.04 + 50000000
-                page = post_request(BANK_WITHDRAW_URL, {'cq': str(amount_to_withdraw)})
+                post_request(BANK_WITHDRAW_URL, {'cq': str(amount_to_withdraw)})
                 # check if enough money (in case account was < 0 before)
                 page = get_request(AIRPORT_BUY_URL.format(airport_id=i['airport_id']))
                 notify('FM : Bought one airport', page)

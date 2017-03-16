@@ -2,6 +2,10 @@
 import unittest
 
 # from app.airport.airport_buyer import take_plane_from_alliance
+from app.common.http_methods import get_request
+from app.common.string_methods import string_contains, get_values_from_regex
+from app.common.target_parse_strings import PLANE_PANEL_AVAILABLE_HTML, ALLIANCE_CONCORDE_PATTERN_HTML
+from app.common.target_urls import ALLIANCE_PAGE, ALLIANCE_PLANE_PANEL_URL, ALLIANCE_TAKE_PLANE_URL
 
 
 class TestAirportParser(unittest.TestCase):
@@ -25,16 +29,15 @@ print(truc.text)
 unstub()
 
 
-
+@unittest.skip("Not ready yet")
 def take_plane_from_alliance(required_plane_type=10):
-    # concorde_type = 10
-    # page = get_request(ALLIANCE_PAGE)
-    # if string_contains(PLANE_PANEL_AVAILABLE_HTML.format(plane_type=required_plane_type), page):
-    #     page = get_request(ALLIANCE_PLANE_PANEL_URL.format(plane_type=required_plane_type))
-    #     plane_id = get_values_from_regex(ALLIANCE_CONCORDE_PATTERN_HTML, page)[0]
-    #     page = get_request(ALLIANCE_TAKE_PLANE_URL.format(plane_id=plane_id))
-    #     if u"Vous avez retiré avec succès l'avion" in page:
-    #         return True
+    page = get_request(ALLIANCE_PAGE)
+    if string_contains(PLANE_PANEL_AVAILABLE_HTML.format(plane_type=required_plane_type), page):
+        page = get_request(ALLIANCE_PLANE_PANEL_URL.format(plane_type=required_plane_type))
+        plane_id = get_values_from_regex(ALLIANCE_CONCORDE_PATTERN_HTML, page)[0]
+        page = get_request(ALLIANCE_TAKE_PLANE_URL.format(plane_id=plane_id))
+        if u"Vous avez retiré avec succès l'avion" in page:
+            return True
     return False
 
 

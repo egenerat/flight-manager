@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 
-from app.airport.airports_methods import get_other_airports_id, filter_airports, switch_to_airport
+from app.airport.airports_methods import switch_to_airport
 from app.common.logger import logger
 from app.manager.bot_player import BotPlayer
 from fm.databases.database_django import db_get_ordered_missions_multi_type

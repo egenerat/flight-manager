@@ -4,6 +4,7 @@ from lib.geopy.distance import vincenty
 # https://pypi.python.org/pypi/geopy/1.11.0
 # https://www.distancecalculator.net/about.php
 
+
 class LocationCoordinates:
 
     def __init__(self):
