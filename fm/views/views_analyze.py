@@ -7,7 +7,7 @@ import copy
 
 from app.analyzer.globetrotter import Globetrotter, simulate_reputation_mission, filter_top_n_missions
 from app.analyzer.location import Location
-from app.analyzer.location_coordinates import LocationCoordinates
+from app.analyzer.location_coordinates import LocationCoordinates, distance_2_points
 from app.common.countries import countries
 from app.common.target_parse_strings import SHOP_PARSE_MODELS_REGEX
 from app.missions.mission_utils import planes_needed_by_category, sort_missions_by_type, is_possible_mission, \
@@ -126,7 +126,7 @@ def view_globetrotter(_):
         for a_mission in mission_list:
             a_destination_loc = fr_loc.get_location(a_mission.city_name, countries.get(str(a_mission.country_nb)))
             if a_destination_loc and origin_loc:
-                simulated_distance = locator.distance_2_points(origin_loc, a_destination_loc)
+                simulated_distance = distance_2_points(origin_loc, a_destination_loc)
                 clone_mission = copy.deepcopy(a_mission)
                 clone_mission.km_nb = simulated_distance
                 if is_possible_mission(clone_mission):

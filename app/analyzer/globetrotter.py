@@ -60,8 +60,8 @@ class Globetrotter:
         # return self.fr_loc.get_location(en_city_name, en_country_name)
         return self.locator.coordinates_city('{} {}'.format(en_city_name, en_country_name))
 
-    def location_fr_city(self, fr_city_name, fr_country_name):
-        return self.locator.coordinates_city(fr_city_name, fr_country_name)
+    def location_fr_city(self, fr_city_name):
+        return self.locator.coordinates_city(fr_city_name)
 
     def get_origin_airports_location(self):
         result = []
