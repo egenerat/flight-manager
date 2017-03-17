@@ -2,8 +2,8 @@
 
 from django.conf.urls.defaults import *
 from fm.views import views_utils
-from fm.views.views_analyze import view_top_missions, view_compare_planes, view_missions_ratios, view_list_all_destination_cities, \
-    view_globetrotter
+from fm.views.views_analyze import view_top_missions, view_compare_planes, view_missions_ratios, \
+    view_list_all_destination_cities, view_globetrotter
 from fm.views.views_missions import view_empty_db_missions
 
 urlpatterns = patterns('fm.views',

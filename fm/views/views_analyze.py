@@ -34,7 +34,8 @@ def view_top_missions(_):
     nb_planes_needed = planes_needed_by_category(mission_list)
     total_reputation_per_week = 0
     for i in mission_list:
-        # approximation, because plane can start a same mission before the previous plane came back from the same mission
+        # approximation, because plane can start a same mission before the previous plane came
+        # back from the same mission
         total_reputation_per_week += i.reputation_per_hour * HOURS_PER_WEEK
     return render_to_response('list_missions.html',
                               {
@@ -70,29 +71,30 @@ def view_missions_ratios(_):
     mission_list = db_get_ordered_missions_multi_type(400, '-reputation_per_hour')
     sorted_missions = sort_missions_by_type(mission_list)
     for mission_type in sorted_missions:
-        min = 100
-        max = -1
+        min_ratio = 100
+        max_ratio = -1
         min_stopover = 100
         max_stopover = -1
         for a_mission in sorted_missions[mission_type]:
             reputation_ratio = a_mission.reputation / float(a_mission.km_nb)
             if not a_mission.stopover:
-                if reputation_ratio < min:
-                    min = reputation_ratio
-                if reputation_ratio > max:
-                    max = reputation_ratio
+                if reputation_ratio < min_ratio:
+                    min_ratio = reputation_ratio
+                if reputation_ratio > max_ratio:
+                    max_ratio = reputation_ratio
             else:
                 if reputation_ratio < min_stopover:
                     min_stopover = reputation_ratio
                 if reputation_ratio > max_stopover:
                     max_stopover = reputation_ratio
         result[mission_type] = {
-            'min': min,
-            'max': max,
+            'min': min_ratio,
+            'max': max_ratio,
             'min_stopover': min_stopover,
             'max_stopover': max_stopover
         }
-        # approximation, because plane can start a same mission before the previous plane came back from the same mission
+        # approximation, because plane can start a same mission before the previous
+        # plane came back from the same mission
     return HttpResponse(json.dumps(result), content_type="application/json")
 
 
@@ -108,7 +110,6 @@ def view_list_all_destination_cities(_):
 def view_globetrotter(_):
     mission_list = db_get_ordered_missions_multi_type(10000, '-reputation_per_hour')
     globetrotter = Globetrotter()
-    locator = LocationCoordinates()
     fr_loc = Location()
     origin_dict = globetrotter.get_origin_airports_location()
     countries_list = []
@@ -169,7 +170,7 @@ def view_globetrotter(_):
 
 
 # TODO cleanup
-def planes_value(request):
+def planes_value(_):
     response = ''
     other_airports = get_other_airports_id()
     for j in other_airports:

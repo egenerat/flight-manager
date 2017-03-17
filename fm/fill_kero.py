@@ -22,7 +22,8 @@ def fill_all_airports():
         difference = capacity - stock
 
         if difference > 0:
-            page = get_request()
+            address = ''
+            page = get_request(address)
             available_offers = extract_available_offers(page)
             # while difference > 0:
             # the list should be copied so that it's a copy that's altered
@@ -88,5 +89,5 @@ def extract_available_offers(page):
                 'price': price
             }
             sell_list.append(obj)
-        sell_list = sorted(sell_list, key=lambda i: i['price'])
+        sell_list = sorted(sell_list, key=lambda j: j['price'])
         return sell_list

@@ -117,7 +117,7 @@ def __accept_mission(country_id, plane_id, mission_id, mission_type, stopover):
 def accept_one_mission(plane_id, a_mission):
     try:
         has_stopover = a_mission.stopover is not None
-        bonus = __accept_mission(a_mission.country_nb, plane_id, a_mission.mission_nb, a_mission.mission_type,
+        __accept_mission(a_mission.country_nb, plane_id, a_mission.mission_nb, a_mission.mission_type,
                                  has_stopover)
     except Exception as e:
         exception_text = traceback.format_exc()
