@@ -16,33 +16,37 @@ from fm.mission_handler import accept_all_missions
 from fm.notifications import notify_plane_crashes
 
 
+def build_airport():
+    staff_page = get_request(STAFF_PAGE)
+    airport_page = get_request(AIRPORT_PAGE)
+    return build_airport(airport_page, staff_page)
+
+
+def build_planes():
+    html_page = get_request(PLANES_PAGE)
+    planes_list = build_planes_from_html(html_page)
+    sorted_planes = split_planes_list_by_type(planes_list)
+    return sorted_planes
+
+
+def get_ongoing_missions():
+    dashboard = get_request(MISSION_DASHBOARD)
+    return get_ongoing_missions(dashboard)
+
+
+def build_report():
+    report_html = get_request(AIRPORT_REPORT)
+    return report_parser(report_html)
+
+
 class BotPlayer(object):
     def __init__(self, missions):
-        self.airport = self.build_airport()
-        self.planes = self.build_planes()
-        self.ongoing_missions = self.get_ongoing_missions()
-        self.report = self.build_report()
+        self.airport = build_airport()
+        self.planes = build_planes()
+        self.ongoing_missions = get_ongoing_missions()
+        self.report = build_report()
         self.missions = missions
         logger.info('Airport {}'.format(self.airport.airport_name.encode('utf-8')))
-
-    def build_airport(self):
-        staff_page = get_request(STAFF_PAGE)
-        airport_page = get_request(AIRPORT_PAGE)
-        return build_airport(airport_page, staff_page)
-
-    def build_planes(self):
-        html_page = get_request(PLANES_PAGE)
-        planes_list = build_planes_from_html(html_page)
-        sorted_planes = split_planes_list_by_type(planes_list)
-        return sorted_planes
-
-    def get_ongoing_missions(self):
-        dashboard = get_request(MISSION_DASHBOARD)
-        return get_ongoing_missions(dashboard)
-
-    def build_report(self):
-        report_html = get_request(AIRPORT_REPORT)
-        return report_parser(report_html)
 
     @property
     def usable_planes(self):
@@ -79,4 +83,4 @@ class BotPlayer(object):
                 notify_plane_crashes(self.airport.airport_name, daily_crashes_number)
 
     def refresh_planes(self):
-        self.planes = self.build_planes()
+        self.planes = build_planes()
