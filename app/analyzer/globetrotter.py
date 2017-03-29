@@ -46,7 +46,7 @@ class Globetrotter:
         self.origin_airports_location = []
         self.translator = CountryNameTranslator()
         self.capital_finder = CapitalFinder()
-        self.airport_finder = AirportFinder()
+        # self.airport_finder = AirportFinder()
         self.locator = LocationCoordinates()
         self.fr_loc = Location()
 
