@@ -1,6 +1,7 @@
 # -*- coding: utf-8 -*-
 
 from app.airport.airports_methods import switch_to_airport
+from app.common.constants import ACTIVE_AIRPORT_ID
 from app.common.logger import logger
 from app.manager.bot_player import BotPlayer
 from fm.databases.database_django import db_get_ordered_missions_multi_type
@@ -14,8 +15,7 @@ class MultiAirportBot(object):
     def start(self):
         # other_airports = get_other_airports_id()
         # other_airports = filter_airports(other_airports)
-        # h200 h84 h84 h36 h36
-        other_airports = ['125146', '122791']
+        other_airports = ACTIVE_AIRPORT_ID
         for airport_id in other_airports:
             switch_to_airport(airport_id)
             bot = BotPlayer(self.missions)
