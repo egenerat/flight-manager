@@ -75,7 +75,7 @@ def parse_all_missions_in_page(html_page, country_nb):
     return all_missions_one_country
 
 
-def get_ongoing_missions(html_page):
+def get_ongoing_missions_from_html(html_page):
     str_list = re.findall(MISSIONS_ONGOING_ID_REGEX, html_page)
     return [int(item) for item in str_list]
 

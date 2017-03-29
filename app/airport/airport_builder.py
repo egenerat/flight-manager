@@ -7,7 +7,7 @@ from app.airport.airports_parsers import get_country, get_money, get_kerosene_su
 from app.airport.staff_parser import get_pilots, get_flight_attendants, get_mechanics
 
 
-def build_airport(airport_html, staff_html):
+def build_airport_from_html(airport_html, staff_html):
     country = get_country(airport_html)
     money = get_money(airport_html)
     kerosene_supply = get_kerosene_supply(airport_html)

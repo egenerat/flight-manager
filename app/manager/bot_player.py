@@ -1,14 +1,14 @@
 # -*- coding: utf-8 -*-
 from app.airport import airport_buyer
 from app.airport import staff_buyer
-from app.airport.airport_builder import build_airport
+from app.airport.airport_builder import build_airport_from_html
 from app.airport.airport_checker import AirportChecker
 from app.airport.report_parser import report_parser
 from app.common.constants import MAIN_AIRPORT_NAME
 from app.common.logger import logger
 from app.common.http_methods import get_request
 from app.common.target_urls import STAFF_PAGE, AIRPORT_PAGE, MISSION_DASHBOARD, PLANES_PAGE, AIRPORT_REPORT
-from app.missions.missionparser import get_ongoing_missions, subtract
+from app.missions.missionparser import subtract, get_ongoing_missions_from_html
 from app.parsers.planes_parser import build_planes_from_html
 from app.planes.plane_garage import PlaneGarage
 from app.planes.planes_util2 import split_planes_list_by_type
@@ -19,7 +19,7 @@ from fm.notifications import notify_plane_crashes
 def build_airport():
     staff_page = get_request(STAFF_PAGE)
     airport_page = get_request(AIRPORT_PAGE)
-    return build_airport(airport_page, staff_page)
+    return build_airport_from_html(airport_page, staff_page)
 
 
 def build_planes():
@@ -31,7 +31,7 @@ def build_planes():
 
 def get_ongoing_missions():
     dashboard = get_request(MISSION_DASHBOARD)
-    return get_ongoing_missions(dashboard)
+    return get_ongoing_missions_from_html(dashboard)
 
 
 def build_report():
