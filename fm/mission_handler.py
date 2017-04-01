@@ -6,7 +6,7 @@ import datetime
 
 import math
 
-from app.airport.airport_builder import build_airport
+from app.airport.airport_builder import build_airport_from_html
 from app.airport.airports_methods import switch_to_airport
 from app.common.constants import PARSER_AIRPORT_ID
 from app.common.exceptions.string_not_found import StringNotFoundException
@@ -57,7 +57,7 @@ def empty_db_missions():
 def parse_all_missions():
     switch_to_airport(PARSER_AIRPORT_ID)
     # ANALYSIS
-    full_analysis = True
+    full_analysis = False
     db_remove_all_missions()
     mission_types = ["4", "5"]
     # ANALYSIS
@@ -67,7 +67,7 @@ def parse_all_missions():
     expiry_date = get_expiry_date()
     staff_page = get_request(STAFF_PAGE)
     airport_page = get_request(AIRPORT_PAGE)
-    current_airport = build_airport(airport_page, staff_page)
+    current_airport = build_airport_from_html(airport_page, staff_page)
     country = current_airport.country
     for mission_type, countries_list in result.iteritems():
         mission_list = list_missions(mission_type, countries_list)
