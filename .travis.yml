@@ -15,10 +15,12 @@ script:
 - python -m unittest discover app
 - sonar-scanner
 before_install:
-- openssl aes-256-cbc -K $encrypted_046cc4d61ee9_key -iv $encrypted_046cc4d61ee9_iv
-  -in archive.tar.enc -out archive.tar -d
+- echo $super_secret_password | gpg --passphrase-fd 0 archive.tar.gpg
 - tar xvf archive.tar
 addons:
   sonarqube:
     token:
       secure: 5c495226de78494f99b3717bff5ec18a0a52dd1c
+env:
+  global:
+  - secure: Pqv73ItRs9ope/kzvA1psrk42GnT/y4vos2e6nmCPqcrX1QmpP0pRNFpVdLW2AS0fNg7OabZHcfTAdZtrDuPoSEjxRKbtw9NpHFUNmxEv6j+vQOE2twYcqDovSVqYpNbcBM+m5aLTZO5pmgf011q0ur6u8/Eoedb1THNLOazR+VSi0dix9xDm9EI/4cks5oogS/eNLjVNiG+JLZpRFQ6wVFuc45CT9p0A7einJ+6LRpjEzQE64FFpTpPaZCTH3f9/trBn2NiG2q7+yDASZawWjowmvm1yslLW2PkuUHSOPUiRWdrJcFai5oDaU5kSFQg6bJH/4MeAh8IdV1OUkszz4NSfN1s8SaLHdZ3lqbzS5qWpMbSqHr+mDcdcNGnI2j2YXQHZX8jZZBHBI43oKskrizOBHzwr+dhRp0HKfhS8CQ2s7vnXOCoDSgsy/BQjTD2xCdFwI/ZcI1k/KRuBpn2bXlyGmEPF7nIgILblJBJSBVhqQDH/uqvcGhPYPyukRUjXNm2vxc1bdBjTeM0/nX4JEX9jYYFvso3hMZNWO1tXCtTvg035LzYwKt+lzPTY00717/KYcw/B2/0KIz0or8mBwMIj2mHebUVfF7q13WKJJtaGjp5UdyFqWSwQSlaxAFur8AWJydf1fFa8D3y5Mgkp71/HPZuck0xKbFbHkcjIeA=
