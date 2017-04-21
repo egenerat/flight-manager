@@ -4,6 +4,7 @@ import unittest
 from app.analyzer.airport_finder import AirportFinder
 
 
+@unittest.skip("demonstrating skipping")
 class TestAirportFinder(unittest.TestCase):
 
     @classmethod

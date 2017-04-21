@@ -28,7 +28,7 @@ def planes_config_factory(airport_capacity):
         # in order to reduce planes number
         84: PlanesConfig(supersonics_nb=0, jets_nb=30),
         114: PlanesConfig(supersonics_nb=104, jets_nb=110),
-        200: PlanesConfig(supersonics_nb=127, jets_nb=73),
+        200: PlanesConfig(supersonics_nb=95, jets_nb=105),
     }[airport_capacity]
 
 
