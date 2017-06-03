@@ -8,10 +8,7 @@ python:
 install:
 - pip install requests mockito geopy
 script:
-- "./script.sh"
-- export WEBSERVER_TEST_PAGES_IP=$(docker inspect -f '{{range .NetworkSettings.Networks}}{{.IPAddress}}{{end}}'
-  webserver_test_pages)
-- echo $WEBSERVER_TEST_PAGES_IP
+- "./build_test_docker.sh"
 - python -m unittest discover app
 - sonar-scanner
 before_install:
