@@ -46,6 +46,7 @@ class BotPlayer(object):
         self.ongoing_missions = get_ongoing_missions()
         self.report = build_report()
         self.missions = missions
+        self.refresh_needed = False
         logger.info('Airport {}'.format(self.airport.airport_name.encode('utf-8')))
 
     @property
@@ -58,7 +59,7 @@ class BotPlayer(object):
         # should be improved to select only planes with status I
         temp = self.planes['commercial_planes'] + self.planes['supersonic_planes'] + self.planes[
             'jet_planes']
-        return [plane for plane in temp if plane.required_maintenance or plane.endlife]
+        return [plane for plane in temp if plane.in_mission == 'I' and (plane.required_maintenance or plane.endlife)]
 
     def launch_missions(self):
         mission_list = self.missions
@@ -66,13 +67,13 @@ class BotPlayer(object):
         mission_list = subtract(mission_list, ongoing_missions)
         checker = AirportChecker(self.airport, self.planes, airport_buyer, staff_buyer)
         checker.fix()
+        self.refresh_needed = checker.refresh_needed
 
-        # be careful, also send planes to maintainance with status A
         garage = PlaneGarage(self.usable_planes + self.maintenance_needed_planes, self.airport)
         # garage.get_kerosene_quantity_needed()
         # garage.get_engines_needed_nb()
-        # TODO reparse after buying new planes
         garage.prepare_all_planes()
+        self.refresh_needed = self.refresh_needed or garage.refresh_needed
         accept_all_missions(mission_list, garage.ready_planes)
 
     def check_report(self):
@@ -84,3 +85,4 @@ class BotPlayer(object):
 
     def refresh_planes(self):
         self.planes = build_planes()
+        self.refresh_needed = False

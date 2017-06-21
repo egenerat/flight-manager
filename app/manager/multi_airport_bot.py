@@ -20,6 +20,9 @@ class MultiAirportBot(object):
             switch_to_airport(airport_id)
             bot = BotPlayer(self.missions)
             bot.launch_missions()
+            while bot.refresh_needed:
+                bot.refresh_planes()
+                bot.launch_missions()
             bot.check_report()
 
             # TODO save the current airport in the singleton/session

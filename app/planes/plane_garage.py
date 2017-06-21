@@ -8,11 +8,14 @@ class PlaneGarage(object):
         self.plane_list = plane_list
         self.airport = airport
         self.ready_planes = None
+        self.refresh_needed = False
 
     def prepare_all_planes(self):
         temp_ready_planes = []
         for i in self.plane_list:
-            is_ready = PlaneMaintainer(i, self.airport).prepare_plane()
+            plane_maintainer = PlaneMaintainer(i, self.airport)
+            is_ready = plane_maintainer.prepare_plane()
+            self.refresh_needed = self.refresh_needed or plane_maintainer.refresh_needed
             if is_ready:
                 temp_ready_planes.append(i)
         self.ready_planes = temp_ready_planes
