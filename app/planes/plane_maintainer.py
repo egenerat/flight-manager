@@ -18,6 +18,7 @@ class PlaneMaintainer(object):
         self.plane = plane
         self.__ready = True
         self.airport = airport
+        self.refresh_needed = False
         # TODO make sure airport contains enough resources before maintenance
 
     def __change_engines(self):
@@ -48,15 +49,15 @@ class PlaneMaintainer(object):
             exception_if_not_contains(u'Votre avion est maintenant en maintenance', page)
         except:
             logger.error('Problem sending to maintenance')
-            if not string_contains(u"en mission, en maintenance ou n'a pas plus de 100,000 km sans maintenance",
-                                   page):
-                # case when the current airport has changed
-                # case not enough mecanicians
-                notify('FM : could not send to maintenance', page)
+            if string_contains(u"en mission, en maintenance ou n'a pas plus de 100,000 km sans maintenance", page):
+                # case plane maintenance was over
+                logger.warning("Maintenance over, should refresh plane list")
+                self.refresh_needed = True
             else:
-                # TODO case plane maintenance was over, should continue iteration over planes, refresh and run again
-                logger.warning("Outdated plane list (not an exception anymore)")
-                # raise OutdatedPlanesListException()
+                # case:
+                # - not enough mechanics
+                # - current airport has changed
+                notify('FM : could not send to maintenance', page)
         self.__ready = False
 
     def prepare_plane(self):

@@ -24,6 +24,7 @@ def build_plane_from_line(html_line):
         plane_model = __get_model(html_line)
         plane_id = get_value_from_regex(PLANE_ID_REGEX, html_line)
         ready = True
+        in_mission = get_value_from_regex(PLANE_STATUS_REGEX, html_line)
 
         if string_contains(PLANE_IN_SALE, html_line) or string_contains(PLANE_MAINTAINANCE_ONGOING, html_line):
             ready = False
@@ -35,20 +36,18 @@ def build_plane_from_line(html_line):
             required_maintenance = True
         if not ready:
             return planes_factory(plane_model)(plane_id=plane_id, ready=ready, required_maintenance=required_maintenance,
-                                               endlife=endlife)
+                                               endlife=endlife, in_mission=in_mission)
         else:
-            status = get_value_from_regex(PLANE_STATUS_REGEX, html_line)
-            ready = True if status == 'I' else False
+            ready = True if in_mission == 'I' else False
             kerosene = get_amount_from_regex(PLANE_KEROSENE_REGEX, html_line)
             hours = get_value_from_regex(PLANE_ENGINES_HOURS_REGEX, html_line)
             km_nb = get_amount_from_regex(PLANE_KM_REGEX, html_line)
             current_engine_hours = hours[0]
             maximum_engine_hours = hours[1]
             return planes_factory(plane_model)(plane_id=plane_id, ready=ready,
-                                               required_maintenance=required_maintenance,
-                                               status=status, kerosene=kerosene,
+                                               required_maintenance=required_maintenance, kerosene=kerosene,
                                                current_engine_hours=current_engine_hours, km=km_nb,
-                                               maximum_engine_hours=maximum_engine_hours)
+                                               maximum_engine_hours=maximum_engine_hours, in_mission=in_mission)
 
 
 def build_planes_from_html(html):

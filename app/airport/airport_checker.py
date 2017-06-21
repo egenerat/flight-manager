@@ -15,6 +15,7 @@ class AirportChecker(object):
         self.airport_config = AirportConfig(self.airport)
         self.airport_buyer = injected_airport_buyer
         self.injected_staff_buyer = injected_staff_buyer
+        self.refresh_needed = False
 
     def check_missing_planes(self):
         config = self.airport_config.planes_config
@@ -25,18 +26,16 @@ class AirportChecker(object):
         }
 
     def fix_missing_planes(self):
-        new_planes = False
         total_missing_planes = self.airport.planes_capacity - get_planes_nb_from_sorted_dict(self.sorted_planes_dict)
         if total_missing_planes > 0:
+            self.refresh_needed = True
             if self.airport.airport_name == MAIN_AIRPORT_NAME:
-                new_planes = True
                 for plane_class, missing_units in self.check_missing_planes().iteritems():
                     if missing_units > 0:
                         self.airport_buyer.buy_missing_planes(plane_class, min(missing_units, total_missing_planes))
                         # TODO new_planes var should be set with the result of buying_missing_planes
             else:
                 take_planes_alliance(total_missing_planes)
-        return new_planes
 
     def fix_missing_staff(self):
         current_staff = self.airport.staff
