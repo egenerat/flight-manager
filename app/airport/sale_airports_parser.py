@@ -1,13 +1,29 @@
 # -*- coding: utf-8 -*-
 
-import re
-
 from app.common.constants import OWN_PSEUDO
 from app.common.string_methods import get_amount, get_value_from_regex, get_values_from_regex
-from app.common.target_parse_strings import SALE_AIRPORTS_BEGIN_HTML, SALE_ONE_AIRPORT_BEGIN_HTML, \
-    SALE_ONE_AIRPORT_END_HTML, SALE_AIRPORT_ID_REGEX, SALE_AIRPORT_REPUTATION_REGEX, SALE_AIRPORT_CASH_REGEX, \
+from app.common.target_parse_strings import SALE_AIRPORTS_BEGIN_HTML, \
+    SALE_AIRPORT_ID_REGEX, SALE_AIRPORT_REPUTATION_REGEX, SALE_AIRPORT_CASH_REGEX, \
     SALE_AIRPORT_PRICE_REGEX, SALE_AIRPORT_PSEUDO
 from app.common.target_parse_strings import SALE_AIRPORTS_END_HTML
+
+
+def build_airport_from_line(html_line):
+    airport_id = get_value_from_regex(SALE_AIRPORT_ID_REGEX, html_line)
+    capacity_reputation = get_values_from_regex(SALE_AIRPORT_REPUTATION_REGEX, html_line)
+    cash = get_amount(get_values_from_regex(SALE_AIRPORT_CASH_REGEX, html_line)[1])
+    price = get_amount(get_value_from_regex(SALE_AIRPORT_PRICE_REGEX, html_line))
+    vendor = get_value_from_regex(SALE_AIRPORT_PSEUDO, html_line)
+    if not vendor == OWN_PSEUDO:
+        an_airport = {
+            'airport_id': int(airport_id),
+            'cash': cash,
+            'capacity': int(capacity_reputation[0]),
+            'reputation': get_amount(capacity_reputation[1]),
+            'price': price,
+            'vendor': vendor
+        }
+    return an_airport
 
 
 def build_airports_list(page):
@@ -17,29 +33,10 @@ def build_airports_list(page):
     index_end = page.find(SALE_AIRPORTS_END_HTML)
 
     page = page[index_begin: index_end]
+    airports_html_list = page.split("</tr><tr>")[1:]
 
-    begin_one_airport = SALE_ONE_AIRPORT_BEGIN_HTML
-    end_one_airport = SALE_ONE_AIRPORT_END_HTML
-
-    indexes_begin_airport = [(m.start()) for m in re.finditer(begin_one_airport, page)][::2]
-    indexed_end_airport = [(m.start()) for m in re.finditer(end_one_airport, page)]
-
-    for i in range(0, len(indexes_begin_airport)):
-        a_airport_text = page[indexes_begin_airport[i]:indexed_end_airport[i]]
-        airport_id = get_value_from_regex(SALE_AIRPORT_ID_REGEX, a_airport_text)
-        capacity_reputation = get_values_from_regex(SALE_AIRPORT_REPUTATION_REGEX, a_airport_text)
-        cash = get_amount(get_values_from_regex(SALE_AIRPORT_CASH_REGEX, a_airport_text)[1])
-        price = get_amount(get_value_from_regex(SALE_AIRPORT_PRICE_REGEX, a_airport_text))
-        saler = get_value_from_regex(SALE_AIRPORT_PSEUDO, page)
-        if not saler == OWN_PSEUDO:
-            an_airport = {
-                'airport_id': int(airport_id),
-                'cash': cash,
-                'capacity': int(capacity_reputation[0]),
-                'reputation': get_amount(capacity_reputation[1]),
-                'price': price,
-            }
-            result.append(an_airport)
+    for an_airport_html in airports_html_list:
+        result.append(build_airport_from_line(an_airport_html))
     return result
 
 
