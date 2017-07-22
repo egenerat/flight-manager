@@ -41,6 +41,7 @@ class PlaneMaintainer(object):
     def __scrap_plane(self):
         get_request(SCRAP_PLANE_URL.format(plane_id=self.plane.plane_id))
         self.__ready = False
+        self.refresh_needed = True
 
     def __do_maintenance(self):
         page = None
