@@ -7,8 +7,7 @@ from HTMLParser import HTMLParser
 
 from app.common.logger import logger
 from app.common.session_manager import get_session, save_session_in_cache
-from app.common.target_strings import LOGOUT_STRING_1
-from app.common.target_strings import LOGOUT_STRING_2
+from app.common.target_strings import LOGOUT_STRING
 from app.common.target_urls import LOGIN_PAGE
 from app.common.target_urls import POST_LOGIN_PAGE
 from fm.databases.database_django import save_session_to_db
@@ -34,9 +33,8 @@ def wait():
 
 
 def is_connected(page):
-    p = re.compile(LOGOUT_STRING_1)
-    p2 = re.compile(LOGOUT_STRING_2)
-    return not len(p.findall(page)) and not len(p2.findall(page))
+    p = re.compile(LOGOUT_STRING)
+    return not len(p.findall(page))
 
 
 def __generic_request(method_name, address, post_data=None):
@@ -47,6 +45,7 @@ def __generic_request(method_name, address, post_data=None):
     response = getattr(http_session, method_name)(address, data=post_data, headers=HEADER)
     response.encoding = 'utf-8'
     html_page = response.text
+    html_page = parser.unescape(html_page)
     if not is_connected(html_page):
         logger.warning('Session expired')
         http_session = authenticate_with_server()
