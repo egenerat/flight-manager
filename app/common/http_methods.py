@@ -13,6 +13,7 @@ from app.common.target_urls import POST_LOGIN_PAGE
 from fm.databases.database_django import save_session_to_db
 from lib import requests
 from app.common.constants import USERNAME, PASSWORD, HEADER
+from lib.requests import RequestException
 
 parser = HTMLParser()
 
@@ -37,26 +38,30 @@ def is_connected(page):
     return not len(p.findall(page))
 
 
+def __send_request_process_response(http_session, method_name, address, post_data):
+    request_retries = 3
+    for _ in range(request_retries):
+        try:
+            response = getattr(http_session, method_name)(address, data=post_data, headers=HEADER)
+            response.encoding = 'utf-8'
+            html_page = response.text
+            return parser.unescape(html_page)
+        except RequestException:
+            wait()
+            logger.warning('Request failed, will retry')
+            continue
+
+
 def __generic_request(method_name, address, post_data=None):
     http_session = get_session()
     if not http_session:
         logger.warning('No previous session found')
         http_session = authenticate_with_server()
-    response = getattr(http_session, method_name)(address, data=post_data, headers=HEADER)
-    response.encoding = 'utf-8'
-    html_page = response.text
-    html_page = parser.unescape(html_page)
+    html_page = __send_request_process_response(http_session, method_name, address, post_data)
     if not is_connected(html_page):
         logger.warning('Session expired')
         http_session = authenticate_with_server()
-        try:
-            response = getattr(http_session, method_name)(address, data=post_data, headers=HEADER)
-        except:
-            wait()
-            response = getattr(http_session, method_name)(address, data=post_data, headers=HEADER)
-    response.encoding = 'utf-8'
-    html_page = response.text
-    html_page = parser.unescape(html_page)
+        html_page = __send_request_process_response(http_session, method_name)(address, data=post_data)
     save_session_in_cache(http_session)
     wait()
     return html_page
