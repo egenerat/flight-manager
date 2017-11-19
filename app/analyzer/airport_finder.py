@@ -10,12 +10,12 @@ def parse_airports():
         reader = csv.reader(f, delimiter=',', quotechar='"')
         for row in reader:
             result.setdefault((row[2], row[3]), []).append({
-                    'airport_name': row[1],
-                    'location': {
-                        'latitude': row[6],
-                        'longitude': row[7]
-                    }
-                })
+                'airport_name': row[1],
+                'location': {
+                    'latitude': row[6],
+                    'longitude': row[7]
+                }
+            })
     return result
 
 

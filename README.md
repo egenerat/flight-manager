@@ -23,3 +23,14 @@ List versions
 
 Set version
 `appcfg.py set_default_version .`
+
+
+
+Environment variable
+`--env_var SKIP_MISSION_REFRESH=True`
+
+Check if runs locally
+`os.getenv('SERVER_SOFTWARE', '').startswith('Google App Engine/')`
+
+Useful links:
+- [Using the Local Development Server](https://cloud.google.com/appengine/docs/standard/python/tools/using-local-server)

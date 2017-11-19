@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 
-from app.common.constants import OWN_PSEUDO
+from app.common.constants import USERNAME
 from app.common.string_methods import get_amount, get_value_from_regex, get_values_from_regex
 from app.common.target_parse_strings import SALE_AIRPORTS_BEGIN_HTML, \
     SALE_AIRPORT_ID_REGEX, SALE_AIRPORT_REPUTATION_REGEX, SALE_AIRPORT_CASH_REGEX, \
@@ -14,7 +14,7 @@ def build_airport_from_line(html_line):
     cash = get_amount(get_values_from_regex(SALE_AIRPORT_CASH_REGEX, html_line)[1])
     price = get_amount(get_value_from_regex(SALE_AIRPORT_PRICE_REGEX, html_line))
     vendor = get_value_from_regex(SALE_AIRPORT_PSEUDO, html_line)
-    if not vendor == OWN_PSEUDO:
+    if not vendor == USERNAME:
         an_airport = {
             'airport_id': int(airport_id),
             'cash': cash,

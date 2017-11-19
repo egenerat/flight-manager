@@ -5,6 +5,7 @@ import re
 import time
 from HTMLParser import HTMLParser
 
+from google.appengine.api.urlfetch_errors import InternalTransientError
 from app.common.logger import logger
 from app.common.session_manager import get_session, save_session_in_cache
 from app.common.target_strings import LOGOUT_STRING
@@ -35,7 +36,7 @@ def wait():
 
 def is_connected(page):
     p = re.compile(LOGOUT_STRING)
-    return not len(p.findall(page))
+    return len(p.findall(page)) == 0
 
 
 def __send_request_process_response(http_session, method_name, address, post_data):
@@ -46,7 +47,8 @@ def __send_request_process_response(http_session, method_name, address, post_dat
             response.encoding = 'utf-8'
             html_page = response.text
             return parser.unescape(html_page)
-        except RequestException:
+        # except (RequestException, InternalTransientError, HTTPException, DeadlineExceededError):
+        except (RequestException, InternalTransientError):
             wait()
             logger.warning('Request failed, will retry')
             continue
@@ -61,7 +63,7 @@ def __generic_request(method_name, address, post_data=None):
     if not is_connected(html_page):
         logger.warning('Session expired')
         http_session = authenticate_with_server()
-        html_page = __send_request_process_response(http_session, method_name)(address, data=post_data)
+        html_page = __send_request_process_response(http_session, method_name, address, post_data)
     save_session_in_cache(http_session)
     wait()
     return html_page

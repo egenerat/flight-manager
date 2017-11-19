@@ -1,10 +1,9 @@
 # -*- coding: utf-8 -*-
 
-import traceback
-
 import datetime
-
 import math
+import os
+import traceback
 
 from app.airport.airport_builder import build_airport_from_html
 from app.airport.airports_methods import switch_to_airport
@@ -32,7 +31,8 @@ def enrich_mission_dictionary(mission_dict, expiry_date, country, mission_type):
     a_mission.mission_type = mission_type
     plane_class = find_plane_class_for_mission(a_mission)
     a_mission.revenue_per_hour = get_real_benefit(a_mission, plane_class.price)
-    total_hours = a_mission.time_before_departure + math.ceil(a_mission.km_nb / plane_class.speed) * 2
+    total_hours = a_mission.time_before_departure + \
+        math.ceil(a_mission.km_nb / plane_class.speed) * 2
     a_mission.total_time = total_hours
     total_reputation = a_mission.reputation
     if stopover_dict:
@@ -72,7 +72,8 @@ def parse_all_missions():
     for mission_type, countries_list in result.iteritems():
         mission_list = list_missions(mission_type, countries_list)
         for a_mission_dict in mission_list:
-            enriched_data = enrich_mission_dictionary(a_mission_dict, expiry_date, country, mission_type)
+            enriched_data = enrich_mission_dictionary(
+                a_mission_dict, expiry_date, country, mission_type)
             a_mission = enriched_data['a_mission']
             if (is_possible_mission(a_mission) and is_interesting_mission(a_mission)) or full_analysis:
                 a_stopover = enriched_data['stopover']
@@ -87,9 +88,8 @@ def extract_bonus_from_page(page):
 
 
 def are_missions_expired(missions):
-    # TODO improve environment handling
-    # if fm.singleton_session.local_mode:
-    #     return False
+    if os.getenv('SKIP_MISSION_REFRESH') == "True":
+        return False
     expiry_date = missions[0].expiry_date
     today = datetime.datetime.now()
     return (expiry_date - today) <= datetime.timedelta(0)
@@ -97,13 +97,15 @@ def are_missions_expired(missions):
 
 def __accept_mission(country_id, plane_id, mission_id, mission_type, stopover):
     bonus = None
-    log_message = 'accept mission {} with plane {}'.format(mission_id, plane_id)
+    log_message = 'accept mission {} with plane {}'.format(
+        mission_id, plane_id)
     post_data = {'id_avion': str(plane_id)}
     if stopover:
         log_message += ' + stopover'
         post_data.update({'active_escale': '1'})
     page = post_request(
-        GENERIC_ACCEPT_MISSION.format(mission_type=mission_type, mission_id=mission_id, country_id=country_id),
+        GENERIC_ACCEPT_MISSION.format(
+            mission_type=mission_type, mission_id=mission_id, country_id=country_id),
         post_data)
     logger.info(log_message)
     try:
@@ -118,7 +120,7 @@ def accept_one_mission(plane_id, a_mission):
     try:
         has_stopover = a_mission.stopover is not None
         __accept_mission(a_mission.country_nb, plane_id, a_mission.mission_nb, a_mission.mission_type,
-                                 has_stopover)
+                         has_stopover)
     except Exception as e:
         exception_text = traceback.format_exc()
         logger.error(exception_text)
@@ -141,6 +143,9 @@ def accept_all_missions_one_type(plane_list, mission_list):
 def accept_all_missions(missions_list, plane_list):
     sorted_planes = split_planes_list_by_type(plane_list)
     sorted_missions = split_missions_list_by_type(missions_list)
-    accept_all_missions_one_type(sorted_planes['commercial_ready_planes'], sorted_missions['missions_for_commercial'])
-    accept_all_missions_one_type(sorted_planes['supersonic_ready_planes'], sorted_missions['missions_for_supersonics'])
-    accept_all_missions_one_type(sorted_planes['jet_ready_planes'], sorted_missions['missions_for_jet'])
+    accept_all_missions_one_type(
+        sorted_planes['commercial_ready_planes'], sorted_missions['missions_for_commercial'])
+    accept_all_missions_one_type(
+        sorted_planes['supersonic_ready_planes'], sorted_missions['missions_for_supersonics'])
+    accept_all_missions_one_type(
+        sorted_planes['jet_ready_planes'], sorted_missions['missions_for_jet'])
