@@ -7,6 +7,9 @@ Python Django application deployed on Google App Engine
 Run server in debug mode
 `--automatic_restart=no --max_module_instances=default:1`
 
+Run one test
+`python -m unittest app.test.airport.test_airport_parser`
+
 Specific datastore
 `--datastore_path=/path/to/datastore`
 
