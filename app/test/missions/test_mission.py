@@ -1,8 +1,7 @@
 # -*- coding: utf-8 -*-
 
-from app.missions.mission import is_mission_feasible, get_expiry_date
 import unittest
-
+from app.missions.mission import is_mission_feasible, get_expiry_date
 from app.planes.supersonic_tu_plane import SupersonicTUPlane
 
 
@@ -18,18 +17,21 @@ class TestMission(object):
 class TestParser(unittest.TestCase):
 
     def test_feasible(self):
-        mission = TestMission(km_nb=4000, travellers_nb=0, pilots_nb=0, flight_attendants_nb=0)
-        plane = SupersonicTUPlane(plane_id=0, ready=True)
+        mission = TestMission(km_nb=4000, travellers_nb=0,
+                              pilots_nb=0, flight_attendants_nb=0)
+        plane = SupersonicTUPlane(plane_id=0, ready=True, in_mission=False)
         self.assertTrue(is_mission_feasible(mission, plane))
 
     def test_not_feasible(self):
-        mission = TestMission(km_nb=7000, travellers_nb=0, pilots_nb=0, flight_attendants_nb=0)
-        plane = SupersonicTUPlane(plane_id=0, ready=True)
+        mission = TestMission(km_nb=7000, travellers_nb=0,
+                              pilots_nb=0, flight_attendants_nb=0)
+        plane = SupersonicTUPlane(plane_id=0, ready=True, in_mission=False)
         self.assertFalse(is_mission_feasible(mission, plane))
 
     @unittest.skip("Not implemented yet")
     def test_get_expiry_date(self):
         self.assertEqual(0, get_expiry_date())
+
 
 if __name__ == '__main__':
     unittest.main()

@@ -9,23 +9,25 @@ from app.common.target_urls import ALLIANCE_PAGE, ALLIANCE_PLANE_PANEL_URL, ALLI
 
 class TestAirportParser(unittest.TestCase):
 
+    @unittest.skip("Not ready yet")
     def test_amount_needed(self):
         take_plane_from_alliance()
         # self.assertEqual(43900000, 0)
 
 
-from mockito import when, mock, unstub
-
-import requests
-response = mock({'status_code': 200, 'text': 'Ok'})
-when(requests).get('http://google.com/').thenReturn(response)
-
-# use it
-truc = requests.get('http://google.com/')
-print(truc.text)
-
-# clean up
-unstub()
+#TODO
+# from mockito import when, mock, unstub
+#
+# import requests
+# response = mock({'status_code': 200, 'text': 'Ok'})
+# when(requests).get('http://google.com/').thenReturn(response)
+#
+# # use it
+# truc = requests.get('http://google.com/')
+# print(truc.text)
+#
+# # clean up
+# unstub()
 
 
 @unittest.skip("Not ready yet")
