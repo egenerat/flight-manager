@@ -4,9 +4,11 @@
 class AirportConfig(object):
     def __init__(self, airport):
         self.airport = airport
-        self.planes_config = planes_config_factory(self.airport.planes_capacity)
+        self.planes_config = planes_config_factory(
+            self.airport.planes_capacity)
         self.staff_config = staff_config_factory(self.airport.planes_capacity)
-        self.resources_config = ResourcesConfig(self.airport, self.planes_config)
+        self.resources_config = ResourcesConfig(
+            self.airport, self.planes_config)
 
 
 class PlanesConfig(object):
@@ -24,10 +26,8 @@ def planes_config_factory(airport_capacity):
         27: PlanesConfig(supersonics_nb=27),
         36: PlanesConfig(supersonics_nb=36),
         54: PlanesConfig(supersonics_nb=52, jets_nb=2),
-        # 84: PlanesConfig(supersonics_nb=81, jets_nb=3),
-        # in order to reduce planes number
-        84: PlanesConfig(supersonics_nb=0, jets_nb=30),
-        114: PlanesConfig(supersonics_nb=104, jets_nb=110),
+        84: PlanesConfig(supersonics_nb=81, jets_nb=3),
+        114: PlanesConfig(supersonics_nb=95, jets_nb=9),
         200: PlanesConfig(supersonics_nb=95, jets_nb=105),
     }[airport_capacity]
 
@@ -50,7 +50,7 @@ def staff_config_factory(airport_capacity):
         36: StaffConfig(pilots_nb=100, flight_attendants_nb=56, mechanics_nb=32),
         54: StaffConfig(pilots_nb=85, flight_attendants_nb=56, mechanics_nb=32),
         84: StaffConfig(pilots_nb=250, flight_attendants_nb=120, mechanics_nb=40),
-        114: StaffConfig(pilots_nb=190, flight_attendants_nb=115, mechanics_nb=40),
+        114: StaffConfig(pilots_nb=260, flight_attendants_nb=175, mechanics_nb=60),
         200: StaffConfig(pilots_nb=520, flight_attendants_nb=315, mechanics_nb=200),
     }[airport_capacity]
 
@@ -60,14 +60,14 @@ class ResourcesConfig(object):
         # self.kerosene = airport_config.jets_nb * 10000 + airport_config.supersonics_nb * 100000
         # multiple of the airport capacity
         self.kerosene = {
-            'min': 0.7*airport.kerosene_capacity,
-            'max': 1*airport.kerosene_capacity
+            'min': 0.7 * airport.kerosene_capacity,
+            'max': 1 * airport.kerosene_capacity
         }
         self.engines_5_nb = {
-            'min': 3*planes_config.jets_nb/4,
-            'max': 3*planes_config.jets_nb/2
+            'min': 3 * planes_config.jets_nb / 4,
+            'max': 3 * planes_config.jets_nb / 2
         }
         self.engines_6_nb = {
-            'min': 4*planes_config.supersonics_nb/10,
-            'max': 4*planes_config.supersonics_nb/7
+            'min': 4 * planes_config.supersonics_nb / 10,
+            'max': 4 * planes_config.supersonics_nb / 7
         }

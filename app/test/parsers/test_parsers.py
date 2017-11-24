@@ -1,5 +1,5 @@
 from app.common.http_methods_unittests import get_request
-from app.common.target_urls import YOUR_PLANES_URL
+from app.common.target_urls import YOUR_PLANES_URL, YOUR_PLANES_NO_PLANE_URL
 from app.parsers.planes_parser import build_planes_from_html
 import unittest
 
@@ -37,7 +37,7 @@ class TestParser(unittest.TestCase):
         self.assertEqual(69, len(planes_by_type['commercial_ready_planes']))
 
     def test_parser_no_plane(self):
-        html_page = get_request("http://localhost/test_pages/your_planes_no_plane.html")
+        html_page = get_request(YOUR_PLANES_NO_PLANE_URL)
         self.planes_list = build_planes_from_html(html_page)
         self.assertEqual(0, len(self.planes_list))
 

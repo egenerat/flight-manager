@@ -43,16 +43,19 @@ def get_sale_airports():
         airports_sold_nb = len(new_airports)
         response = ''
         for i in new_airports:
-            response += 'H{} :  {} $, cash: {}\n'.format(i['capacity'], i['price'], format_amount(i['cash']))
+            response += 'H{}: {} $, cash: {}\n'.format(
+                i['capacity'], i['price'], format_amount(i['cash']))
             # TODO improve buying policy
             if (i['price'] - i['cash']) < PRICE_AIRPORT_AUTOMATIC_PURCHASE and i[
-                'price'] < 20000000000:  # and i['price'] > 0:
+                    'price'] < 20000000000:  # and i['price'] > 0:
                 switch_to_airport(BANK_AIRPORT)
                 # in case account < 0
                 amount_to_withdraw = i['price'] * 1.04 + 50000000
-                post_request(BANK_WITHDRAW_URL, {'cq': str(amount_to_withdraw)})
+                post_request(BANK_WITHDRAW_URL, {
+                             'cq': str(amount_to_withdraw)})
                 # check if enough money (in case account was < 0 before)
-                page = get_request(AIRPORT_BUY_URL.format(airport_id=i['airport_id']))
+                page = get_request(AIRPORT_BUY_URL.format(
+                    airport_id=i['airport_id']))
                 notify('FM : Bought one airport', page)
         if response:
             logger.info('Airport to be sold !')

@@ -13,6 +13,8 @@ Run one test
 Specific datastore
 `--datastore_path=/path/to/datastore`
 
+Google App Engine specific
+
 Push updates
 `appcfg.py update .`
 
@@ -26,8 +28,6 @@ List versions
 
 Set version
 `appcfg.py set_default_version .`
-
-
 
 Environment variable
 `--env_var SKIP_MISSION_REFRESH=True`
