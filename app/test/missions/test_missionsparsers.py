@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 
 from app.common.http_methods_unittests import get_request
-from app.common.target_urls import YOUR_MISSIONS_URL, YOUR_MISSIONS_JET_URL
+from app.common.target_urls import YOUR_MISSIONS_URL, YOUR_MISSIONS_JET_URL, STOPOVER_DETAILS_URL
 from app.missions.missionparser import parse_all_missions_in_page, parse_stopover
 import unittest
 
@@ -47,11 +47,12 @@ class TestParser(unittest.TestCase):
         self.assertTrue(stopover_details)
 
     def test_stopover(self):
-        stopover_html = get_request("http://localhost/test_pages/stopover_details.html")
+        stopover_html = get_request(STOPOVER_DETAILS_URL)
         a_stopover = parse_stopover(stopover_html)
         self.assertEqual(29, a_stopover['reputation'])
         self.assertEqual(7, a_stopover['travellers_nb'])
         self.assertEqual(25930, a_stopover['revenue'])
+
 
 if __name__ == '__main__':
     unittest.main()

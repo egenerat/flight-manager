@@ -2,7 +2,7 @@
 
 from HTMLParser import HTMLParser
 
-import requests
+from lib import requests
 
 parser = HTMLParser()
 
