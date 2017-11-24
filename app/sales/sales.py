@@ -56,4 +56,5 @@ def get_sale_airports():
                 notify('FM : Bought one airport', page)
         if response:
             logger.info('Airport to be sold !')
-            notify('FM : {} airport to be sold', 'Airport to be sold :\n{}'.format(airports_sold_nb, response))
+            notify('FM : {} airport to be sold'.format(airports_sold_nb),
+                   'Airport to be sold :\n{}'.format(response))
