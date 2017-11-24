@@ -1,12 +1,9 @@
-dist: trusty
 sudo: required
 services:
 - docker
 language: python
 python:
 - '2.7'
-install:
-- pip install requests mockito geopy
 script:
 - "./build_test_docker.sh"
 - python -m unittest discover app
