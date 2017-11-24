@@ -1,29 +1,27 @@
 # -*- coding: utf-8 -*-
 
 from app.common.constants import USERNAME
-from app.common.string_methods import get_amount, get_value_from_regex, get_values_from_regex
-from app.common.target_parse_strings import SALE_AIRPORTS_BEGIN_HTML, \
-    SALE_AIRPORT_ID_REGEX, SALE_AIRPORT_REPUTATION_REGEX, SALE_AIRPORT_CASH_REGEX, \
-    SALE_AIRPORT_PRICE_REGEX, SALE_AIRPORT_PSEUDO
+from app.common.string_methods import get_value_from_regex, get_values_from_regex, clean_amount
+from app.common.target_parse_strings import SALE_AIRPORTS_BEGIN_HTML, SALE_AIRPORT_ID_REGEX
 from app.common.target_parse_strings import SALE_AIRPORTS_END_HTML
 
 
 def build_airport_from_line(html_line):
-    airport_id = get_value_from_regex(SALE_AIRPORT_ID_REGEX, html_line)
-    capacity_reputation = get_values_from_regex(SALE_AIRPORT_REPUTATION_REGEX, html_line)
-    cash = get_amount(get_values_from_regex(SALE_AIRPORT_CASH_REGEX, html_line)[1])
-    price = get_amount(get_value_from_regex(SALE_AIRPORT_PRICE_REGEX, html_line))
-    vendor = get_value_from_regex(SALE_AIRPORT_PSEUDO, html_line)
-    if not vendor == USERNAME:
-        an_airport = {
-            'airport_id': int(airport_id),
-            'cash': cash,
-            'capacity': int(capacity_reputation[0]),
-            'reputation': get_amount(capacity_reputation[1]),
-            'price': price,
-            'vendor': vendor
-        }
-    return an_airport
+    table_data = get_values_from_regex('<td class="Vaero\d">(.+?)<\/td>', html_line)
+    airport_id = int(get_value_from_regex(SALE_AIRPORT_ID_REGEX, html_line))
+    capacity = int(table_data[2])
+    reputation = clean_amount(table_data[3])
+    cash = clean_amount(table_data[4])
+    price = clean_amount(table_data[6])
+    vendor = table_data[0]
+    return {
+        'airport_id': airport_id,
+        'cash': cash,
+        'capacity': capacity,
+        'reputation': reputation,
+        'price': price,
+        'vendor': vendor
+    }
 
 
 def build_airports_list(page):
@@ -40,16 +38,6 @@ def build_airports_list(page):
     return result
 
 
-def __is_element_in_list(a_list, element):
-    # TODO dirty
-    result = True
-    try:
-        a_list.index(element)
-    except:
-        result = False
-    return result
-
-
 def find_new_airports(old_list, new_list):
     old_list_price = []
     result = []
@@ -57,6 +45,6 @@ def find_new_airports(old_list, new_list):
         old_list_price.append(i.price)
     for i in new_list:
         # check if already exists (price)
-        if not __is_element_in_list(old_list_price, i['price']):
+        if i['price'] not in old_list_price and not i['vendor'] == USERNAME:
             result.append(i)
     return result

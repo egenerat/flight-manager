@@ -49,8 +49,14 @@ def get_int_from_regex(regex, string):
     return int(get_value_from_regex(regex, string))
 
 
+# this method should be used to search an amount in a text (slow)
 def get_amount(string):
     return get_amount_from_regex(AMOUNT_REGEX, string)
+
+
+# this method should be used to clean a string representing an amount
+def clean_amount(string):
+    return int(string.replace(",", "").replace("$", "").strip())
 
 
 # direct call deprecated
