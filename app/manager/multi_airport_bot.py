@@ -23,7 +23,8 @@ class MultiAirportBot(object):
             while bot.refresh_needed:
                 bot.refresh_planes()
                 bot.launch_missions()
-            bot.check_report()
+            # Disable email notification for plane crashes
+            # bot.check_report()
 
             # TODO save the current airport in the singleton/session
             # current_airport = Airport()

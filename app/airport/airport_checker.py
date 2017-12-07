@@ -27,6 +27,7 @@ class AirportChecker(object):
         total_missing_planes = self.airport.planes_capacity - \
             get_planes_nb_from_sorted_dict(self.sorted_planes_dict)
         if total_missing_planes > 0:
+            # TODO bug here, if the plane is missing but never bought (for example not enough money), infinite loop
             self.refresh_needed = True
             for plane_class, missing_units in self.__check_missing_planes().iteritems():
                 if missing_units > 0:
