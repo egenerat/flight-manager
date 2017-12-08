@@ -20,7 +20,8 @@ class MultiAirportBot(object):
             switch_to_airport(airport_id)
             bot = BotPlayer(self.missions)
             bot.launch_missions()
-            while bot.refresh_needed:
+            # TODO: Should be a while, but be careful with infinite loop
+            if bot.refresh_needed:
                 bot.refresh_planes()
                 bot.launch_missions()
             # Disable email notification for plane crashes
