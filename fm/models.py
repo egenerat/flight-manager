@@ -34,6 +34,7 @@ class Stopover(models.Model):
 
 
 class AirportsToBeSold(models.Model):
+    vendor = models.CharField(max_length=30)
     airport_id = models.PositiveSmallIntegerField()
     price = models.PositiveSmallIntegerField()
     cash = models.SmallIntegerField()
