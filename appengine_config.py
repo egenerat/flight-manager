@@ -10,7 +10,7 @@ if os.environ.get('SERVER_SOFTWARE', '').startswith('Development'):
     import imp
     import os.path
     import inspect
-    from google.appengine.tools.devappserver2.python import sandbox
+    from google.appengine.tools.devappserver2.python.runtime import sandbox
 
     sandbox._WHITE_LIST_C_MODULES += ['_ssl', '_socket']
     # Use the system socket.
