@@ -65,6 +65,6 @@ class AirportChecker(object):
             self.airport_buyer.buy_engines(qty_needed, '6')
 
     def fix(self):
+        self.__fix_missing_resources()
         self.__fix_missing_planes()
         self.__fix_missing_staff()
-        self.__fix_missing_resources()
