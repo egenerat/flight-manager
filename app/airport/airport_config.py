@@ -25,10 +25,10 @@ def planes_config_factory(airport_capacity):
         18: PlanesConfig(supersonics_nb=18),
         27: PlanesConfig(supersonics_nb=27),
         36: PlanesConfig(supersonics_nb=36),
-        54: PlanesConfig(supersonics_nb=52, jets_nb=2),
-        84: PlanesConfig(supersonics_nb=81, jets_nb=3),
-        114: PlanesConfig(supersonics_nb=95, jets_nb=9),
-        200: PlanesConfig(supersonics_nb=95, jets_nb=105),
+        54: PlanesConfig(supersonics_nb=54),
+        84: PlanesConfig(supersonics_nb=84),
+        114: PlanesConfig(supersonics_nb=108, jets_nb=6),
+        200: PlanesConfig(supersonics_nb=108, jets_nb=92),
     }[airport_capacity]
 
 
