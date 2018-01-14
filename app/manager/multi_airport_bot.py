@@ -19,6 +19,7 @@ class MultiAirportBot(object):
         for airport_id in other_airports:
             switch_to_airport(airport_id)
             bot = BotPlayer(self.missions)
+            logger.info(bot.airport)
             bot.launch_missions()
             # TODO: Should be a while, but be careful with infinite loop
             if bot.refresh_needed:

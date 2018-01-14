@@ -47,7 +47,6 @@ class BotPlayer(object):
         self.report = build_report()
         self.missions = missions
         self.refresh_needed = False
-        logger.info('Airport {}'.format(self.airport.airport_name.encode('utf-8')))
 
     @property
     def usable_planes(self):

@@ -10,4 +10,4 @@ class Airport(object):
             # TODO Move the list of planes as a property of the airport
 
     def __str__(self):
-        return 'Airport {} H{} {}'.format(self.airport_name, self.planes_capacity, self.country)
+        return 'Airport {} H{} {}'.format(self.airport_name.encode('utf-8'), self.planes_capacity, self.country.encode('utf-8'))
