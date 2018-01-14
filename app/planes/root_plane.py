@@ -26,7 +26,7 @@ class RootPlane(object):
             self.maximum_engine_hours = int(self.maximum_engine_hours)
 
     def engines_to_be_changed(self):
-        if self.current_engine_hours and self.limit_change_engines:
+        if hasattr(self, 'current_engine_hours') and hasattr(self, 'limit_change_engines'):
             return self.current_engine_hours > self.limit_change_engines
         return False
 
@@ -35,15 +35,19 @@ class RootPlane(object):
             return get_plane_value(self.new_plane_value, self.km, self.kerosene)
 
     def get_fuel_consumption_per_hour(self):
-        if self.consumption_per_hour:
+        if hasattr(self, 'consumption_per_hour'):
             return self.consumption_per_hour
 
     def is_fuel_full(self):
-        if self.kerosene and self.fuel_capacity:
+        if hasattr(self, 'kerosene') and hasattr(self, 'fuel_capacity'):
             return self.kerosene == self.fuel_capacity
 
     def __str__(self):
-        if self.current_engine_hours and self.maximum_engine_hours:
-            return 'Plane {} {}/{}'.format(self.plane_id, self.current_engine_hours, self.maximum_engine_hours)
-        else:
-            return 'Plane {}'.format(self.plane_id)
+        result = 'Plane {}'.format(self.plane_id)
+        if hasattr(self, 'current_engine_hours') and hasattr(self, 'maximum_engine_hours'):
+            result += ' {}/{}'.format(self.current_engine_hours, self.maximum_engine_hours)
+        if self.required_maintenance:
+            result += ' Maintenance needed'
+        if self.endlife:
+            result += ' > 500.000 km'
+        return result

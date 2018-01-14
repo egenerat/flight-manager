@@ -2,6 +2,7 @@ import unittest
 
 from app.planes.commercial7plane4 import Commercial7Plane4
 from app.planes.jet_gx_plane import JetGXPlane
+from app.planes.supersonic_tu_plane import SupersonicTUPlane
 
 
 class TestParser(unittest.TestCase):
@@ -28,6 +29,10 @@ class TestParser(unittest.TestCase):
     def test_range_jet(self):
         plane_class = JetGXPlane
         self.assertEqual(6335, plane_class.plane_range)
+
+    def test_str(self):
+        plane = SupersonicTUPlane(plane_id=123, ready=True, in_mission=True, kerosene=0, current_engine_hours=0, km=0)
+        self.assertEqual("Plane 123 0/100", str(plane))
 
 
 if __name__ == '__main__':
