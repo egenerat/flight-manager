@@ -5,9 +5,9 @@ from app.airport.airport_builder import build_airport_from_html
 from app.airport.airport_checker import AirportChecker
 from app.airport.report_parser import report_parser
 from app.common.constants import MAIN_AIRPORT_NAME
-from app.common.logger import logger
 from app.common.http_methods import get_request
 from app.common.target_urls import STAFF_PAGE, AIRPORT_PAGE, MISSION_DASHBOARD, PLANES_PAGE, AIRPORT_REPORT
+from app.missions.mission_utils import split_missions_list_by_type
 from app.missions.missionparser import subtract, get_ongoing_missions_from_html
 from app.parsers.planes_parser import build_planes_from_html
 from app.planes.plane_garage import PlaneGarage
@@ -43,9 +43,9 @@ class BotPlayer(object):
     def __init__(self, missions):
         self.airport = build_airport()
         self.planes = build_planes()
-        self.ongoing_missions = get_ongoing_missions()
         self.report = build_report()
         self.missions = missions
+        self.available_missions = None
         self.refresh_needed = False
 
     @property
@@ -61,9 +61,8 @@ class BotPlayer(object):
         return [plane for plane in temp if plane.in_mission == 'I' and (plane.required_maintenance or plane.endlife)]
 
     def launch_missions(self):
-        mission_list = self.missions
-        ongoing_missions = self.ongoing_missions
-        mission_list = subtract(mission_list, ongoing_missions)
+        self.refresh_planes()
+        self.refresh_available_missions()
         checker = AirportChecker(self.airport, self.planes, airport_buyer, staff_buyer)
         checker.fix()
         self.refresh_needed = checker.refresh_needed
@@ -73,7 +72,7 @@ class BotPlayer(object):
         # garage.get_engines_needed_nb()
         garage.prepare_all_planes()
         self.refresh_needed = self.refresh_needed or garage.refresh_needed
-        accept_all_missions(mission_list, garage.ready_planes)
+        accept_all_missions(self.available_missions, garage.ready_planes)
 
     def check_report(self):
         daily_report = self.report['daily']
@@ -85,3 +84,21 @@ class BotPlayer(object):
     def refresh_planes(self):
         self.planes = build_planes()
         self.refresh_needed = False
+
+    def refresh_available_missions(self):
+        mission_list = self.missions
+        ongoing_missions = get_ongoing_missions()
+        self.available_missions = subtract(mission_list, ongoing_missions)
+
+    def stats_supersonics(self):
+        self.refresh_available_missions()
+        supersonic_planes = len(self.planes['supersonic_planes'])
+        supersonic_missions = len(split_missions_list_by_type(self.missions)['missions_for_supersonics'])
+        supersonic_available_missions = len(split_missions_list_by_type(self.available_missions)['missions_for_supersonics'])
+        return {
+            "capacity": self.airport.planes_capacity,
+            "supersonic_planes": supersonic_planes,
+            "supersonic_missions": supersonic_missions,
+            "supersonic_available_missions": supersonic_available_missions,
+            "ideal_supersonic_number": supersonic_available_missions + supersonic_planes
+        }

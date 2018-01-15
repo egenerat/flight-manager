@@ -18,8 +18,31 @@ from app.common.target_urls import PLANES_PAGE, SHOP_ONE_CONSTRUCTOR_PAGE, SITE
 from app.parsers.planes_parser import build_planes_from_html
 from django.http import HttpResponse
 from fm.databases.database_django import db_get_ordered_missions_multi_type
+from fm.models import SupersonicStats
 
 HOURS_PER_WEEK = 168
+
+
+def view_ideal_supersonic_number(_):
+    capacity = 200
+    data = SupersonicStats.objects.filter(capacity=capacity)
+    lmin = capacity
+    lmax = 0
+    lmean = 0
+    lsum = 0
+    for i in data:
+        ideal = i.ideal_supersonic_number
+        if ideal < lmin:
+            lmin = ideal
+        if ideal > lmax:
+            lmax = ideal
+        lsum += ideal
+    lmean = lsum / len(data)
+    return HttpResponse("""Ideal number of supersonic planes:<br/>
+    min: {}<br/>
+    max: {}<br/>
+    mean: {}<br/><br/>
+    Computed over {} measures""".format(lmin, lmax, lmean, len(data)))
 
 
 def view_top_missions(_):

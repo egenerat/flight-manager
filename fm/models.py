@@ -2,6 +2,7 @@
 
 from django.db import models
 import base64
+from app.common.logger import logger
 
 
 class Mission(models.Model):
@@ -45,6 +46,15 @@ class AirportsToBeSold(models.Model):
 class Notification(models.Model):
     last_date = models.DateTimeField()
     plane_crashes = models.PositiveSmallIntegerField()
+
+
+
+class SupersonicStats(models.Model):
+    capacity = models.SmallIntegerField()
+    supersonic_planes = models.SmallIntegerField()
+    supersonic_missions = models.SmallIntegerField()
+    supersonic_available_missions = models.SmallIntegerField()
+    ideal_supersonic_number = models.SmallIntegerField()
 
 
 class ASHttpSession(models.Model):

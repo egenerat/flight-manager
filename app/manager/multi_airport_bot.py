@@ -4,8 +4,9 @@ from app.airport.airports_methods import switch_to_airport
 from app.common.constants import ACTIVE_AIRPORT_ID
 from app.common.logger import logger
 from app.manager.bot_player import BotPlayer
-from fm.databases.database_django import db_get_ordered_missions_multi_type
+from fm.databases.database_django import db_get_ordered_missions_multi_type, db_insert_object
 from fm.mission_handler import are_missions_expired, parse_all_missions
+from fm.models import SupersonicStats
 
 
 class MultiAirportBot(object):
@@ -23,14 +24,13 @@ class MultiAirportBot(object):
             bot.launch_missions()
             # TODO: Should be a while, but be careful with infinite loop
             if bot.refresh_needed:
-                bot.refresh_planes()
                 bot.launch_missions()
             # Disable email notification for plane crashes
             # bot.check_report()
 
-            # TODO save the current airport in the singleton/session
-            # current_airport = Airport()
-            # set_airport(current_airport)
+            stats_dict = bot.stats_supersonics()
+            stats = SupersonicStats(**stats_dict)
+            db_insert_object(stats)
 
 
 def get_missions():
