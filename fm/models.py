@@ -48,6 +48,19 @@ class Notification(models.Model):
     plane_crashes = models.PositiveSmallIntegerField()
 
 
+class DynamicSettings(models.Model):
+    key = models.CharField(max_length=30)
+    value = models.CharField(max_length=30)
+
+    @staticmethod
+    def get(key, default_value=None):
+        db_results = DynamicSettings.objects.filter(key=key)
+        db_results_nb = len(db_results)
+        if db_results_nb > 1:
+            logger.warning("More than one value for the same key, please check DB content")
+        if db_results_nb == 1:
+            return db_results[0].value
+        return default_value
 
 class SupersonicStats(models.Model):
     capacity = models.SmallIntegerField()
