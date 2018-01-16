@@ -143,9 +143,9 @@ def accept_all_missions_one_type(plane_list, mission_list):
 def accept_all_missions(missions_list, plane_list):
     sorted_planes = split_planes_list_by_type(plane_list)
     sorted_missions = split_missions_list_by_type(missions_list)
-    accept_all_missions_one_type(
-        sorted_planes['commercial_ready_planes'], sorted_missions['missions_for_commercial'])
-    accept_all_missions_one_type(
-        sorted_planes['supersonic_ready_planes'], sorted_missions['missions_for_supersonics'])
-    accept_all_missions_one_type(
-        sorted_planes['jet_ready_planes'], sorted_missions['missions_for_jet'])
+    if len(sorted_planes['commercial_ready_planes']):
+        accept_all_missions_one_type(sorted_planes['commercial_ready_planes'], sorted_missions['missions_for_commercial'])
+    if len(sorted_planes['supersonic_ready_planes']):
+        accept_all_missions_one_type(sorted_planes['supersonic_ready_planes'], sorted_missions['missions_for_supersonics'])
+    if len(sorted_planes['jet_ready_planes']):
+        accept_all_missions_one_type(sorted_planes['jet_ready_planes'], sorted_missions['missions_for_jet'])
