@@ -42,15 +42,16 @@ class StaffConfig(object):
 
 def staff_config_factory(airport_capacity):
     """ should be improved, and be variable of supersonic nb and jets nb """
+    # supersonics only: 3 pilots & 2 flight attendants per plane
     return {
-        3: StaffConfig(pilots_nb=6, flight_attendants_nb=8, mechanics_nb=8),
-        9: StaffConfig(pilots_nb=20, flight_attendants_nb=16, mechanics_nb=16),
-        18: StaffConfig(pilots_nb=42, flight_attendants_nb=25, mechanics_nb=16),
-        27: StaffConfig(pilots_nb=20, flight_attendants_nb=16, mechanics_nb=16),
-        36: StaffConfig(pilots_nb=100, flight_attendants_nb=56, mechanics_nb=32),
-        54: StaffConfig(pilots_nb=85, flight_attendants_nb=56, mechanics_nb=32),
-        84: StaffConfig(pilots_nb=250, flight_attendants_nb=120, mechanics_nb=40),
-        114: StaffConfig(pilots_nb=285, flight_attendants_nb=175, mechanics_nb=60),
+        3: StaffConfig(pilots_nb=9, flight_attendants_nb=6, mechanics_nb=8),
+        9: StaffConfig(pilots_nb=27, flight_attendants_nb=18, mechanics_nb=16),
+        18: StaffConfig(pilots_nb=54, flight_attendants_nb=38, mechanics_nb=16),
+        27: StaffConfig(pilots_nb=71, flight_attendants_nb=60, mechanics_nb=16),
+        36: StaffConfig(pilots_nb=108, flight_attendants_nb=72, mechanics_nb=32),
+        54: StaffConfig(pilots_nb=162, flight_attendants_nb=108, mechanics_nb=32),
+        84: StaffConfig(pilots_nb=200, flight_attendants_nb=160, mechanics_nb=40),
+        114: StaffConfig(pilots_nb=270, flight_attendants_nb=215, mechanics_nb=80),
         200: StaffConfig(pilots_nb=520, flight_attendants_nb=315, mechanics_nb=200),
     }[airport_capacity]
 
